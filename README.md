@@ -6,7 +6,7 @@
 
 ## Tabulación
 
-![foto tabulación](image-1.png)
+![Tabulación](image-15.png)
 
 ## Responsive
 
