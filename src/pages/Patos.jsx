@@ -2,7 +2,6 @@ import ContenedorGlobal from "../components/ContenedorGlobal";
 import TarjetaPato from "../components/TarjetaPato";
 import ducklyn from "../data/ducklyn";
 import { Link } from "react-router-dom";
-
 function Patos() {
   return (
     <ContenedorGlobal titulo="Nuestros Patos">

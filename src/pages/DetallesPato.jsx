@@ -34,7 +34,7 @@ function DetallesPato() {
 
         <section className="my-4">
           <button
-            onClick={() => navigate("/patos")}
+            onClick={() => navigate(-1)}
             className="px-4 py-2 bg-[#09207d] text-white rounded"
           > Volver
           </button>

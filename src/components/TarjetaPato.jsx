@@ -16,7 +16,7 @@ function TarjetaPato({
       <article
         tabIndex="0"
         aria-label={`${nombre}`}
-        className="flex flex-col justify-between w-full h-full p-3 rounded-md bg-white shadow-md"
+        className="flex flex-col justify-between w-full h-full p-3 rounded-md bg-white shadow-xl"
       >
         <figure className="w-full aspect-square rounded-lg bg-gray-100 overflow-hidden">
           <img
