@@ -1,7 +1,9 @@
 function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, children }) {
+  {/* He quitado el tabIndex={0} ya que por ahora ya que la card está dentro de un link
+        y me hacia tocar dos veces el tabulador para avanzar
+      */}
   return (
     <article
-      tabIndex={0}
       aria-label={titulo}
       className="flex flex-col justify-between w-full h-full p-6 sm:p-3 rounded-md bg-white shadow-sm sm:shadow-md border border-black"
     >

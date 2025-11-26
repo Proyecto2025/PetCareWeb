@@ -93,3 +93,9 @@
     max-width: 240px;
   }
 }
+
+{/*Para que al tabuñar sea verde*/}
+:focus {
+  outline: 2px solid #16a34a; 
+  outline-offset: 2px;   
+}
