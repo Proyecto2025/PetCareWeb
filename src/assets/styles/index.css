@@ -31,7 +31,7 @@
   font-weight: var(--text-large-font-weight);
   letter-spacing: var(--text-large-letter-spacing);
   line-height: var(--text-large-line-height);
-  color: var(--color-grey-3); /* sustituye var(--color-text) por gris claro */
+  color: var(--color-grey-3); 
 }
 
 /* Texto normal */
@@ -44,6 +44,10 @@
   line-height: var(--text-normal-line-height);
   color: var(--color-grey-2);
   white-space: normal;
+}
+
+.contenedor__texto-primary {
+  color: var(--color-primary);
 }
 
 
