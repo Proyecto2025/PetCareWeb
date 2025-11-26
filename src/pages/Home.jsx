@@ -1,6 +1,7 @@
 import GlobalContent from "../components/GlobalContent.jsx";
 import posts from "../data/post.js";  
 import Card from "../components/Card.jsx";  
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -9,6 +10,11 @@ function Home() {
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch"
       >
         {posts.map((animales) => (
+          <Link
+            key={animales.id}
+            to={`/animal/${animales.id}`}
+            aria-label={`Ver detalles de ${animales.titulo}`}
+          >
             <Card 
             nombreUsuario={animales.nombreUsuario}
             tipoAnimal={animales.tipoAnimal}
@@ -16,6 +22,7 @@ function Home() {
             foto={animales.imagen} 
             descripcionCorta = {animales.descripcionCorta}
             />
+            </Link>
         ))}
       </section>
     </GlobalContent>

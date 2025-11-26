@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx";
 import Advice from "./pages/Advice.jsx";
 import Post from "./pages/Post.jsx";
 import Profile from "./pages/Profile.jsx";
+import DetailAnimal from "./components/DetailAnimal.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="advice" element={<Advice />} />
           <Route path="post" element={<Post />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="animal/:id" element= {<DetailAnimal/>} />
           <Route path="*" element={<p>La página que buscas no existe</p>} />
         </Route>
       </Routes>
