@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "./theme.css";
 
-
-
 /* h1 */
 .contenedor__titulo {
   font-family: var(--heading-h1-font-family);
@@ -33,26 +31,19 @@
   font-weight: var(--text-large-font-weight);
   letter-spacing: var(--text-large-letter-spacing);
   line-height: var(--text-large-line-height);
-  color: var(--color-text);
-  
+  color: var(--color-grey-3); /* sustituye var(--color-text) por gris claro */
 }
 
-/* Texto para descripcón y tipo */
+/* Texto normal */
 .contenedor__texto-normal {
+  font-family: var(--text-normal-font-family);
   font-size: var(--text-normal-font-size);
+  font-style: var(--text-normal-font-style);
+  font-weight: var(--text-normal-font-weight);
+  letter-spacing: var(--text-normal-letter-spacing);
+  line-height: var(--text-normal-line-height);
   color: var(--color-grey-2);
   white-space: normal;
-}
-
-/* Color para precio */
-.contenedor__precio {
-  font-family: var(--text-medium-bold-font-family);
-  font-size: var(--text-medium-bold-font-size);
-  font-style: var(--text-medium-bold-font-style);
-  font-weight: var(--text-medium-bold-font-weight);
-  letter-spacing: var(--text-medium-bold-letter-spacing);
-  line-height: var(--text-medium-bold-line-height);
-  color: var(--color-success);
 }
 
 
@@ -60,7 +51,7 @@
 .contenedor__tarjeta {
   background-color: var(--color-white);
   border-radius: 10px;
-  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--dropshadow); /* usa la sombra definida en root */
   padding: 12px;
   width: 100%;
   max-width: 180px;
@@ -68,17 +59,21 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px
+  gap: 8px;
 }
 
-/* Estilo para Header y Footer */
+/* Header y Footer */
 .contenedor__barra-principal {
-  background-color: var(--color-secondary); /* amarillo */
-  color: var(--color-black); /* o el que prefieras */
+  background-color: white;
+  color: var(--color-white);
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   width: 100%;
-  
+}
+
+.contenedor__textfont {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 700; 
 }
 
 

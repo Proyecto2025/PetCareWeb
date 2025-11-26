@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-/**
- * Componente de navegación principal.
- * @returns Devuelve el elemento <nav> con el menú de navegación responsivo:
- */
 function Nav() {
-  {/* Estado para controlar si el menú móvil está abierto o cerrado */}
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="relative" aria-label="Menú principal">
-      {/* Hamburguesa solo en móvil */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="text-2xl text-black px-2 py-1 rounded md:hidden"
@@ -19,58 +13,34 @@ function Nav() {
         aria-expanded={isOpen}
         aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        {isOpen ? "x" : "☰"}
+        {isOpen ? "×" : "☰"}
       </button>
 
-      {/* Menú móvil bajo header */}
       {isOpen && (
         <ul
           id="menuMovil"
-          className="absolute top-full left-1/2 -translate-x-1/2 w-full bg-[rgba(255,236,58,1)] text-white z-50 flex flex-col items-center gap-6 px-10 py-10 rounded-lg shadow-xl md:hidden"
+          className="absolute top-full left-1/2 -translate-x-1/2 w-full bg-[#d6d6d4] z-50 flex flex-col items-center gap-6 px-10 py-10 rounded-lg shadow-xl md:hidden"
         >
-          <li role="none">
-            <NavLink
-              to="/"
-              className="px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base md:px-4 md:py-2 md:text-lg rounded-md font-medium text-black hover:text-blue-900"
-              onClick={() => setIsOpen(false)}
-              role="menuitem"
-            >
-              Inicio
-            </NavLink>
+          <li>
+            <NavLink className="contenedor__textfont text-black" to="/" onClick={() => setIsOpen(false)}>Inicio</NavLink>
           </li>
-          <li role="none">
-            <NavLink
-              to="/patos"
-              className="px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base md:px-4 md:py-2 md:text-lg rounded-md font-medium text-black hover:text-blue-900"
-              onClick={() => setIsOpen(false)}
-              role="menuitem"
-            >
-              Catálogo
-            </NavLink>
+          <li>
+            <NavLink className="contenedor__textfont text-black" to="/advice" onClick={() => setIsOpen(false)}>Consejos</NavLink>
+          </li>
+          <li>
+            <NavLink className="contenedor__textfont text-black" to="/post" onClick={() => setIsOpen(false)}>Publicar</NavLink>
+          </li>
+          <li>
+            <NavLink className="contenedor__textfont text-black" to="/profile" onClick={() => setIsOpen(false)}>Perfil</NavLink>
           </li>
         </ul>
       )}
 
-      {/* Menú escritorio */}
-      <ul className="hidden md:flex gap-4" role="menubar">
-        <li role="none">
-          <NavLink
-            to="/"
-            className="px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base md:px-4 md:py-2 md:text-lg rounded-md font-medium text-black hover:text-blue-900"
-            role="menuitem"
-          >
-            Inicio
-          </NavLink>
-        </li>
-        <li role="none">
-          <NavLink
-            to="/patos"
-            className="px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base md:px-4 md:py-2 md:text-lg rounded-md font-medium text-black hover:text-blue-900"
-            role="menuitem"
-          >
-            Catálogo
-          </NavLink>
-        </li>
+      <ul className="hidden md:flex gap-10">
+        <li><NavLink className="contenedor__textfont text-black" to="/">Inicio</NavLink></li>
+        <li><NavLink className="contenedor__textfont text-black" to="/advice">Cosejos</NavLink></li>
+        <li><NavLink className="contenedor__textfont text-black" to="/post">Publicar</NavLink></li>
+        <li><NavLink className="contenedor__textfont text-black" to="/profile">Perfil</NavLink></li>
       </ul>
     </nav>
   );

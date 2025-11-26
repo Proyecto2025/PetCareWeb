@@ -3,113 +3,100 @@
 @import "@fontsource/baloo-2/600.css";
 
 :root {
-  /* ---------------------
-     Tipografía principal
-     --------------------- */
-  font-family: "Baloo 2", Helvetica, sans-serif;
+  /* Colores base */
+  --color-black-1: rgba(0, 0, 0, 1);        /* Negro puro */
+  --color-black-2: rgba(29, 29, 29, 1);     /* Negro suave */
+  --color-black-3: rgba(40, 40, 40, 1);     /* Negro intermedio */
+  --color-grey-1: rgba(51, 51, 51, 1);      /* Gris oscuro */
+  --color-grey-2: rgba(79, 79, 79, 1);      /* Gris medio */
+  --color-grey-3: rgba(130, 130, 130, 1);   /* Gris claro */
+  --color-grey-4: rgba(189, 189, 189, 1);   /* Gris más claro */
+  --color-grey-5: rgba(224, 224, 224, 1);   /* Gris muy claro */
+  --color-white: rgba(255, 255, 255, 1);    /* Blanco puro */
 
-  /* ---------------------
-     Paleta de colores
-     --------------------- */
-  --color-black-1: rgba(0, 0, 0, 1);
-  --color-black-2: rgba(29, 29, 29, 1);
-  --color-black-3: rgba(40, 40, 40, 1);
+  /* Colores de estado */
+  --color-error: rgba(235, 87, 87, 1);      /* Error / rojo */
+  --color-info: rgba(47, 128, 237, 1);      /* Info / azul */
+  --color-primary: rgba(12, 101, 61, 1);    /* Primario / verde branding */
+  --color-secondary: rgba(23, 18, 25, 1);   /* Secundario / oscuro */
+  --color-succes: rgba(39, 174, 96, 1);     /* Éxito / verde (nota: corregir a success) */
+  --color-warning: rgba(226, 185, 59, 1);   /* Advertencia / amarillo */
 
-  --color-error: rgba(235, 87, 87, 1);
-  --color-info: rgba(47, 128, 237, 1);
-  --color-success: rgba(39, 174, 96, 1);
-  --color-warning: rgba(255, 209, 102, 1);
-
-  --color-grey-1: rgba(51, 51, 51, 1);
-  --color-grey-2: rgba(79, 79, 79, 1);
-  --color-grey-3: rgba(130, 130, 130, 1);
-  --color-grey-4: rgba(189, 189, 189, 1);
-  --color-grey-5: rgba(224, 224, 224, 1);
-
-  --color-secondary: rgba(255, 236, 58, 1);
-  --color-primary: rgba(9, 32, 125, 1);
-
-  --color-white: rgba(255, 255, 255, 1);
+  /* Sombras */
   --dropshadow: 0px 4px 24px 0px rgba(9, 44, 76, 0.4);
 
-  /* ---------------------
-     Jerarquía tipográfica
-     --------------------- */
+  /* Tipografía encabezados */
+  --heading-h1-font-family: "Baloo", Helvetica;
+  --heading-h1-font-size: 56px;
+  --heading-h1-font-weight: 400;
+  --heading-h1-line-height: 61.6px;
 
-  /* Encabezado H1 */
-  --heading-h1-font-size: clamp(28px, 6vw, 56px);
-  --heading-h1-font-style: normal;
-  --heading-h1-font-weight: 700;
-  --heading-h1-line-height: clamp(32px, 6.5vw, 61.6px);
-
-  /* Encabezado H2 */
-  --heading-h2-font-size: clamp(24px, 5vw, 48px);
-  --heading-h2-font-style: normal;
+  --heading-h2-font-family: "Poppins", Helvetica;
+  --heading-h2-font-size: 48px;
   --heading-h2-font-weight: 700;
-  --heading-h2-line-height: clamp(28px, 5.5vw, 52.8px);
+  --heading-h2-line-height: 52.8px;
 
-  /* Encabezado H3 */
-  --heading-h3-font-size: clamp(20px, 4vw, 40px);
-  --heading-h3-font-style: normal;
+  --heading-h3-font-family: "Poppins", Helvetica;
+  --heading-h3-font-size: 40px;
   --heading-h3-font-weight: 700;
-  --heading-h3-line-height: clamp(24px, 4.5vw, 44px);
+  --heading-h3-line-height: 44px;
 
-  /* Encabezado H4 */
-  --heading-h4-font-size: clamp(18px, 3vw, 32px);
-  --heading-h4-font-style: normal;
+  --heading-h4-font-family: "Poppins", Helvetica;
+  --heading-h4-font-size: 32px;
   --heading-h4-font-weight: 700;
-  --heading-h4-line-height: clamp(22px, 3.5vw, 35.2px);
+  --heading-h4-line-height: 35.2px;
 
-  /* Encabezado H5 */
-  --heading-h5-font-size: clamp(16px, 2.5vw, 24px);
-  --heading-h5-font-style: normal;
+  --heading-h5-font-family: "Poppins", Helvetica;
+  --heading-h5-font-size: 24px;
   --heading-h5-font-weight: 700;
-  --heading-h5-line-height: clamp(20px, 3vw, 26.4px);
+  --heading-h5-line-height: 26.4px;
 
-  /* Encabezado H6 */
-  --heading-h6-font-size: clamp(14px, 2vw, 20px);
-  --heading-h6-font-style: normal;
+  --heading-h6-font-family: "Inter", Helvetica;
+  --heading-h6-font-size: 20px;
   --heading-h6-font-weight: 600;
-  --heading-h6-line-height: clamp(18px, 2.5vw, 22px);
+  --heading-h6-line-height: 22px;
 
-  /* ---------------------
-     Estilos de texto
-     --------------------- */
-
-  --text-large-bold-font-size: clamp(16px, 2.5vw, 20px);
+  /* Tipografía textos */
+  --text-large-bold-font-family: "Lato", Helvetica;
+  --text-large-bold-font-size: 20px;
   --text-large-bold-font-weight: 700;
-  --text-large-bold-line-height: clamp(22px, 3vw, 28px);
+  --text-large-bold-line-height: 28px;
 
-  --text-large-font-size: clamp(16px, 2.5vw, 20px);
+  --text-large-font-family: "Lato", Helvetica;
+  --text-large-font-size: 20px;
   --text-large-font-weight: 400;
-  --text-large-line-height: clamp(22px, 3vw, 28px);
+  --text-large-line-height: 28px;
 
-  --text-medium-bold-font-size: clamp(14px, 2vw, 18px);
+  --text-medium-bold-font-family: "Lato", Helvetica;
+  --text-medium-bold-font-size: 18px;
   --text-medium-bold-font-weight: 700;
-  --text-medium-bold-line-height: clamp(20px, 2.5vw, 25.2px);
+  --text-medium-bold-line-height: 25.2px;
 
-  --text-medium-font-size: clamp(14px, 2vw, 18px);
+  --text-medium-font-family: "Lato", Helvetica;
+  --text-medium-font-size: 18px;
   --text-medium-font-weight: 400;
-  --text-medium-line-height: clamp(20px, 2.5vw, 25.2px);
+  --text-medium-line-height: 25.2px;
 
-  --text-normal-bold-font-size: clamp(12px, 1.5vw, 16px);
+  --text-normal-bold-font-family: "Lato", Helvetica;
+  --text-normal-bold-font-size: 16px;
   --text-normal-bold-font-weight: 700;
-  --text-normal-bold-line-height: clamp(18px, 2vw, 22.4px);
+  --text-normal-bold-line-height: 22.4px;
 
-  --text-normal-font-size: clamp(12px, 1.5vw, 16px);
+  --text-normal-font-family: "Lato", Helvetica;
+  --text-normal-font-size: 16px;
   --text-normal-font-weight: 400;
-  --text-normal-line-height: clamp(18px, 2vw, 22.4px);
+  --text-normal-line-height: 22.4px;
 
-  --text-small-bold-font-size: clamp(10px, 1.2vw, 14px);
+  --text-small-bold-font-family: "Lato", Helvetica;
+  --text-small-bold-font-size: 14px;
   --text-small-bold-font-weight: 700;
-  --text-small-bold-line-height: clamp(14px, 1.5vw, 19.6px);
+  --text-small-bold-line-height: 19.6px;
 
-  --text-small-font-size: clamp(10px, 1.2vw, 14px);
+  --text-small-font-family: "Lato", Helvetica;
+  --text-small-font-size: 14px;
   --text-small-font-weight: 400;
-  --text-small-line-height: clamp(14px, 1.5vw, 19.6px);
+  --text-small-line-height: 19.6px;
 
-  --body-text-font-size: clamp(14px, 2vw, 20px);
-  --body-text-font-weight: 500;
-  --body-text-font-color: var(--color-grey-3);
-  --body-text-line-height: 150%;
+  /* Animaciones */
+  --animate-spin: spin 1s linear infinite;
 }

@@ -1,38 +1,17 @@
 import Nav from "./Nav.jsx";
-import logo from "../assets/images/Pato.png";
 import { Link } from "react-router-dom";
-/**
- * El header de la página, que incluye el logo y la barra de navegación
- * @returns Devuelve el componente <header>
- */
+
 function Header() {
-  return (
-    <header className="contenedor__barra-principal py-6 ">
-      <article className="mx-auto flex justify-between items-center px-4">
-        {/* Logo + Marca */}
+  {/* No poner ARTICLE, porque el header es como que ya lo contiene */}
+  return ( 
+    <header className="contenedor__barra-principal py-6">
+      <section className="mx-auto flex justify-between items-center px-4">
         <section className="flex items-center gap-3">
-          {/*Para que el logo lleve al inicio de la pág*/}
-          <Link to="/">
-            <img
-              src={logo}
-              alt="Logo de Ducklyn"
-              className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-contain"
-            />
-          </Link>
-          <section>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-wide leading-tight">
-              Ducklyn
-            </h1>
-            <p className="text-xs sm:text-sm lg:text-base font-extrabold text-black leading-none">
-              Tu patito favorito
-            </p>
-          </section>
+          <h1 className="contenedor__titulo contenedor__textfont">PetCare</h1>
         </section>
-        {/* Barra de navegación */}
         <Nav />
-      </article>
+      </section>
     </header>
   );
 }
-
 export default Header;

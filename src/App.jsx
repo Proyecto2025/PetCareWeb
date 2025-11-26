@@ -1,37 +1,28 @@
-import Patos from "./pages/Patos.jsx";
+import { Routes, Route, Navigate } from "react-router-dom";
+import MainContent from "./components/MainContent.jsx";
+import Footer from "./components/Footer.jsx";
 import Header from "./components/Header.jsx";
 import Home from "./pages/Home.jsx";
-import {Routes , Route} from "react-router-dom";
-import ContenidoPrincipal from "./pages/ContenidoPrincipal.jsx"; 
-import DetallesPato from "./pages/DetallesPato.jsx";
-import Footer from "./components/Footer.jsx";
-/**
- * Componente principal de la aplicación
- * @returns  Devuelve la estructura base de la aplicación
- */
+import Advice from "./pages/Advice.jsx";
+import Post from "./pages/Post.jsx";
+import Profile from "./pages/Profile.jsx";
+
 function App() {
   return (
     <>
-      <Header /> {/*Encabezado */}
+      <Header />
       <Routes>
-        <Route path="/" element={<ContenidoPrincipal />}> 
+        <Route path="/" element={<MainContent />}>
           <Route index element={<Home />} />
-          <Route path="inicio" element={<Home />} />
-          <Route path="patos" element={<Patos />} />
-          <Route path="patos/:id" element={<DetallesPato />} />
-          {/*Por si no existe la pág */}
-          <Route
-            path="*"
-            titulo="Contenido no encontrado"
-            element={<p>La página que buscas no existe</p>}
-          />
+          <Route path="inicio" element={<Navigate to="/" replace />} />
+          <Route path="advice" element={<Advice />} />
+          <Route path="post" element={<Post />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="*" element={<p>La página que buscas no existe</p>} />
         </Route>
       </Routes>
-      
       <Footer />
-
     </>
   );
 }
-
 export default App;
