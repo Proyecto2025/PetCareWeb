@@ -28,7 +28,7 @@ function Nav() {
             <NavLink className="contenedor__textfont text-black" to="/advice" onClick={() => setIsOpen(false)}>Consejos</NavLink>
           </li>
           <li>
-            <NavLink className="contenedor__textfont text-black" to="/post" onClick={() => setIsOpen(false)}>Publicar</NavLink>
+            <NavLink className="contenedor__textfont text-black" to="/newPost" onClick={() => setIsOpen(false)}>Publicar</NavLink>
           </li>
           <li>
             <NavLink className="contenedor__textfont text-black" to="/profile" onClick={() => setIsOpen(false)}>Perfil</NavLink>
@@ -39,7 +39,7 @@ function Nav() {
       <ul className="hidden md:flex gap-10">
         <li><NavLink className="contenedor__textfont text-black" to="/">Inicio</NavLink></li>
         <li><NavLink className="contenedor__textfont text-black" to="/advice">Cosejos</NavLink></li>
-        <li><NavLink className="contenedor__textfont text-black" to="/post">Publicar</NavLink></li>
+        <li><NavLink className="contenedor__textfont text-black" to="/newPost">Publicar</NavLink></li>
         <li><NavLink className="contenedor__textfont text-black" to="/profile">Perfil</NavLink></li>
       </ul>
     </nav>
