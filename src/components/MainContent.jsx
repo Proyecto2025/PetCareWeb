@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-function MainContent({ titulo }) {
+function MainContent() {
   return (
     <main
       id="main-content"
@@ -8,7 +8,6 @@ function MainContent({ titulo }) {
       tabIndex={-1}
       className="min-h-screen bg-gradient-to-br flex flex-col items-center justify-center p-8"
     >
-      {titulo && <h1>{titulo}</h1>}
       <Outlet />
     </main>
   );

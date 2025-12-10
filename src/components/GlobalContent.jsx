@@ -5,8 +5,8 @@ function GlobalContent({ titulo, children }) {
       className="w-full max-w-7xl"
     >
       {titulo && (
-        <h2 id="section-title" className="contenedor__titulo mb-2">
-          {titulo}
+        <h2 id="section-title" className="text-2xl text-green-700 font-semibold mb-6">
+          {titulo} 
         </h2>
       )}
       {children}
