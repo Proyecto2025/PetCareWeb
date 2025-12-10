@@ -1,11 +1,10 @@
-import GlobalContent from "../components/GlobalContent.jsx";
 import advices from "../data/advice.js";  
 import Card from "../components/Card.jsx";  
 import { Link } from "react-router-dom";
 
 function Advice() {
   return (
-    <GlobalContent>
+    <>
       <section
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch"
       >
@@ -28,7 +27,7 @@ function Advice() {
             </Link>
         ))}
       </section>
-    </GlobalContent>
+   </>
   );
 }
 export default Advice;

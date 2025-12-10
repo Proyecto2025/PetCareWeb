@@ -1,4 +1,3 @@
-import GlobalContent from "../components/GlobalContent.jsx";
 import posts from "../data/post.js";
 import Card from "../components/Card.jsx";
 import DropdownTitle from "../components/DropDownTitle.jsx";
@@ -7,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <GlobalContent>
+    <>
       <DropdownTitle
         title="Publicaciones"
         options={[
@@ -34,7 +33,7 @@ function Home() {
           </Link>
         ))}
       </section>
-    </GlobalContent>
+  </>
   );
 }
 export default Home;

@@ -1,10 +1,9 @@
-import GlobalContent from "../components/GlobalContent.jsx";
 
 function NewPost() {
   return (
-    <GlobalContent>
+    <section>
       <p>Pág post </p>
-    </GlobalContent>
+    </section>
   );
 }
 export default NewPost;

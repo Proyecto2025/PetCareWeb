@@ -1,10 +1,9 @@
-import GlobalContent from "../components/GlobalContent.jsx";
 
 function Profile() {
   return (
-    <GlobalContent>
+    <section>
        <p>Pág perfil</p>
-    </GlobalContent>
+    </section>
   );
 }
 export default Profile;
