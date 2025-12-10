@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 
 function Advice() {
   return (
-    <GlobalContent titulo="Consejo">
+    <GlobalContent titulo="Consejo"
+        item={advices}
+        filtro="categoria"
+    >
       <section
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch"
       >

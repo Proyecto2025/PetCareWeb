@@ -6,7 +6,7 @@ function GlobalContent({ titulo, children }) {
     >
       {titulo && (
         <h2 id="section-title" className="text-2xl text-green-700 font-semibold mb-6">
-          {titulo} 
+          {titulo}
         </h2>
       )}
       {children}
