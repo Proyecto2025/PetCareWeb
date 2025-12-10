@@ -2,7 +2,7 @@ import GlobalContent from "../components/GlobalContent.jsx";
 
 function NewPost() {
   return (
-    <GlobalContent titulo="Publicaciones formulario">
+    <GlobalContent>
       <p>Pág post </p>
     </GlobalContent>
   );

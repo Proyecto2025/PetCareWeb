@@ -2,7 +2,7 @@ import GlobalContent from "../components/GlobalContent.jsx";
 
 function Profile() {
   return (
-    <GlobalContent titulo="Perfil de Usuario">
+    <GlobalContent>
        <p>Pág perfil</p>
     </GlobalContent>
   );

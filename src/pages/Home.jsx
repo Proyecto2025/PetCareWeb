@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <GlobalContent titulo="Publicaciones">
+    <GlobalContent>
       <DropdownTitle
         title="Publicaciones"
         options={[
