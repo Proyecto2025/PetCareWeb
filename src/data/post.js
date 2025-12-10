@@ -18,7 +18,7 @@ const posts = [
       "manta",
       "cartilla veterinaria",
     ],
-    imagen: "https://images.unsplash.com/photo-1601979031483-3cc8b3c3c3f1",
+    imagen: "https://www.respetmascotas.com/posts/easset_upload_file32027_708883_e.jpg",
   },
   {
     id: 2,
@@ -30,7 +30,6 @@ const posts = [
     descripcionCorta: "Zona centro, responde al nombre 'Luna'.",
     descripcionLarga: "Luna es una gata siamés de dos años que desapareció...",
     datosExtra: "Microchip activo, esterilizada, última vacuna hace 3 meses.",
-    pertenencias: ["collar azul", "placa identificativa", "cama de tela"],
     imagen: "https://images.unsplash.com/photo-1592194996308-7b43878e84a6",
   },
   {
@@ -44,8 +43,7 @@ const posts = [
     descripcionLarga: "Este bulldog francés de cinco años fue abandonado...",
     datosExtra:
       "Tratamiento con inhalador, antibióticos y dieta hipoalergénica.",
-    pertenencias: ["medicación", "cama ortopédica", "arnés especial"],
-    imagen: "https://images.unsplash.com/photo-1625246333197-3f3c3f3c3f3c",
+    imagen: "https://cdn.britannica.com/07/234207-050-0037B589/English-bulldog-dog.jpg",
   },
   {
     id: 4,
@@ -59,7 +57,7 @@ const posts = [
     datosExtra:
       "Desparasitada, pendiente de esterilización, negativa en test de leucemia y FIV.",
     pertenencias: ["rascador", "transportín", "juguetes de tela"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Longhaired_Calico_Cat_%282008_photo%3B_cropped_2022%29.jpg/250px-Longhaired_Calico_Cat_%282008_photo%3B_cropped_2022%29.jpg",
   },
   {
     id: 5,
@@ -71,7 +69,6 @@ const posts = [
     descripcionCorta: "Última vez visto en el parque central.",
     descripcionLarga: "Toby, un labrador dorado de cuatro años, se perdió...",
     datosExtra: "Microchip activo, vacunado, esterilizado.",
-    pertenencias: ["collar rojo", "pelota de tenis", "arnés de paseo"],
     imagen: "https://images.unsplash.com/photo-1558788353-f76d92427f16",
   },
   {
@@ -85,8 +82,7 @@ const posts = [
     descripcionLarga:
       "Este pequeño gatito de apenas dos meses fue encontrado...",
     datosExtra: "Desparasitado, en proceso de vacunación, come solo.",
-    pertenencias: ["manta", "biberón", "juguete de peluche"],
-    imagen: "https://images.unsplash.com/photo-1595433562696-1c7d3c3c3c3c",
+    imagen: "https://www.mediterraneannatural.com/wp-content/uploads/2019/03/Curiosidades-de-las-gatas-tricolor-por-que-son-hembras-en-su-mayoria-4.jpg",
   },
   {
     id: 7,
@@ -100,7 +96,7 @@ const posts = [
     datosExtra:
       "Esterilizado, microchip activo, cartilla veterinaria completa.",
     pertenencias: ["arnés de trabajo", "pelota de cuerda", "bebedero portátil"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://www.hola.com/horizon/landscape/a71e34a2a6e2-cosassobrepastoraleman-t.jpg",
   },
   {
     id: 8,
@@ -112,8 +108,7 @@ const posts = [
     descripcionCorta: "Tiene collar rojo, muy sociable.",
     descripcionLarga: "Nuestro gato 'Salem' se extravió hace dos días...",
     datosExtra: "Microchip activo, castrado, sin problemas de salud.",
-    pertenencias: ["collar rojo", "juguete de ratón", "cama de felpa"],
-    imagen: "https://images.unsplash.com/photo-1592194996308-1c7d3c3c3c3c",
+    imagen: "https://gatogazzu.org/wp-content/uploads/2021/09/gato-negro-sacando-lengua-705x1024.png",
   },
   {
     id: 9,
@@ -126,8 +121,7 @@ const posts = [
     descripcionLarga:
       "Este pequeño mestizo de apenas 4 meses fue atropellado...",
     datosExtra: "Fractura de fémur, necesita cirugía ortopédica.",
-    pertenencias: ["manta térmica", "collar isabelino", "medicación"],
-    imagen: "https://images.unsplash.com/photo-1601979031483-1c7d3c3c3c3c",
+    imagen: "https://cdn.shopify.com/s/files/1/0560/3241/files/8165539512_cd5c25de26_h_grande.jpg?2227402961487937639",
   },
   {
     id: 10,
@@ -140,7 +134,7 @@ const posts = [
     descripcionLarga: "Romeo es un gato persa de 3 años...",
     datosExtra: "Esterilizado, vacunado, negativo en leucemia y FIV.",
     pertenencias: ["cepillo especial", "cama elevada", "fuente de agua"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://monanimal.net/wp-content/uploads/2025/03/Gato-persa.jpg",
   },
   {
     id: 11,
@@ -153,8 +147,7 @@ const posts = [
     descripcionLarga: "Max es un Yorkshire Terrier de 6 años...",
     datosExtra:
       "Microchip activo, castrado, necesita medicación para el corazón.",
-    pertenencias: ["abrigo azul", "arnés pequeño", "juguete de peluche"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Imageyorkie.png/960px-Imageyorkie.png",
   },
   {
     id: 12,
@@ -168,8 +161,7 @@ const posts = [
       "En el barrio Sur de Córdoba cuidamos una colonia de más de 20 gatos callejeros. Actualmente estamos sin recursos para comprar pienso y necesitamos ayuda urgente. Los gatos están esterilizados y controlados sanitariamente, pero dependen completamente de las donaciones para alimentarse. Agradecemos cualquier colaboración, ya sea con pienso, latas o donaciones económicas. También buscamos voluntarios para ayudarnos con la limpieza y el mantenimiento de los puntos de alimentación.",
     datosExtra:
       "Colonia registrada, gatos esterilizados, puntos de alimentación fijos.",
-    pertenencias: ["comedero comunitario", "contenedor de pienso", "bebederos"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://participa.alboraya.es/system/images/attachments/000/000/125/large/f8dee3fbda9ec2d8306820255a878ee6c228deb6.jpg",
   },
   {
     id: 13,
@@ -187,7 +179,7 @@ const posts = [
       "pelota interactiva",
       "cartilla veterinaria",
     ],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://www.casachata.com/wp-content/uploads/2023/05/beagle-01.jpg",
   },
   {
     id: 14,
@@ -200,8 +192,7 @@ const posts = [
     descripcionLarga:
       "Nuestra gata 'Nieve' desapareció hace tres días en la zona norte de Pamplona. Es completamente blanca, de ojos verdes, y llevaba un collar azul con una campanita. Es muy tranquila y suele esconderse en lugares cerrados. Tiene microchip y está esterilizada. Agradecemos cualquier información que pueda ayudarnos a encontrarla. Se ofrece recompensa.",
     datosExtra: "Microchip activo, esterilizada, sin enfermedades.",
-    pertenencias: ["collar azul", "cama redonda", "juguete con plumas"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://images.ctfassets.net/denf86kkcx7r/5hUe9Uzc24tolx3azug5UP/241744084bd0d3bfc5c213dcc34fdff9/gato_blanco_2.jpg?fit=fill&w=1024&q=80",
   },
   {
     id: 15,
@@ -215,8 +206,7 @@ const posts = [
       "Hemos rescatado a un perro herido en las afueras de Logroño, pero no contamos con vehículo para llevarlo a la clínica veterinaria más cercana, que se encuentra a 25 km. El perro está estable, pero necesita atención médica urgente para revisar una posible fractura. Buscamos a alguien con coche que pueda ayudarnos con el traslado. Cualquier colaboración es bienvenida.",
     datosExtra:
       "Perro tranquilo, sin agresividad, necesita revisión ortopédica.",
-    pertenencias: ["manta", "bozal suave", "arnés de seguridad"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://static.nationalgeographicla.com/files/styles/image_3200/public/nationalgeographic1457064.webp?w=1600&h=900",
   },
   {
     id: 16,
@@ -230,7 +220,7 @@ const posts = [
       "Este pequeño de 3 meses fue encontrado en una obra en construcción. Es un gato muy activo, le encanta perseguir pelotas y dormir en los rincones más cálidos de la casa. Está desparasitado, ha comenzado su calendario de vacunación y se adapta bien a otros gatos. Ideal para hogares con niños o personas que busquen un compañero divertido y afectuoso.",
     datosExtra: "Desparasitado, vacunado, negativo en enfermedades víricas.",
     pertenencias: ["pelota con cascabel", "rascador pequeño", "transportín"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/British_shorthair_Irina_AEA.JPG/960px-British_shorthair_Irina_AEA.JPG",
   },
   {
     id: 17,
@@ -243,8 +233,7 @@ const posts = [
     descripcionLarga:
       "Rocky es un perro mestizo de tamaño mediano, color marrón claro, que se perdió en la zona sur de Málaga. Es muy amigable y suele acercarse a la gente. Llevaba un collar verde sin placa. Tiene microchip y está castrado. Se ruega a quien lo vea que contacte lo antes posible. Su familia está muy preocupada.",
     datosExtra: "Microchip activo, castrado, sin historial médico grave.",
-    pertenencias: ["collar verde", "arnés de paseo", "juguete de cuerda"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://media.ambito.com/p/0057380d81ca3862cbbdfedd2594c687/adjuntos/239/imagenes/041/677/0041677027/730x0/smart/pais-sin-perros-callejerosjpg.jpg",
   },
   {
     id: 18,
@@ -258,8 +247,7 @@ const posts = [
       "Nuestro refugio acoge actualmente a más de 40 gatos, muchos de ellos mayores o con necesidades especiales. Buscamos voluntarios que puedan ayudarnos con la limpieza, alimentación y socialización de los gatos. No se requiere experiencia previa, solo compromiso y amor por los animales. Ofrecemos formación básica y un ambiente de trabajo colaborativo. También aceptamos donaciones de pienso, arena y medicamentos.",
     datosExtra:
       "Refugio registrado, con veterinario colaborador. Turnos flexibles.",
-    pertenencias: ["guantes", "bandejas de arena", "pienso especial"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://images.ecestaticos.com/w87hMmyxBlFSrBRW2H4S_8uBHpU=/0x103:998x852/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F1e7%2Fb0b%2F8f0%2F1e7b0b8f0915f14d8516788569bb4f95.jpg",
   },
   {
     id: 19,
@@ -273,7 +261,7 @@ const posts = [
       "Bruno es un Golden Retriever de 2 años, entregado por una familia que no podía seguir cuidándolo por motivos laborales. Es un perro extremadamente sociable, obediente y juguetón. Le encanta nadar, correr y estar rodeado de personas. Está acostumbrado a vivir en casa, sabe pasear con correa y responde a órdenes básicas. Está vacunado, esterilizado y con microchip. Ideal para familias con niños o personas que disfruten de actividades al aire libre. Se entrega con contrato de adopción responsable.",
     datosExtra: "Esterilizado, vacunado, microchip activo.",
     pertenencias: ["arnés", "pelota flotante", "cartilla veterinaria"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://www.catalunyaplants.com/wp-content/uploads/2015/01/golden-retriever.jpg",
   },
   {
     id: 20,
@@ -286,8 +274,7 @@ const posts = [
     descripcionLarga:
       "Milo es un gato gris de 3 años que desapareció hace dos días en la zona este de Valencia. Tiene ojos amarillos, pelaje corto y una pequeña cicatriz en la oreja izquierda. Está castrado y tiene microchip. Es muy curioso y suele esconderse en garajes o patios. Si lo ves, por favor, contacta con nosotros. Se ofrece recompensa. Milo es parte de nuestra familia y lo extrañamos profundamente.",
     datosExtra: "Microchip activo, castrado, sin enfermedades.",
-    pertenencias: ["collar reflectante", "cama de tela", "juguete de cuerda"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://images.ctfassets.net/denf86kkcx7r/4dMibL13t7aV2dPJj9JVXE/319cee400b2a3666499932620836f789/gato_gris_3.jpg?fit=fill&w=1024&q=80",
   },
   {
     id: 21,
@@ -301,8 +288,7 @@ const posts = [
       "Este perro de 10 años fue abandonado en una gasolinera. Es de tamaño mediano, muy tranquilo y cariñoso. Tiene problemas articulares leves y necesita un lugar cálido donde descansar. Actualmente está en una jaula en el refugio, pero no es el entorno ideal para un perro mayor. Buscamos una casa de acogida temporal donde pueda recuperarse y recibir atención. Se proporcionará todo lo necesario: cama ortopédica, comida especial y medicación.",
     datosExtra:
       "Desparasitado, necesita condroprotectores, revisión veterinaria mensual.",
-    pertenencias: ["cama ortopédica", "pienso senior", "medicación"],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://cdn.pixabay.com/photo/2017/06/19/00/58/dog-2417805_1280.jpg",
   },
   {
     id: 22,
@@ -317,7 +303,7 @@ const posts = [
     datosExtra:
       "Desparasitado, en proceso de vacunación, negativo en enfermedades víricas.",
     pertenencias: ["manta suave", "juguete de peluche", "bandeja de arena"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdHIbutN-jvlb72QcJ8ut3eKYG7_40yaUGpg&s",
   },
   {
     id: 23,
@@ -330,12 +316,7 @@ const posts = [
     descripcionLarga:
       "Nuestro husky 'Blizzard' se perdió durante una excursión en la zona de montaña cerca de Andorra. Tiene pelaje blanco y gris, ojos azules y lleva un arnés negro. Es muy activo y puede recorrer grandes distancias. Tiene microchip y está castrado. Se ruega a senderistas y vecinos de la zona que estén atentos. Se ofrece recompensa.",
     datosExtra: "Microchip activo, castrado, sin historial médico grave.",
-    pertenencias: [
-      "arnés negro",
-      "botas de montaña para perros",
-      "placa identificativa",
-    ],
-    imagen: "https://images.unsplash.com/photo-1601758123927-1c7d3c3c3c3c",
+    imagen: "https://upload.wikimedia.org/wikipedia/commons/f/f5/Siberian_Husky_-_Mika.jpg",
   },
   {
     id: 24,
@@ -348,8 +329,7 @@ const posts = [
     descripcionLarga:
       "Este gato de 7 años tiene insuficiencia renal crónica y necesita medicación diaria para mantener su calidad de vida. Está en acogida, pero los costes del tratamiento son elevados. Buscamos ayuda para cubrir los gastos de medicación, análisis y alimentación especial. También se aceptan donaciones de pienso renal y latas específicas. Es un gato muy tranquilo, agradecido y cariñoso.",
     datosExtra: "Tratamiento renal, dieta específica, controles mensuales.",
-    pertenencias: ["pienso renal", "fuente de agua", "pastillero"],
-    imagen: "https://images.unsplash.com/photo-1603312571956-1c7d3c3c3c3c",
+    imagen: "https://thumbs.dreamstime.com/b/gato-enfermo-23064016.jpg",
   },
 ];
 
