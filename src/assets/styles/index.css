@@ -50,7 +50,6 @@
   color: var(--color-primary);
 }
 
-
 /* Tarjeta con imagen */
 .contenedor__tarjeta {
   background-color: var(--color-white);
@@ -94,7 +93,6 @@
   }
 }
 
-
 .contenedor__textfont {
   font-family: 'Baloo 2', cursive;
   font-weight: 700; 
@@ -105,3 +103,14 @@
   font-weight: 700; 
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 700,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.icon-arrow {
+  font-size: 2.5rem;
+}
