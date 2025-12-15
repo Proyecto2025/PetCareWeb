@@ -21,13 +21,13 @@ function DropdownTitle({ title, options }) {
         {isOpen && (
           <section className="w-full absolute mt-2 bg-white border border-gray-300 rounded shadow-lg z-10">
             {options.map((opt) => (
-              <article
+              <section
                 key={opt.label}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={opt.onClick} // acción al hacer click
+                onClick={opt.onClick}
               >
                 {opt.label}
-              </article>
+              </section>
             ))}
           </section>
         )}

@@ -14,7 +14,13 @@ function Router() {
         <Route path="/" element={<MainContent />}>
           <Route index element={<Home />} />
           <Route path="inicio" element={<Navigate to="/" replace />} />
+
+          <Route path="posts" element={<Home />} />
+          <Route path="posts/:categoria" element={<Home />} />
+  
           <Route path="advice" element={<Advice />} />
+          <Route path="advice/:categoria" element={<Advice />} />
+
           <Route path="newPost" element={<NewPost />} />
           <Route path="profile" element={<Profile />} />
           <Route path="animal/:id" element={<DetailAnimal />} />
