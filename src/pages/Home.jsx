@@ -11,7 +11,7 @@ function Home() {
         title="Publicaciones"
         options={[
           { label: "Todo", onClick: () => console.log("Ir a FAQ") },
-          { label: "Adopcion", onClick: () => console.log("Ir a FAQ") },
+          { label: "Adopción", onClick: () => console.log("Ir a FAQ") },
           { label: "Ayuda", onClick: () => console.log("Ir a contacto") },
           { label: "Extravio", onClick: () => console.log("Ir a contacto") },
         ]}
