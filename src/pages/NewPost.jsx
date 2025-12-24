@@ -1,9 +1,9 @@
-
+import Form from "../components/Form";
 function NewPost() {
   return (
-    <section>
-      <p>Pág post </p>
-    </section>
+    <>
+    <Form />
+    </>
   );
 }
 export default NewPost;

@@ -114,3 +114,7 @@
 .icon-arrow {
   font-size: 2.5rem;
 }
+
+.input-error {
+  border-color: #dc2626 !important;
+} 
