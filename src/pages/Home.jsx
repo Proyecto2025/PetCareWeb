@@ -1,4 +1,5 @@
 import posts from "../data/post.js";
+import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropdownTitle from "../components/DropDownTitle.jsx";
@@ -26,13 +27,21 @@ function Home() {
     { label: "Extravio", to: "/posts/extravio" },
   ];
 
+  const [titulo, setTitulo] = useState("Publicaciones");
+  const TITULO_TODO = "Publicaciones";
+
   return (
     <>
       <DropdownTitle
-        title="Publicaciones"
+        title={titulo}
         options={opciones.map((opcion) => ({
           label: opcion.label,
-          onClick: () => navigate(opcion.to),
+          onClick: () => {
+            setTitulo(
+              opcion.label === "Todo" ? TITULO_TODO : opcion.label
+            );
+            navigate(opcion.to);
+          }
         }))}
       />
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
