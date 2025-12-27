@@ -37,10 +37,10 @@ function Nav() {
       )}
 
       <ul className="hidden md:flex gap-10">
-        <li><NavLink className="contenedor__textfont text-black" to="/">Inicio</NavLink></li>
-        <li><NavLink className="contenedor__textfont text-black" to="/advice">Cosejos</NavLink></li>
-        <li><NavLink className="contenedor__textfont text-black" to="/newPost">Publicar</NavLink></li>
-        <li><NavLink className="contenedor__textfont text-black" to="/profile">Perfil</NavLink></li>
+        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/">Inicio</NavLink></li>
+        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/advice">Cosejos</NavLink></li>
+        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/newPost">Publicar</NavLink></li>
+        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/profile">Perfil</NavLink></li>
       </ul>
     </nav>
   );

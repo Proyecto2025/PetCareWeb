@@ -5,13 +5,13 @@ function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, child
   return (
     <article
       aria-label={titulo}
-      className="flex flex-col justify-between w-full h-full p-6 sm:p-3 rounded-md bg-white shadow-sm sm:shadow-md border border-black"
+      className="flex flex-col justify-between w-full h-full p-6 sm:p-3 rounded-md bg-white shadow-sm sm:shadow-md border border-gray-300 transition-transform duration-200 hover:scale-[1.02]"
     >
-      <section className="mt-3">
-        <h3 className="text-black baloo tracking-wide leading-tight">
-          <strong>{nombreUsuario}</strong>
+      <section>
+        <h3 className="text-black baloo tracking-wide leading-tight font-bold">
+          {nombreUsuario}
         </h3>
-        <p className="contenedor__texto-primary">{tipoAnimal}</p>
+        <p className="contenedor__texto-primary mb-1 font-bold">{tipoAnimal}</p>
       </section>
       <figure className="w-full aspect-square rounded-lg bg-gray-100 overflow-hidden">
         <img
@@ -23,12 +23,12 @@ function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, child
         {children && <figcaption className="sr-only">{children}</figcaption>}
       </figure>
 
-      <section className="mt-3">
-        <h4 className="text-black text-lg font-bold baloo tracking-wide leading-tight">
+      <section className="mt-1">
+        <h4 className="text-black text-lg font-bold contenedor__textfont tracking-wide leading-tight">
           <strong>{titulo}</strong>
         </h4>
         {descripcionCorta && (
-          <p className="contenedor__texto-normal font-bold">{descripcionCorta}</p>
+          <p className="contenedor__texto-normal font-bold mt-1">{descripcionCorta}</p>
         )}
       </section>
     </article>

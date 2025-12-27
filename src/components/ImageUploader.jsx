@@ -29,7 +29,7 @@ function ImageUploader({ id, onChange, containerWidth = "w-[80%]" }) {
       <button
         type="button"
         onClick={handleClick}
-        className="px-4 py-2 primary-color text-2xl contenedor__textfont text-white h5 rounded"
+        className="px-4 py-2 primary-color-hover primary-bg-color text-2xl contenedor__textfont text-white h5 rounded justify-center  cursor-pointer"
       >
         {fileName ? "Cambiar Imagen" : "Subir Imagen"}
       </button>

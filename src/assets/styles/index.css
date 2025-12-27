@@ -75,10 +75,9 @@
 }
 
 .contenedor__textfont {
-  font-family: 'Baloo 2', cursive;
-  font-weight: 700; 
+  font-family: 'Baloo 2';
+  font-weight: 600; 
 }
-
 
 /* Responsividad tarjeta */
 @media (min-width: 640px) {
@@ -94,13 +93,9 @@
 }
 
 .contenedor__textfont {
-  font-family: 'Baloo 2', cursive;
-  font-weight: 600; 
-}
-
-.dropdownTitle {
-  font-family: 'Baloo 2', cursive;
-  font-weight: 700; 
+  font-family: 'Baloo 2';
+  font-weight: 700;
+  line-height: 1;
 }
 
 .material-symbols-outlined {
@@ -117,12 +112,31 @@
 
 .icon-arrow-form {
   font-size: 2rem;
+  font-weight: 800;
 }
 
 .input-error {
   border-color: #dc2626 !important;
 } 
 
+.primary-bg-color {
+  background-color: var(--color-primary);
+}
+
 .primary-color {
   background-color: var(--color-primary);
+}
+
+.primary-color-hover:hover {
+  background-color: rgba(10, 85, 50, 1);
+}
+
+.primary-color-nav-hover:hover {
+  color: rgb(8, 168, 94);
+}
+
+.focus-primary-color:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-primary);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }

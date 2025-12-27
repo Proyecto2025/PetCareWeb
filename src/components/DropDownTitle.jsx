@@ -8,11 +8,13 @@ function DropdownTitle({ title, options }) {
       <section className="relative inline-block text-left">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="font-bold text-4xl dropdownTitle flex items-center contenedor__texto-primary"
+          className="font-bold text-4xl contenedor__textfont flex items-center contenedor__texto-primary cursor-pointer"
         >
           {title}
-          <span className="material-symbols-outlined icon-arrow">
-            {isOpen ? "keyboard_arrow_down" : "keyboard_arrow_right"}
+          <span
+            className={`material-symbols-outlined icon-arrow-form ml-1 transition-transform duration-200 ${isOpen ? "rotate-90" : "rotate-0"}`}
+          >
+            keyboard_arrow_right
           </span>
         </button>
 

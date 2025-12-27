@@ -2,10 +2,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import MainContent from "../components/MainContent.jsx";
 import Home from "../pages/Home.jsx";
 import Advice from "../pages/Advice.jsx";
-import NewPost from "../pages/NewPost.jsx";
 import Profile from "../pages/Profile.jsx";
 import DetailAnimal from "../components/DetailAnimal.jsx";
 import DetailAdvice from "../components/DetailAdvice.jsx"; 
+import NewPost from "../pages/NewPost.jsx";
 
 function Router() {
   return (

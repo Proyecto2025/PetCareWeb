@@ -9,6 +9,18 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
 
   return (
     <article className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <section>
+        <button
+          onClick={onBack}
+          className="px-6 py-3 primary-bg-color text-white contenedor__textfont text-[1.2rem] rounded-lg shadow primary-color-hover transition cursor-pointer flex items-center gap-1"
+        >
+          <span className="material-symbols-outlined">
+            keyboard_arrow_left
+          </span>
+          Volver
+        </button>
+      </section>
+
       <section className="bg-white border border-gray-200 shadow-md p-6 rounded-lg text-left flex flex-col lg:flex-row gap-8 items-start">
         {/* Título + Imagen */}
         <header className="space-y-4 w-full lg:w-1/3">
@@ -57,15 +69,6 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
             </>
           )}
         </section>
-      </section>
-
-      <section className="text-center">
-        <button
-          onClick={onBack}
-          className="px-6 py-3 bg-[#0C653D] text-white baloo rounded-lg shadow hover:bg-green-800 transition"
-        >
-          Volver
-        </button>
       </section>
     </article>
   );
