@@ -2,47 +2,88 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Nav() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const toggleMenu = () => setOpen(!open);
+  const closeMenu = () => setOpen(false);
 
   return (
-    <nav className="relative" aria-label="Menú principal">
+    <>
+      {/* Botón hamburguesa accesible */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="text-2xl text-black px-2 py-1 rounded md:hidden"
-        aria-controls="menuMovil"
-        aria-expanded={isOpen}
-        aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+        className="md:hidden font-bold text-3xl text-black rounded px-3 py-1 focus:ring-green-500"
+        aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={open}
+        aria-controls="menu-principal"
+        onClick={toggleMenu}
       >
-        {isOpen ? "×" : "☰"}
+        {open ? "×" : "☰"}
       </button>
 
-      {isOpen && (
-        <ul
-          id="menuMovil"
-          className="absolute top-full left-1/2 -translate-x-1/2 w-full bg-[#d6d6d4] z-50 flex flex-col items-center gap-6 px-10 py-10 rounded-lg shadow-xl md:hidden"
+      {/* NAV */}
+      <nav
+        id="menu-principal"
+        className={
+          open
+            ? "md:h-full opacity-100 pointer-events-auto md:max-h-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-auto bg-white shadow md:shadow-none p-6 md:p-0 z-50"
+            : "opacity-0 md:max-h-none pointer-events-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-auto bg-white shadow md:shadow-none p-6 md:p-0 z-50"
+        }
+        aria-label="Navegación principal"
+      >
+        {/* Inicio */}
+        <NavLink
+          to="/"
+          onClick={closeMenu}
+          className={(isActive) =>
+            isActive
+              ? "md:contenedor__textfont block ml-3 border-b-[0.25px] border-gray-300 md:border-none md:ml-0 pt-5 pb-5 md:pt-0 md:pb-0 text-black font-medium md:hover:text-green-600"
+              : "md:contenedor__textfont text-black font-medium md:hover:text-green-600"
+          }
         >
-          <li>
-            <NavLink className="contenedor__textfont text-black" to="/" onClick={() => setIsOpen(false)}>Inicio</NavLink>
-          </li>
-          <li>
-            <NavLink className="contenedor__textfont text-black" to="/advice" onClick={() => setIsOpen(false)}>Consejos</NavLink>
-          </li>
-          <li>
-            <NavLink className="contenedor__textfont text-black" to="/newPost" onClick={() => setIsOpen(false)}>Publicar</NavLink>
-          </li>
-          <li>
-            <NavLink className="contenedor__textfont text-black" to="/profile" onClick={() => setIsOpen(false)}>Perfil</NavLink>
-          </li>
-        </ul>
-      )}
+          Inicio
+        </NavLink>
 
-      <ul className="hidden md:flex gap-10">
-        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/">Inicio</NavLink></li>
-        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/advice">Cosejos</NavLink></li>
-        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/newPost">Publicar</NavLink></li>
-        <li><NavLink className="primary-color-nav-hover transition-colors duration-200 contenedor__textfont text-black" to="/profile">Perfil</NavLink></li>
-      </ul>
-    </nav>
+        {/* Consejos */}
+        <NavLink
+          to="/advice"
+          onClick={closeMenu}
+          className={(isActive) =>
+            isActive
+              ? "md:contenedor__textfont block border-b-[0.25px] border-gray-300 md:border-none ml-3 md:ml-2 pt-5 pb-5 md:pt-0 md:pb-0 text-black font-medium md:hover:text-green-600"
+              : "md:contenedor__textfont text-black font-medium md:hover:text-green-600"
+          }
+        >
+          Consejos
+        </NavLink>
+
+        {/* Publicar */}
+        <NavLink
+          to="/newPost"
+          onClick={closeMenu}
+          className={(isActive) =>
+            isActive
+              ? "md:contenedor__textfont block border-b-[0.25px] border-gray-300 md:border-none ml-3 md:ml-2 pt-5 pb-5 md:pt-0 md:pb-0 text-black font-medium md:hover:text-green-600"
+              : "md:contenedor__textfont text-black font-medium hover:text-green-600"
+          }
+        >
+          Publicar
+        </NavLink>
+
+        {/* Perfil */}
+        <NavLink
+          to="/profile"
+          onClick={closeMenu}
+          className={(isActive) =>
+            isActive
+              ? "md:contenedor__textfont block ml-3 md:ml-2 pb-5 pt-5 md:pt-0 md:pb-0 text-black font-medium md:hover:text-green-600"
+              : "md:contenedor__textfont text-black font-medium md:hover:text-green-600"
+          }
+        >
+          Perfil
+        </NavLink>
+      </nav>
+    </>
   );
 }
+
 export default Nav;

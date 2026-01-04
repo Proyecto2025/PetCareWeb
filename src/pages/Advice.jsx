@@ -1,48 +1,52 @@
 import advices from "../data/advice.js";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
-import DropdownTitle from "../components/DropDownTitle.jsx";
+import DropDownTitle from "../components/DropDownTitle.jsx";
 
 function Advice() {
   const { categoria } = useParams();
   const navigate = useNavigate();
 
-  const filtro = categoria ? categoria.toLowerCase() : "todo";
-  const filtrado = advices.filter(
-    (advice) =>
-      filtro === "todo" || advice.categoria.toLowerCase() === filtro.toLowerCase()
-  );
+  // Por defecto muestra todas las categorías
+  const filtroCategoria = categoria ? categoria.toLowerCase() : "todos";
+  const TITULO_TODO = "Consejos";
 
-  //Al hacer click se filtre por lo elegido
-  const opciones = [
-    { label: "Todo", to: "/advice" },
+  // Título dinámico basado en la categoría seleccionada
+  const titulo = useMemo(() => {
+    if (!categoria) return TITULO_TODO;
+    return categoria.charAt(0).toUpperCase() + categoria.slice(1);
+  }, [categoria]);
+
+  // Opciones para filtrar por categoría
+  const opcionesCategoria = [
+    { label: "Todos", to: "/advice" },
     { label: "Accesorios", to: "/advice/accesorios" },
     { label: "Comida", to: "/advice/comida" },
     { label: "Higiene", to: "/advice/higiene" },
   ];
 
-  const [titulo, setTitulo] = useState("Consejos");
-  const TITULO_TODO = "Consejos";
+  // Filtrado de consejos según categoría
+  const filtrado = useMemo(() => {
+    return advices.filter(
+      (advice) =>
+        filtroCategoria === "todos" || advice.categoria.toLowerCase() === filtroCategoria
+    );
+  }, [filtroCategoria]);
 
   return (
     <>
-      <DropdownTitle
+      <DropDownTitle
         title={titulo}
-        options={opciones.map((opcion) => ({
+        options={opcionesCategoria.map((opcion) => ({
           label: opcion.label,
           onClick: () => {
-            setTitulo(
-              opcion.label === "Todo" ? TITULO_TODO : opcion.label
-            );
             navigate(opcion.to);
-          }
+          },
         }))}
       />
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
-        {/*Aqui sería la categoría en vez del tipoAnimal y pongo `/consejo porque o si no, no me encuentra la ruta
-          ya que sale /advice/consejo/id pero en app no lo tengo así y por eso no iba
-        */}
+
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch mt-6">
         {filtrado.map((consejos) => (
           <Link
             key={consejos.id}
@@ -62,4 +66,5 @@ function Advice() {
     </>
   );
 }
+
 export default Advice;

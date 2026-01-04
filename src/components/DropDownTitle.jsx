@@ -4,7 +4,7 @@ function DropdownTitle({ title, options }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <article className="w-full justify-start mb-6">
+    <article className="w-full justify-start">
       <section className="relative inline-block text-left">
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -20,10 +20,10 @@ function DropdownTitle({ title, options }) {
 
         {isOpen && (
           <section className="w-full absolute mt-2 bg-white border border-gray-300 rounded shadow-lg z-10">
-            {options.map((opt) => (
+            {options.map((opt, index) => (
               <section
                 key={opt.label}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${index < options.length - 1 ? "border-b border-gray-200" : ""}`}
                 onClick={() => {
                   opt.onClick();
                   setIsOpen(false);

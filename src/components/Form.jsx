@@ -1,232 +1,226 @@
 import FormInput from "../components/FormInput";
 import ImageUploader from "../components/ImageUploader";
 
-function Form({ modo, formData, error, preview, handleChange }) {
+// Definición de campos por modo
+const camposPorModo = {
+  post: [
+    { id: "tipoPost", nombre: "Tipo de Publicación", type: "select", options: [{ label: "Adopción", value: "Adopción" }, { label: "Ayuda", value: "Ayuda" }, { label: "Extravio", value: "Extravio" }], required: true },
+    { id: "tipoAnimal", nombre: "Tipo de Animal", type: "select", options: [{ label: "Perro", value: "Perro" }, { label: "Gato", value: "Gato" }], required: true },
+    { id: "tituloPost", nombre: "Título del Post", maxLength: 60, required: true },
+    { id: "ubicacion", nombre: "Ubicación del Post", required: true },
+    { id: "descripcionCorta", nombre: "Descripción Corta del Post", maxLength: 60, required: true },
+    { id: "descripcion", nombre: "Descripción del Post", type: "textarea", maxLength: 1500, required: true },
+    { id: "detalleExtra", nombre: "Detalles Extra", type: "textarea", maxLength: 500 },
+    { id: "donarPertenencias", nombre: "¿Deseas Donar Pertenencias?", type: "radio", options: [{ label: "Sí", value: "si" }, { label: "No", value: "no" }] },
+    { id: "pertenencias", nombre: "¿Qué pertenencias deseas donar?" },
+    { id: "imagen", nombre: "Imagen", required: true }
+  ],
+  consejo: [
+    { id: "tipoConsejo", nombre: "Tipo de Consejo", type: "select", options: [{ label: "Comida", value: "Comida" }, { label: "Higiene", value: "Higiene" }, { label: "Accesorios", value: "Accesorios" }], required: true },
+    { id: "tituloConsejo", nombre: "Título del Consejo", maxLength: 60, required: true },
+    { id: "subtituloConsejo", nombre: "Subtítulo del Consejo", maxLength: 60, required: true },
+    { id: "descripcionCorta", nombre: "Descripción Corta del Consejo", maxLength: 60, required: true },
+    { id: "descripcion", nombre: "Descripción del Consejo", type: "textarea", maxLength: 1500, required: true },
+    { id: "detalleExtra", nombre: "Detalles Extra", type: "textarea", maxLength: 500 },
+    { id: "imagen", nombre: "Imagen", required: true }
+  ]
+};
+
+function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
+
+  // Función para verificar si un campo es visible
+  const isFieldVisible = (id) => (!visibleFields ? true : visibleFields.includes(id));
+
+  // Filtrar campos por modo y visibilidad
+  const camposFiltrados = camposPorModo[modo].filter(c => isFieldVisible(c.id));
+
+  // Separar campos por columna según modo
+  const leftFields = camposFiltrados.filter(c => {
+    if (modo === "post") return ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion"].includes(c.id);
+    if (modo === "consejo") return ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion"].includes(c.id);
+    return false;
+  });
+
+  // Campos de la columna derecha
+  const rightFields = camposFiltrados.filter(c => {
+    if (modo === "post") return ["detalleExtra", "donarPertenencias", "pertenencias", "imagen"].includes(c.id);
+    if (modo === "consejo") return ["detalleExtra", "imagen"].includes(c.id);
+    return false;
+  });
+
   return (
-    <form id="formComponent" className="w-full mb-8" noValidate>
-      {/* Contenedor principal con columnas izquierda y derecha */}
-      <section className="flex gap-20">
-        {/* Columna izquierda: campos principales */}
-        <section className="flex-1 flex flex-col gap-4">
-          <p className="text-gray-600">
-            Los campos que tienen <span className="text-red-500">*</span> son obligatorios.
-          </p>
+    <form id="formComponent" className="w-full mb-4 md:mb-0" noValidate>
+      <section className="flex flex-col md:flex-row gap-10">
 
-          {modo === "post" ? (
-            <>
-              <section className="flex w-full gap-10">
-                <FormInput
-                  nombre="Tipo de Publicación"
-                  id="tipoPost"
-                  type="select"
-                  value={formData.tipoPost}
-                  onChange={handleChange}
-                  required
-                  error={error?.tipoPost}
-                  options={[
-                    { label: "Adopción", value: "Adopción" },
-                    { label: "Ayuda", value: "Ayuda" },
-                    { label: "Extravio", value: "Extravio" },
-                  ]}
-                  className="flex-auto"
-                  placeholder="Selecciona un tipo de publicación"
-                />
-                <FormInput
-                  nombre="Tipo de Animal"
-                  id="tipoAnimal"
-                  type="select"
-                  value={formData.tipoAnimal}
-                  onChange={handleChange}
-                  required
-                  error={error?.tipoAnimal}
-                  options={[
-                    { label: "Perro", value: "Perro" },
-                    { label: "Gato", value: "Gato" },
-                  ]}
-                  className="flex-auto"
-                  placeholder="Selecciona un tipo de animal"
-                />
-              </section>
+        {/* Columna izquierda */}
+        {leftFields.length > 0 && (
+          <section className="flex-1 flex flex-col gap-4">
+            <p className="text-gray-600 text-sm md:block md:mb-2">
+              Los campos que tienen <span className="text-red-500">*</span> son obligatorios.
+            </p>
 
-              <FormInput
-                nombre="Título del Post"
-                id="tituloPost"
-                placeholder="Escribe un título descriptivo..."
-                value={formData.tituloPost}
-                onChange={handleChange}
-                required
-                error={error?.tituloPost}
-                maxLength={60}
-              />
-
-              <FormInput
-                nombre={formData.tipoPost === "extravio" ? "Última ubicación" : "Ubicación del Post"}
-                id="ubicacion"
-                placeholder="Ej: Ciudad, País"
-                value={formData.ubicacion}
-                onChange={handleChange}
-                required
-                error={error?.ubicacion}
-              />
-
-              <FormInput
-                nombre="Descripción Corta del Post"
-                id="descripcionCorta"
-                type="textarea"
-                placeholder="Escribe una descripción breve..."
-                value={formData.descripcionCorta}
-                onChange={handleChange}
-                required
-                error={error?.descripcionCorta}
-                maxLength={60}
-              />
-
-              <FormInput
-                nombre="Descripción del Post"
-                id="descripcion"
-                type="textarea"
-                placeholder="Escribe una descripción detallada..."
-                value={formData.descripcion}
-                onChange={handleChange}
-                required
-                error={error?.descripcion}
-                className="h-60"
-                maxLength={1500}
-              />
-            </>
-          ) : (
-            <>
-              <FormInput
-                nombre="Tipo de Consejo"
-                id="tipoConsejo"
-                type="select"
-                value={formData?.tipoConsejo ?? ""}
-                onChange={handleChange}
-                required
-                error={error?.tipoConsejo}
-                options={[
-                  { label: "Comida", value: "Comida" },
-                  { label: "Higiene", value: "Higiene" },
-                  { label: "Accesorios", value: "Accesorios" },
-                ]}
-                placeholder="Selecciona un tipo de consejo"
-              />
-
-              <FormInput
-                nombre="Título del Consejo"
-                id="tituloConsejo"
-                placeholder="Escribe un título descriptivo..."
-                value={formData?.tituloConsejo ?? ""}
-                onChange={handleChange}
-                required
-                error={error?.tituloConsejo}
-                maxLength={60}
-              />
-
-              <FormInput
-                nombre="Subtítulo del Consejo"
-                id="subtituloConsejo"
-                placeholder="Añade un subtítulo breve..."
-                value={formData?.subtituloConsejo ?? ""}
-                onChange={handleChange}
-                required
-                error={error?.subtituloConsejo}
-                maxLength={60}
-              />
-
-              <FormInput
-                nombre="Descripción corta"
-                id="descripcionCorta"
-                type="textarea"
-                placeholder="Escribe una descripción breve del consejo..."
-                value={formData?.descripcionCorta ?? ""}
-                onChange={handleChange}
-                required
-                error={error?.descripcionCorta}
-                maxLength={150}
-              />
-
-              <FormInput
-                nombre="Descripción"
-                id="descripcion"
-                type="textarea"
-                placeholder="Explica tu consejo de forma detallada..."
-                value={formData?.descripcion ?? ""}
-                onChange={handleChange}
-                required
-                error={error?.descripcion}
-                className="h-60"
-                maxLength={1500}
-              />
-            </>
-          )}
-        </section>
-
-        {/* Columna derecha: imagen y detalles extra */}
-        <section className="flex-1 flex flex-col gap-4">
-          <p className="font-medium text-gray-700">
-            Seleccionar Imagen <span className="text-red-500">*</span>
-          </p>
-          <section className="border border-gray-300 rounded p-2 flex flex-col gap-2 w-full items-center">
-            <section className="w-80 h-80 border border-gray-300 rounded flex items-center justify-center bg-gray-50 overflow-hidden">
-              {preview ? (
-                <img src={preview} alt="Preview" className="w-full h-full object-cover" />
-              ) : (
-                <p className="text-gray-400">No se ha seleccionado imagen</p>
-              )}
-            </section>
-            <ImageUploader id="imagen" onChange={handleChange} />
-            {error?.imagen && (
-              <p className="text-red-600 text-sm mt-1 w-full">{error.imagen}</p>
-            )}
-          </section>
-
-          <section className="flex gap-10 flex-col md:flex-row">
-            <FormInput
-              nombre="Detalles Extra"
-              id="detalleExtra"
-              type="textarea"
-              placeholder="Agrega información adicional..."
-              value={formData?.detalleExtra}
-              onChange={handleChange}
-              className="h-60 flex-auto"
-              maxLength={500}
-            />
-
-            {modo === "post" &&
-              formData.tipoPost !== "Extravio" &&
-              formData.tipoPost !== "Ayuda" && (
-                <section className="w-full flex flex-col gap-2">
+            {/* Campos especiales tipoPost y tipoAnimal juntos */}
+            {modo === "post" && (isFieldVisible("tipoPost") || isFieldVisible("tipoAnimal")) && (
+              <section className="flex flex-row w-full gap-10">
+                {isFieldVisible("tipoPost") && (
                   <FormInput
-                    nombre="¿Deseas Donar Pertenencias?"
-                    id="donarPertenencias"
-                    type="radio"
-                    value={formData.donarPertenencias}
+                    nombre="Tipo de Publicación"
+                    id="tipoPost"
+                    type="select"
+                    value={formData.tipoPost}
                     onChange={handleChange}
                     required
-                    error={error.donarPertenencias}
-                    options={[
-                      { label: "Sí", value: "si" },
-                      { label: "No", value: "no" },
-                    ]}
+                    error={error?.tipoPost}
+                    options={leftFields.find(f => f.id === "tipoPost")?.options ?? []}
+                    className="flex-auto w-full sm:w-auto"
+                    placeholder="Selecciona un tipo de publicación"
                   />
+                )}
+                {isFieldVisible("tipoAnimal") && (
+                  <FormInput
+                    nombre="Tipo de Animal"
+                    id="tipoAnimal"
+                    type="select"
+                    value={formData.tipoAnimal}
+                    onChange={handleChange}
+                    required
+                    error={error?.tipoAnimal}
+                    options={leftFields.find(f => f.id === "tipoAnimal")?.options ?? []}
+                    className="flex-auto w-full sm:w-auto"
+                    placeholder="Selecciona un tipo de animal"
+                  />
+                )}
+              </section>
+            )}
 
-                  {formData.donarPertenencias === "si" && (
+            {/* Resto de campos de izquierda */}
+            {leftFields.filter(c => !["tipoPost", "tipoAnimal"].includes(c.id)).map(c => (
+              <FormInput
+                key={c.id}
+                nombre={c.nombre}
+                id={c.id}
+                type={c.type ?? "text"}
+                placeholder={`Escribe ${c.nombre.toLowerCase()}...`}
+                value={formData[c.id]}
+                onChange={handleChange}
+                required={c.required}
+                error={error?.[c.id]}
+                maxLength={c.maxLength}
+                className={`w-full ${c.type === "textarea" ? "h-60" : ""}`}
+                options={c.options}
+              />
+            ))}
+          </section>
+        )}
+
+        {/* Columna derecha */}
+        {rightFields.length > 0 && (
+          <section className="flex-1 flex flex-col gap-4 w-full">
+            <p className="text-gray-600 text-sm md:hidden">
+              Los campos que tienen <span className="text-red-500">*</span> son obligatorios.
+            </p>
+
+            {/* Imagen */}
+            {isFieldVisible("imagen") && (
+              <section>
+                <p className="font-medium text-gray-700 mb-1">
+                  Seleccionar Imagen <span className="text-red-500">*</span>
+                </p>
+                <section className="border border-gray-300 rounded p-2 flex flex-col gap-2 w-full items-center">
+                  <section className="w-full sm:w-80 h-80 border border-gray-300 rounded flex items-center justify-center bg-gray-50 overflow-hidden">
+                    {preview ? (
+                      <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <p className="text-gray-400 text-sm text-center">No se ha seleccionado imagen</p>
+                    )}
+                  </section>
+                  <ImageUploader id="imagen" onChange={handleChange} />
+                  {error?.imagen && <p className="text-red-600 text-sm mt-1 w-full">{error.imagen}</p>}
+                </section>
+              </section>
+            )}
+
+            {/* POST: Adopción => detalleExtra y donarPertenencias lado a lado */}
+            {modo === "post" && formData.tipoPost === "Adopción" && (
+              <section className="flex flex-col md:flex-row gap-4 w-full">
+                {/* Detalle Extra */}
+                {isFieldVisible("detalleExtra") && (
+                  <FormInput
+                    nombre="Detalles Extra"
+                    id="detalleExtra"
+                    type="textarea"
+                    placeholder="Agrega información adicional..."
+                    value={formData?.detalleExtra}
+                    onChange={handleChange}
+                    className="h-60 w-full flex-1"
+                    maxLength={500}
+                  />
+                )}
+
+                {/* Donar Pertenencias */}
+                {isFieldVisible("donarPertenencias") && (
+                  <section className="flex-1 flex flex-col gap-2">
                     <FormInput
-                      nombre="¿Qué pertenencias deseas donar?"
-                      id="pertenencias"
-                      placeholder="Separa con coma..."
-                      value={formData.pertenencias}
+                      nombre="¿Deseas Donar Pertenencias?"
+                      id="donarPertenencias"
+                      type="radio"
+                      value={formData.donarPertenencias}
                       onChange={handleChange}
                       required
-                      error={error.pertenencias}
-                      className="mt-4"
+                      error={error.donarPertenencias}
+                      options={[
+                        { label: "Sí", value: "si" },
+                        { label: "No", value: "no" },
+                      ]}
+                      className="w-full"
                     />
-                  )}
-                </section>
-              )}
+
+                    {formData.donarPertenencias === "si" && isFieldVisible("pertenencias") && (
+                      <FormInput
+                        nombre="¿Qué pertenencias deseas donar?"
+                        id="pertenencias"
+                        placeholder="Separa con coma..."
+                        value={formData.pertenencias}
+                        onChange={handleChange}
+                        required
+                        error={error.pertenencias}
+                        className="w-full"
+                      />
+                    )}
+                  </section>
+                )}
+              </section>
+            )}
+
+            {/* POST: no Adopción => detalleExtra solo */}
+            {modo === "post" && formData.tipoPost !== "Adopción" && isFieldVisible("detalleExtra") && (
+              <FormInput
+                nombre="Detalles Extra"
+                id="detalleExtra"
+                type="textarea"
+                placeholder="Agrega información adicional..."
+                value={formData?.detalleExtra}
+                onChange={handleChange}
+                className="h-60 w-full"
+                maxLength={500}
+              />
+            )}
+
+            {/* CONSEJO: detalleExtra */}
+            {modo === "consejo" && isFieldVisible("detalleExtra") && (
+              <FormInput
+                nombre="Detalles Extra"
+                id="detalleExtra"
+                type="textarea"
+                placeholder="Agrega información adicional..."
+                value={formData?.detalleExtra}
+                onChange={handleChange}
+                className="h-60 w-full"
+                maxLength={500}
+              />
+            )}
           </section>
-        </section>
+        )}
       </section>
     </form>
   );

@@ -2,7 +2,7 @@ import posts from "../data/post.js";
 import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
-import DropdownTitle from "../components/DropdownTitle.jsx";
+import DropDownTitle from "../components/DropDownTitle.jsx";
 import Filter from "../components/Filter.jsx";
 
 function Home() {
@@ -12,9 +12,14 @@ function Home() {
   // Por defecto muestra todas las categorías
   const filtroCategoria = categoria ? categoria.toLowerCase() : "todas";
 
-  const [titulo, setTitulo] = useState("Publicaciones");
   const [filtroAnimal, setFiltroAnimal] = useState("todos");
   const TITULO_TODO = "Publicaciones";
+
+  // Título dinámico basado en la categoría seleccionada
+  const titulo = useMemo(() => {
+    if (!categoria) return TITULO_TODO;
+    return categoria.charAt(0).toUpperCase() + categoria.slice(1);
+  }, [categoria]);
 
   // Opciones para filtrar por categoría
   const opcionesCategoria = [
@@ -44,20 +49,17 @@ function Home() {
 
   return (
     <>
-      <section className="w-full flex justify-between mb-4">
-        <DropdownTitle
+      <section className="w-full flex justify-between items-center mb-6 gap-4">
+        <DropDownTitle
           title={titulo}
           options={opcionesCategoria.map(opcion => ({
             label: opcion.label,
             onClick: () => {
-              setTitulo(opcion.label === "Todas" ? TITULO_TODO : opcion.label);
               navigate(opcion.to);
-              setFiltroAnimal("todos"); // resetea filtro de animal al cambiar categoría
             }
           }))}
         />
 
-        {/* Filtro por tipo de animal */}
         <Filter
           title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
           options={opcionesAnimal.map(opt => ({
@@ -67,7 +69,7 @@ function Home() {
         />
       </section>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
         {filtrado.map(animales => (
           <Link
             key={animales.id}
