@@ -59,6 +59,11 @@ function NewPost() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [formData.imagen]);
 
+  // Resetea el paso actual al cambiar modo o tamaño de pantalla
+  useEffect(() => {
+    setCurrentStep(0);
+  }, [isMobile, modo]);
+
   // Maneja cambios en los campos del formulario
   const handleChange = (e) => {
     const { id, value, type, files } = e.target;
@@ -75,13 +80,13 @@ function NewPost() {
       // Desktop
       return modo === "post"
         ? [
-            ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion", "detalleExtra", "donarPertenencias", "pertenencias"],
-            ["imagen"],
-          ]
+          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion", "detalleExtra", "donarPertenencias", "pertenencias"],
+          ["imagen"],
+        ]
         : [
-            ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion", "detalleExtra"],
-            ["imagen"],
-          ];
+          ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion", "detalleExtra"],
+          ["imagen"],
+        ];
     }
 
     // Mobile
@@ -109,23 +114,28 @@ function NewPost() {
   }, [modo, isMobile, formData.tipoPost]);
 
   // Devuelve los campos obligatorios para el paso actual
-  const getRequiredFields = (stepFields) => {
+  const getRequiredFields = (stepFields = []) => {
+    if (!Array.isArray(stepFields)) return [];
+
     if (modo === "post") {
       return stepFields.filter(
         (field) =>
-          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion", "imagen"].includes(field) ||
+          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "imagen","descripcion"].includes(field) ||
           (field === "donarPertenencias" &&
             !["Extravio", "Ayuda"].includes(formData.tipoPost))
       );
     }
 
-    return stepFields.filter((field) =>
-      ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion", "imagen"].includes(field)
+    return stepFields.filter(
+      (field) =>
+        ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "imagen", "descripcion"].includes(field)
     );
   };
 
   // Verifica si el paso actual tiene errores
-  const stepHasErrors = (fieldsToCheck) => {
+  const stepHasErrors = (fieldsToCheck = []) => {
+    if (!Array.isArray(fieldsToCheck)) return false;
+
     const requiredFields = getRequiredFields(fieldsToCheck);
 
     return requiredFields.some((field) => {
@@ -137,11 +147,17 @@ function NewPost() {
   };
 
   // Valida los campos del formulario
-  const validate = (fields) => {
-    const validationErrors = {};
+  const validate = (fields = []) => {
+    if (!Array.isArray(fields)) return {};
 
-    fields.forEach((field) => {
-      if (!formData[field] || (Array.isArray(formData[field]) && formData[field].length === 0)) {
+    const validationErrors = {};
+    const requiredFields = getRequiredFields(fields);
+
+    requiredFields.forEach((field) => {
+      if (
+        !formData[field] ||
+        (Array.isArray(formData[field]) && formData[field].length === 0)
+      ) {
         validationErrors[field] = "Campo obligatorio";
       }
     });
@@ -206,13 +222,16 @@ function NewPost() {
   const progressPercent = ((currentStep + 1) / steps.length) * 100;
 
   // Variables de control para botones
-  const isStepInvalid = stepHasErrors(steps[currentStep]);
+  const isStepInvalid = isMobile
+    ? stepHasErrors(steps[currentStep])
+    : stepHasErrors(steps.flat());
+
   const isBackDisabled = currentStep === 0;
 
   return (
     <section className="w-full relative">
       {/* Mensaje de éxito */}
-      <section className={`success-message ${showSuccess ? "show" : ""}`}>
+      <section className={`success-message z-40 ${showSuccess ? "show" : ""}`}>
         Finalizado <span className="material-symbols-outlined">check_circle</span>
       </section>
 
@@ -222,6 +241,17 @@ function NewPost() {
           title={modo === "post" ? "Publicar un Post" : "Publicar un Consejo"}
           options={opciones}
         />
+
+        {/* Botón Publicar (solo desktop) */}
+        {!isMobile && (
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="px-6 py-4 rounded text-white text-2xl contenedor__textfont cursor-pointer primary-bg-color primary-color-hover"
+          >
+            Publicar
+          </button>
+        )}
       </article>
 
       {/* Formulario desktop */}
@@ -269,9 +299,8 @@ function NewPost() {
               type="button"
               onClick={handleBack}
               disabled={isBackDisabled}
-              className={`px-5 py-2 rounded text-white cursor-pointer ${
-                isBackDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-gray-700 hover:bg-gray-800"
-              }`}
+              className={`px-5 py-2 rounded text-white cursor-pointer ${isBackDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-gray-700 hover:bg-gray-800"
+                }`}
             >
               Atrás
             </button>
@@ -280,9 +309,8 @@ function NewPost() {
               type="button"
               onClick={handleNext}
               disabled={isStepInvalid}
-              className={`px-5 py-2 rounded text-white cursor-pointer ${
-                isStepInvalid ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover"
-              }`}
+              className={`px-5 py-2 rounded text-white cursor-pointer ${isStepInvalid ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover"
+                }`}
             >
               {currentStep === steps.length - 1 ? "Publicar" : "Siguiente"}
             </button>

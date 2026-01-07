@@ -28,20 +28,16 @@ const camposPorModo = {
 
 function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
 
-  // Función para verificar si un campo es visible
   const isFieldVisible = (id) => (!visibleFields ? true : visibleFields.includes(id));
 
-  // Filtrar campos por modo y visibilidad
-  const camposFiltrados = camposPorModo[modo].filter(c => isFieldVisible(c.id));
+  const camposFiltrados = camposPorModo[modo]?.filter(c => isFieldVisible(c.id)) || [];
 
-  // Separar campos por columna según modo
   const leftFields = camposFiltrados.filter(c => {
     if (modo === "post") return ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion"].includes(c.id);
     if (modo === "consejo") return ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion"].includes(c.id);
     return false;
   });
 
-  // Campos de la columna derecha
   const rightFields = camposFiltrados.filter(c => {
     if (modo === "post") return ["detalleExtra", "donarPertenencias", "pertenencias", "imagen"].includes(c.id);
     if (modo === "consejo") return ["detalleExtra", "imagen"].includes(c.id);
@@ -50,18 +46,18 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
 
   return (
     <form id="formComponent" className="w-full mb-4 md:mb-0" noValidate>
-      <section className="flex flex-col md:flex-row gap-10">
+      <section className="flex flex-col md:flex-row gap-6 md:gap-10 w-full h-auto">
 
         {/* Columna izquierda */}
         {leftFields.length > 0 && (
-          <section className="flex-1 flex flex-col gap-4">
+          <section className="flex-1 flex flex-col gap-4 w-full h-auto">
             <p className="text-gray-600 text-sm md:block md:mb-2">
               Los campos que tienen <span className="text-red-500">*</span> son obligatorios.
             </p>
 
-            {/* Campos especiales tipoPost y tipoAnimal juntos */}
+            {/* Campos tipoPost y tipoAnimal juntos */}
             {modo === "post" && (isFieldVisible("tipoPost") || isFieldVisible("tipoAnimal")) && (
-              <section className="flex flex-row w-full gap-10">
+              <section className="flex flex-row gap-4 flex-wrap w-full">
                 {isFieldVisible("tipoPost") && (
                   <FormInput
                     nombre="Tipo de Publicación"
@@ -72,7 +68,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                     required
                     error={error?.tipoPost}
                     options={leftFields.find(f => f.id === "tipoPost")?.options ?? []}
-                    className="flex-auto w-full sm:w-auto"
+                    className="flex-1"
                     placeholder="Selecciona un tipo de publicación"
                   />
                 )}
@@ -86,14 +82,13 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                     required
                     error={error?.tipoAnimal}
                     options={leftFields.find(f => f.id === "tipoAnimal")?.options ?? []}
-                    className="flex-auto w-full sm:w-auto"
+                    className="flex-1"
                     placeholder="Selecciona un tipo de animal"
                   />
                 )}
               </section>
             )}
 
-            {/* Resto de campos de izquierda */}
             {leftFields.filter(c => !["tipoPost", "tipoAnimal"].includes(c.id)).map(c => (
               <FormInput
                 key={c.id}
@@ -106,7 +101,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                 required={c.required}
                 error={error?.[c.id]}
                 maxLength={c.maxLength}
-                className={`w-full ${c.type === "textarea" ? "h-60" : ""}`}
+                className={`w-full`}
                 options={c.options}
               />
             ))}
@@ -115,7 +110,8 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
 
         {/* Columna derecha */}
         {rightFields.length > 0 && (
-          <section className="flex-1 flex flex-col gap-4 w-full">
+          <section className="flex-1 flex flex-col gap-4 w-full h-auto">
+
             <p className="text-gray-600 text-sm md:hidden">
               Los campos que tienen <span className="text-red-500">*</span> son obligatorios.
             </p>
@@ -140,9 +136,9 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
               </section>
             )}
 
-            {/* POST: Adopción => detalleExtra y donarPertenencias lado a lado */}
+            {/* POST: Adopción -> Detalle Extra y Donar Pertenencias debajo */}
             {modo === "post" && formData.tipoPost === "Adopción" && (
-              <section className="flex flex-col md:flex-row gap-4 w-full">
+              <section className="flex flex-col gap-4 w-full">
                 {/* Detalle Extra */}
                 {isFieldVisible("detalleExtra") && (
                   <FormInput
@@ -152,14 +148,14 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                     placeholder="Agrega información adicional..."
                     value={formData?.detalleExtra}
                     onChange={handleChange}
-                    className="h-60 w-full flex-1"
+                    className="w-full min-h-[100px]"
                     maxLength={500}
                   />
                 )}
 
-                {/* Donar Pertenencias */}
+                {/* Donar Pertenencias debajo de Detalle Extra */}
                 {isFieldVisible("donarPertenencias") && (
-                  <section className="flex-1 flex flex-col gap-2">
+                  <section className="flex flex-col gap-2">
                     <FormInput
                       nombre="¿Deseas Donar Pertenencias?"
                       id="donarPertenencias"
@@ -184,7 +180,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                         onChange={handleChange}
                         required
                         error={error.pertenencias}
-                        className="w-full"
+                        className="w-full min-h-[50px]"
                       />
                     )}
                   </section>
@@ -192,7 +188,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
               </section>
             )}
 
-            {/* POST: no Adopción => detalleExtra solo */}
+            {/* POST: No Adopción */}
             {modo === "post" && formData.tipoPost !== "Adopción" && isFieldVisible("detalleExtra") && (
               <FormInput
                 nombre="Detalles Extra"
@@ -201,12 +197,12 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                 placeholder="Agrega información adicional..."
                 value={formData?.detalleExtra}
                 onChange={handleChange}
-                className="h-60 w-full"
+                className="w-full min-h-[100px]"
                 maxLength={500}
               />
             )}
 
-            {/* CONSEJO: detalleExtra */}
+            {/* CONSEJO */}
             {modo === "consejo" && isFieldVisible("detalleExtra") && (
               <FormInput
                 nombre="Detalles Extra"
@@ -215,7 +211,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                 placeholder="Agrega información adicional..."
                 value={formData?.detalleExtra}
                 onChange={handleChange}
-                className="h-60 w-full"
+                className="w-full min-h-[100px]"
                 maxLength={500}
               />
             )}

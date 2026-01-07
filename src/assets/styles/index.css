@@ -129,7 +129,7 @@
 }
 
 .primary-color-hover:hover {
-  background-color: rgba(10, 85, 50, 1);
+  background-color: rgb(10, 85, 50);
 }
 
 .primary-color-nav-hover:hover {

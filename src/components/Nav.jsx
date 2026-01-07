@@ -25,8 +25,8 @@ function Nav() {
         id="menu-principal"
         className={
           open
-            ? "md:h-full opacity-100 pointer-events-auto md:max-h-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-auto bg-white shadow md:shadow-none p-6 md:p-0 z-50"
-            : "opacity-0 md:max-h-none pointer-events-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-auto bg-white shadow md:shadow-none p-6 md:p-0 z-50"
+            ? "md:h-full opacity-100 pointer-events-auto md:max-h-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-autoshadow md:shadow-none p-6 md:p-0 z-50"
+            : "opacity-0 md:max-h-none pointer-events-none md:pointer-events-auto md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:top-auto shadow md:shadow-none p-6 md:p-0 z-50"
         }
         aria-label="Navegación principal"
       >

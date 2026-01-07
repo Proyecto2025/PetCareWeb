@@ -54,7 +54,10 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
 
   // Contador de caracteres (solo si maxLength existe)
   const renderCharCount = () => maxLength && (
-    <p className="absolute bottom-1 right-2 text-xs text-gray-400">
+    <p
+      className={`absolute bottom-1 right-2 text-xs ${value?.length >= maxLength ? "text-red-600" : "text-gray-400"
+        }`}
+    >
       {value?.length || 0}/{maxLength}
     </p>
   );
