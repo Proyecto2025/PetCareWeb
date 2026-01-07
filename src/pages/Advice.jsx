@@ -1,5 +1,5 @@
 import advices from "../data/advice.js";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropDownTitle from "../components/DropDownTitle.jsx";

@@ -4,8 +4,11 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropDownTitle from "../components/DropDownTitle.jsx";
 import Filter from "../components/Filter.jsx";
+import UbicacionFilter from "../components/UbicacionFilter.jsx";
 
 function Home() {
+  const GEOAPI_KEY = "ffbe70b5978749886d63284dfbdab1cf22cb3e40a40c6f0c87f74dc49bbdd7f4"; 
+
   const { categoria } = useParams();
   const navigate = useNavigate();
 
@@ -59,6 +62,8 @@ function Home() {
             }
           }))}
         />
+
+        <UbicacionFilter apiKey={GEOAPI_KEY} />
 
         <Filter
           title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
