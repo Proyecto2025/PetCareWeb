@@ -7,7 +7,7 @@ import Filter from "../components/Filter.jsx";
 import UbicacionFilter from "../components/UbicacionFilter.jsx";
 
 function Home() {
-  const GEOAPI_KEY = "ffbe70b5978749886d63284dfbdab1cf22cb3e40a40c6f0c87f74dc49bbdd7f4"; 
+  const GEOAPI_KEY = "ffbe70b5978749886d63284dfbdab1cf22cb3e40a40c6f0c87f74dc49bbdd7f4";
 
   const { categoria } = useParams();
   const navigate = useNavigate();
@@ -63,15 +63,17 @@ function Home() {
           }))}
         />
 
-        <UbicacionFilter apiKey={GEOAPI_KEY} />
+        <section className="flex items-center gap-5">
+          <UbicacionFilter apiKey={GEOAPI_KEY} />
 
-        <Filter
-          title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
-          options={opcionesAnimal.map(opt => ({
-            label: opt.label,
-            onClick: () => setFiltroAnimal(opt.value),
-          }))}
-        />
+          <Filter
+            title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
+            options={opcionesAnimal.map(opt => ({
+              label: opt.label,
+              onClick: () => setFiltroAnimal(opt.value),
+            }))}
+          />
+        </section>
       </section>
 
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
