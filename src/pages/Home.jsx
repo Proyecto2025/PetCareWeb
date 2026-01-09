@@ -63,7 +63,7 @@ function Home() {
           }))}
         />
 
-        <section className="flex items-center gap-5">
+        <section className="flex w-full justify-end items-center gap-5">
           <UbicacionFilter apiKey={GEOAPI_KEY} />
 
           <Filter
