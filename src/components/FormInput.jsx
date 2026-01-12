@@ -158,9 +158,9 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
           >
             {value || "Selecciona una opción"}
             <span
-              className={`material-symbols-outlined transition-transform duration-100 ${open ? "rotate-90" : "rotate-0"}`}
+              className={`material-symbols-outlined transition-transform duration-100 ${open ? "-rotate-90" : "rotate-0"}`}
             >
-              keyboard_arrow_right
+              keyboard_arrow_down
             </span>
           </section>
 

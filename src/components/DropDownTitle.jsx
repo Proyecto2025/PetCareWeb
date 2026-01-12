@@ -24,10 +24,10 @@ function DropdownTitle({ title, options }) {
           {title}
           <span
             className={`material-symbols-outlined icon-arrow ml-1 transition-transform duration-200 ${
-              isOpen ? "rotate-90" : "rotate-0"
+              isOpen ? "-rotate-90" : "rotate-0"
             }`}
           >
-            keyboard_arrow_right
+            keyboard_arrow_down
           </span>
         </button>
 
