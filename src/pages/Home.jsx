@@ -18,11 +18,18 @@ function Home() {
   const [filtroAnimal, setFiltroAnimal] = useState("todos");
   const TITULO_TODO = "Publicaciones";
 
+  // Estado para el filtro de ubicación
+  const [filtroUbicacion, setFiltroUbicacion] = useState({
+    provincia: null,
+    municipio: null
+  });
+
   // Título dinámico basado en la categoría seleccionada
   const titulo = useMemo(() => {
     if (!categoria) return TITULO_TODO;
     return categoria.charAt(0).toUpperCase() + categoria.slice(1);
   }, [categoria]);
+
 
   // Opciones para filtrar por categoría
   const opcionesCategoria = [
@@ -44,15 +51,27 @@ function Home() {
     return posts.filter(post => {
       const coincideCategoria =
         filtroCategoria === "todas" || post.categoria.toLowerCase() === filtroCategoria;
+
       const coincideAnimal =
         filtroAnimal === "todos" || post.tipoAnimal.toLowerCase() === filtroAnimal;
-      return coincideCategoria && coincideAnimal;
+
+      const coincideUbicacion =
+        !filtroUbicacion.provincia ||
+        (
+          post.ubicacion === filtroUbicacion.provincia &&
+          (
+            !filtroUbicacion.municipio ||
+            post.municipio === filtroUbicacion.municipio
+          )
+        );
+
+      return coincideCategoria && coincideAnimal && coincideUbicacion;
     });
-  }, [filtroCategoria, filtroAnimal]);
+  }, [filtroCategoria, filtroAnimal, filtroUbicacion]);
 
   return (
     <>
-      <section className="w-full flex justify-between items-center mb-6 gap-4">
+      <section className="w-full md:flex justify-between items-center mb-6">
         <DropDownTitle
           title={titulo}
           options={opcionesCategoria.map(opcion => ({
@@ -63,8 +82,11 @@ function Home() {
           }))}
         />
 
-        <section className="flex w-full justify-end items-center gap-5">
-          <UbicacionFilter apiKey={GEOAPI_KEY} />
+        <section className="md:flex w-full justify-end items-center md:gap-8">
+          <UbicacionFilter
+            apiKey={GEOAPI_KEY}
+            onSelect={(value) => setFiltroUbicacion(value)}
+          />
 
           <Filter
             title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
@@ -89,6 +111,8 @@ function Home() {
               titulo={animales.titulo}
               foto={animales.imagen}
               descripcionCorta={animales.descripcionCorta}
+              ubicacion={animales.ubicacion}
+              municipio={animales.municipio}
             />
           </Link>
         ))}

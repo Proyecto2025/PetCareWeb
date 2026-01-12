@@ -19,7 +19,7 @@ function capitalize(str) {
 let cachedProvinces = null;
 const cachedMunicipios = {}; // key = CPRO
 
-function UbicacionFilter({ apiKey }) {
+function UbicacionFilter({ apiKey, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
@@ -144,7 +144,11 @@ function UbicacionFilter({ apiKey }) {
   const handleSelect = async (item) => {
     if (item.type === "province") {
       setSelectedProvince(item);
-      setSelected(capitalize(item.PRO));
+      const provincia = capitalize(item.PRO);
+
+      setSelected(provincia);
+      onSelect?.({ provincia, municipio: null });
+
       setSearch("");
       setFiltered([]);
       const munis = await fetchMunicipiosProvincia(item.CPRO, item.PRO);
@@ -153,7 +157,14 @@ function UbicacionFilter({ apiKey }) {
       inputRef.current?.focus();
     } else {
       const parts = item.label.split("/");
-      setSelected(`${capitalize(parts[0])}/${capitalize(parts[1])}`);
+      const provincia = capitalize(parts[0]);
+      const municipio = capitalize(parts[1]);
+
+      const finalValue = `${provincia}/${municipio}`;
+
+      setSelected(finalValue);
+      onSelect?.({ provincia, municipio });
+
       setSelectedProvince(null);
       setSearch("");
       setFiltered([]);
@@ -170,7 +181,8 @@ function UbicacionFilter({ apiKey }) {
     setSearch("");
     setFiltered([]);
     setHighlightedIndex(-1);
-    setSelected(""); // ✅ vuelve a "Ubicación"
+    setSelected("");
+    onSelect?.({ provincia: null, municipio: null });
     inputRef.current?.focus();
   };
 
@@ -198,46 +210,45 @@ function UbicacionFilter({ apiKey }) {
   return (
     <article
       ref={containerRef}
-      className="relative text-right contenedor__textfont w-full"
+      className="relative text-right md:max-w-70 contenedor__textfont w-full"
     >
       {/* Texto inicial a la derecha */}
       {!isOpen ? (
-  <button
-    type="button"
-    onClick={() => setIsOpen(true)}
-    className="flex items-center justify-end w-full cursor-pointer text-gray-700 primary-color"
-  >
-    <span className="mr-1">{selected || "Ubicación"}</span>
-    <span className="material-symbols-outlined md:text-xl">location_on</span>
-  </button>
-) : (
-  <section className="relative w-full text-left">
-    <input
-      ref={inputRef}
-      type="text"
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      onKeyDown={handleKeyDown}
-      placeholder={
-        !selectedProvince
-          ? "Busca una provincia..."
-          : `Busca el municipio de ${capitalize(selectedProvince.PRO)}...`
-      }
-      className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus-primary-color text-left block"
-      autoFocus
-    />
-    {selectedProvince && (
-      <button
-        onClick={resetProvince}
-        className="absolute right-3 top-2 text-gray-400 hover:text-red-600 focus:outline-none"
-        aria-label="Cambiar provincia"
-      >
-        ×
-      </button>
-    )}
-  </section>
-)}
-
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="flex items-center justify-end w-full cursor-pointer text-gray-700 primary-color"
+        >
+          <span className="mr-1 md:text-lg">{selected || "Ubicación"}</span>
+          <span className="material-symbols-outlined md:text-xl">location_on</span>
+        </button>
+      ) : (
+        <section className="relative w-full text-left">
+          <input
+            ref={inputRef}
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={
+              !selectedProvince
+                ? "Busca una provincia..."
+                : `Busca el municipio de ${capitalize(selectedProvince.PRO)}...`
+            }
+            className="w-full px-2 py-1 text-sm md:text-base border border-gray-300 rounded-md focus-primary-color text-left block"
+            autoFocus
+          />
+          {selectedProvince && (
+            <button
+              onClick={resetProvince}
+              className="absolute right-3 top-2 text-gray-400 hover:text-red-600 focus:outline-none"
+              aria-label="Cambiar provincia"
+            >
+              ×
+            </button>
+          )}
+        </section>
+      )}
 
       {/* Dropdown animado */}
       <section
@@ -257,7 +268,7 @@ function UbicacionFilter({ apiKey }) {
                 key={idx}
                 role="option"
                 aria-selected={highlightedIndex === idx}
-                className={`px-2 py-1 text-sm cursor-pointer text-left truncate ${highlightedIndex === idx ? "bg-green-100" : ""
+                className={`px-2 py-1 text-sm md:text-base cursor-pointer text-left truncate ${highlightedIndex === idx ? "bg-green-100" : ""
                   } hover:bg-green-100`}
                 onMouseEnter={() => setHighlightedIndex(idx)}
                 onClick={() => handleSelect(item)}
@@ -272,9 +283,9 @@ function UbicacionFilter({ apiKey }) {
             ))}
           </ul>
         ) : search ? (
-          <p className="px-2 py-1 text-gray-500 text-sm text-left">No se encontraron resultados</p>
+          <p className="px-2 py-1 text-gray-500 text-sm text-left md:text-base">No se encontraron resultados</p>
         ) : (
-          <p className="px-2 py-1 text-gray-500 text-sm text-left">Escribe para buscar</p>
+          <p className="px-2 py-1 text-gray-500 text-sm text-left md:text-base">Escribe para buscar</p>
         )}
       </section>
     </article>

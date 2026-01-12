@@ -6,6 +6,7 @@ const posts = [
     titulo: "Cachorro mestizo busca hogar",
     nombreUsuario: "LauraG",
     ubicacion: "Valencia",
+    municipio: "Ademuz",
     descripcionCorta: "Tiene 3 meses, muy juguetón y cariñoso.",
     descripcionLarga:
       "Este adorable cachorro mestizo fue encontrado en las afueras de Valencia...",
@@ -27,6 +28,7 @@ const posts = [
     titulo: "Se perdió gato siamés",
     nombreUsuario: "CarlosM",
     ubicacion: "Madrid",
+    municipio: "Aranjuez",
     descripcionCorta: "Zona centro, responde al nombre 'Luna'.",
     descripcionLarga: "Luna es una gata siamés de dos años que desapareció...",
     datosExtra: "Microchip activo, esterilizada, última vacuna hace 3 meses.",
@@ -39,6 +41,7 @@ const posts = [
     titulo: "Necesita medicación urgente",
     nombreUsuario: "AnaVet",
     ubicacion: "Sevilla",
+    municipio: "Dos hermanas",
     descripcionCorta: "Bulldog con tratamiento especial, se busca apoyo.",
     descripcionLarga: "Este bulldog francés de cinco años fue abandonado...",
     datosExtra:
@@ -52,6 +55,7 @@ const posts = [
     titulo: "Gatita tricolor en adopción",
     nombreUsuario: "MartaF",
     ubicacion: "Barcelona",
+    municipio: "Sabadell",
     descripcionCorta: "Rescatada de la calle, muy dócil.",
     descripcionLarga: "Esta preciosa gatita tricolor fue rescatada...",
     datosExtra:
@@ -66,6 +70,7 @@ const posts = [
     titulo: "Perro labrador perdido",
     nombreUsuario: "JoseR",
     ubicacion: "Bilbao",
+    municipio: "Getxo",
     descripcionCorta: "Última vez visto en el parque central.",
     descripcionLarga: "Toby, un labrador dorado de cuatro años, se perdió...",
     datosExtra: "Microchip activo, vacunado, esterilizado.",
@@ -78,6 +83,7 @@ const posts = [
     titulo: "Se busca hogar temporal para gatito",
     nombreUsuario: "RefugioFelino",
     ubicacion: "Zaragoza",
+    municipio: "Utebo",
     descripcionCorta: "Gatito rescatado necesita acogida urgente.",
     descripcionLarga:
       "Este pequeño gatito de apenas dos meses fue encontrado...",
@@ -91,6 +97,7 @@ const posts = [
     titulo: "Pastor alemán adulto en adopción",
     nombreUsuario: "DavidK9",
     ubicacion: "Granada",
+    municipio: "Armilla",
     descripcionCorta: "Entrenado, ideal para familia activa.",
     descripcionLarga: "Thor es un pastor alemán de 5 años...",
     datosExtra:
@@ -104,7 +111,8 @@ const posts = [
     categoria: "Extravio",
     titulo: "Gato negro desaparecido en el barrio viejo",
     nombreUsuario: "LuciaN",
-    ubicacion: "Girona",
+    ubicacion: "Gerona",
+    municipio: "Gualta",
     descripcionCorta: "Tiene collar rojo, muy sociable.",
     descripcionLarga: "Nuestro gato 'Salem' se extravió hace dos días...",
     datosExtra: "Microchip activo, castrado, sin problemas de salud.",
@@ -117,6 +125,7 @@ const posts = [
     titulo: "Cachorro necesita cirugía urgente",
     nombreUsuario: "AyudaAnimal",
     ubicacion: "Murcia",
+    municipio: "San javier",
     descripcionCorta: "Cachorro atropellado, se buscan donaciones.",
     descripcionLarga:
       "Este pequeño mestizo de apenas 4 meses fue atropellado...",
@@ -130,6 +139,7 @@ const posts = [
     titulo: "Gato persa busca hogar tranquilo",
     nombreUsuario: "ClaraP",
     ubicacion: "Toledo",
+    municipio: "Segurilla",
     descripcionCorta: "Muy tranquilo, ideal para piso.",
     descripcionLarga: "Romeo es un gato persa de 3 años...",
     datosExtra: "Esterilizado, vacunado, negativo en leucemia y FIV.",
@@ -143,6 +153,7 @@ const posts = [
     titulo: "Yorkshire perdido en el centro",
     nombreUsuario: "NuriaS",
     ubicacion: "Zaragoza",
+    municipio: "Calatayud",
     descripcionCorta: "Responde al nombre 'Max'.",
     descripcionLarga: "Max es un Yorkshire Terrier de 6 años...",
     datosExtra:
@@ -156,6 +167,7 @@ const posts = [
     titulo: "Colonia felina necesita pienso",
     nombreUsuario: "GatitosBarrioSur",
     ubicacion: "Córdoba",
+    municipio: "Almedinilla",
     descripcionCorta: "Colonia felina necesita pienso urgente.",
     descripcionLarga:
       "En el barrio Sur de Córdoba cuidamos una colonia de más de 20 gatos callejeros. Actualmente estamos sin recursos para comprar pienso y necesitamos ayuda urgente. Los gatos están esterilizados y controlados sanitariamente, pero dependen completamente de las donaciones para alimentarse. Agradecemos cualquier colaboración, ya sea con pienso, latas o donaciones económicas. También buscamos voluntarios para ayudarnos con la limpieza y el mantenimiento de los puntos de alimentación.",
@@ -170,6 +182,7 @@ const posts = [
     titulo: "Cachorro beagle busca familia",
     nombreUsuario: "SoniaBeagle",
     ubicacion: "Alicante",
+    municipio: "Elche",
     descripcionCorta: "Muy activo y cariñoso.",
     descripcionLarga:
       "Este pequeño beagle de 4 meses fue rescatado de una situación de abandono. Es extremadamente activo, curioso y le encanta jugar con otros perros. Tiene un olfato muy desarrollado y disfruta de los paseos largos. Está aprendiendo a hacer sus necesidades fuera y responde bien a órdenes básicas. Ideal para familias con niños o personas que disfruten de actividades al aire libre. Se entrega con compromiso de esterilización y seguimiento.",
@@ -188,6 +201,7 @@ const posts = [
     titulo: "Gata blanca perdida en zona norte",
     nombreUsuario: "EvaGatos",
     ubicacion: "Pamplona",
+    municipio: "Barañain",
     descripcionCorta: "Zona norte, lleva collar azul.",
     descripcionLarga:
       "Nuestra gata 'Nieve' desapareció hace tres días en la zona norte de Pamplona. Es completamente blanca, de ojos verdes, y llevaba un collar azul con una campanita. Es muy tranquila y suele esconderse en lugares cerrados. Tiene microchip y está esterilizada. Agradecemos cualquier información que pueda ayudarnos a encontrarla. Se ofrece recompensa.",
@@ -201,6 +215,7 @@ const posts = [
     titulo: "Perro rescatado necesita transporte",
     nombreUsuario: "TransporteSolidario",
     ubicacion: "Logroño",
+    municipio: "Lardero",
     descripcionCorta: "Perro rescatado requiere traslado a clínica.",
     descripcionLarga:
       "Hemos rescatado a un perro herido en las afueras de Logroño, pero no contamos con vehículo para llevarlo a la clínica veterinaria más cercana, que se encuentra a 25 km. El perro está estable, pero necesita atención médica urgente para revisar una posible fractura. Buscamos a alguien con coche que pueda ayudarnos con el traslado. Cualquier colaboración es bienvenida.",
@@ -215,6 +230,7 @@ const posts = [
     titulo: "Gatito gris en adopción",
     nombreUsuario: "AdoptaGatitos",
     ubicacion: "Oviedo",
+    municipio: "Siero",
     descripcionCorta: "Muy juguetón y cariñoso.",
     descripcionLarga:
       "Este pequeño de 3 meses fue encontrado en una obra en construcción. Es un gato muy activo, le encanta perseguir pelotas y dormir en los rincones más cálidos de la casa. Está desparasitado, ha comenzado su calendario de vacunación y se adapta bien a otros gatos. Ideal para hogares con niños o personas que busquen un compañero divertido y afectuoso.",
@@ -229,6 +245,7 @@ const posts = [
     titulo: "Perro mestizo perdido en zona sur",
     nombreUsuario: "LuisCan",
     ubicacion: "Málaga",
+    municipio: "Churriana",
     descripcionCorta: "Zona sur, responde a 'Rocky'.",
     descripcionLarga:
       "Rocky es un perro mestizo de tamaño mediano, color marrón claro, que se perdió en la zona sur de Málaga. Es muy amigable y suele acercarse a la gente. Llevaba un collar verde sin placa. Tiene microchip y está castrado. Se ruega a quien lo vea que contacte lo antes posible. Su familia está muy preocupada.",
@@ -242,6 +259,7 @@ const posts = [
     titulo: "Se busca voluntario para refugio felino",
     nombreUsuario: "RefugioEsperanza",
     ubicacion: "Tarragona",
+    municipio: "Vila-seca",
     descripcionCorta: "Para cuidar gatos en refugio.",
     descripcionLarga:
       "Nuestro refugio acoge actualmente a más de 40 gatos, muchos de ellos mayores o con necesidades especiales. Buscamos voluntarios que puedan ayudarnos con la limpieza, alimentación y socialización de los gatos. No se requiere experiencia previa, solo compromiso y amor por los animales. Ofrecemos formación básica y un ambiente de trabajo colaborativo. También aceptamos donaciones de pienso, arena y medicamentos.",
@@ -256,6 +274,7 @@ const posts = [
     titulo: "Golden Retriever joven busca hogar",
     nombreUsuario: "FamiliaCanina",
     ubicacion: "Santander",
+    municipio: "Camargo",
     descripcionCorta: "Muy sociable y obediente.",
     descripcionLarga:
       "Bruno es un Golden Retriever de 2 años, entregado por una familia que no podía seguir cuidándolo por motivos laborales. Es un perro extremadamente sociable, obediente y juguetón. Le encanta nadar, correr y estar rodeado de personas. Está acostumbrado a vivir en casa, sabe pasear con correa y responde a órdenes básicas. Está vacunado, esterilizado y con microchip. Ideal para familias con niños o personas que disfruten de actividades al aire libre. Se entrega con contrato de adopción responsable.",
@@ -269,7 +288,8 @@ const posts = [
     categoria: "Extravio",
     titulo: "Gato gris perdido en zona este",
     nombreUsuario: "BuscandoMilo",
-    ubicacion: "Valencia",
+    ubicacion: "Alicante",
+    municipio: "Santa pola",
     descripcionCorta: "Zona este, lleva microchip.",
     descripcionLarga:
       "Milo es un gato gris de 3 años que desapareció hace dos días en la zona este de Valencia. Tiene ojos amarillos, pelaje corto y una pequeña cicatriz en la oreja izquierda. Está castrado y tiene microchip. Es muy curioso y suele esconderse en garajes o patios. Si lo ves, por favor, contacta con nosotros. Se ofrece recompensa. Milo es parte de nuestra familia y lo extrañamos profundamente.",
@@ -283,6 +303,7 @@ const posts = [
     titulo: "Perro mayor necesita acogida temporal",
     nombreUsuario: "AyudaSenior",
     ubicacion: "Huesca",
+    municipio: "Monzón",
     descripcionCorta: "Perro mayor abandonado.",
     descripcionLarga:
       "Este perro de 10 años fue abandonado en una gasolinera. Es de tamaño mediano, muy tranquilo y cariñoso. Tiene problemas articulares leves y necesita un lugar cálido donde descansar. Actualmente está en una jaula en el refugio, pero no es el entorno ideal para un perro mayor. Buscamos una casa de acogida temporal donde pueda recuperarse y recibir atención. Se proporcionará todo lo necesario: cama ortopédica, comida especial y medicación.",
@@ -297,6 +318,7 @@ const posts = [
     titulo: "Gatito naranja busca familia",
     nombreUsuario: "GatitosFelices",
     ubicacion: "León",
+    municipio: "Villaquilambre",
     descripcionCorta: "Muy cariñoso, busca familia.",
     descripcionLarga:
       "Este pequeño de 2 meses fue encontrado en una caja de cartón en un parque. Es un gato muy cariñoso, le encanta dormir en brazos y ronronea constantemente. Está desparasitado, come solo y usa el arenero sin problema. Ideal para familias con niños o personas que busquen un compañero afectuoso. Se entrega con contrato de adopción responsable y seguimiento.",
@@ -311,7 +333,8 @@ const posts = [
     categoria: "Extravio",
     titulo: "Perro husky perdido en zona montaña",
     nombreUsuario: "HuskySOS",
-    ubicacion: "Andorra",
+    ubicacion: "Albacete",
+    municipio: "Lezuza",
     descripcionCorta: "Zona montaña, ojos azules.",
     descripcionLarga:
       "Nuestro husky 'Blizzard' se perdió durante una excursión en la zona de montaña cerca de Andorra. Tiene pelaje blanco y gris, ojos azules y lleva un arnés negro. Es muy activo y puede recorrer grandes distancias. Tiene microchip y está castrado. Se ruega a senderistas y vecinos de la zona que estén atentos. Se ofrece recompensa.",
@@ -325,6 +348,7 @@ const posts = [
     titulo: "Gato con tratamiento necesita medicación",
     nombreUsuario: "CuidaGatos",
     ubicacion: "Burgos",
+    municipio: "Isar",
     descripcionCorta: "Gato con tratamiento especial.",
     descripcionLarga:
       "Este gato de 7 años tiene insuficiencia renal crónica y necesita medicación diaria para mantener su calidad de vida. Está en acogida, pero los costes del tratamiento son elevados. Buscamos ayuda para cubrir los gastos de medicación, análisis y alimentación especial. También se aceptan donaciones de pienso renal y latas específicas. Es un gato muy tranquilo, agradecido y cariñoso.",

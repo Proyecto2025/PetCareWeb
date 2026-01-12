@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function FormInput({ nombre, id, type = "text", value, onChange, error, required = false, placeholder, options, className, maxLength }) {
 
@@ -9,10 +9,24 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
   const isTagInput = id === "pertenencias";
   const errorId = `${id}-error`;
 
+  // Estado para manejar el dropdown del select
+  const containerRef = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  // Cerrar dropdown al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   // Estado para el input de tags
   const [inputValue, setInputValue] = useState("");
   const tags = Array.isArray(value) ? value : [];
-  const [open, setOpen] = useState(false);
 
   // Manejo de cambio de valor
   const handleChange = (e) => {
@@ -129,27 +143,38 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
 
       {/* Select */}
       {isSelect && (
-        <section className={`relative ${className || ""}`}>
+        <section className={`relative ${className || ""}`} ref={containerRef}>
           {nombre && (
             <label id={`${id}-label`} className="block font-medium text-gray-700 mb-1">
               {nombre} {required && <span className="text-red-500 ml-1">*</span>}
             </label>
           )}
+
+          {/* Input simulado */}
           <section
             className="p-2 border border-gray-300 rounded-md shadow-sm flex justify-between items-center cursor-pointer"
             onClick={() => setOpen(!open)}
             aria-labelledby={`${id}-label`}
           >
             {value || "Selecciona una opción"}
-            <span className={`material-symbols-outlined transition-transform duration-100 ${open ? "rotate-90" : "rotate-0"}`}>keyboard_arrow_right</span>
+            <span
+              className={`material-symbols-outlined transition-transform duration-100 ${open ? "rotate-90" : "rotate-0"}`}
+            >
+              keyboard_arrow_right
+            </span>
           </section>
+
+          {/* Dropdown */}
           {open && (
             <section className="absolute top-full left-0 border border-gray-300 rounded bg-white shadow-md z-10 min-w-full">
               {options.map((opt, index) => (
                 <section
                   key={opt.value}
                   className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${index < options.length - 1 ? "border-b border-gray-200" : ""}`}
-                  onClick={() => { onChange({ target: { id, value: opt.value } }); setOpen(false); }}
+                  onClick={() => {
+                    onChange({ target: { id, value: opt.value } });
+                    setOpen(false);
+                  }}
                 >
                   {opt.label}
                 </section>

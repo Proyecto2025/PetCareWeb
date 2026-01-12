@@ -27,8 +27,17 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
           <h1 className="contenedor__texto-primary text-2xl sm:text-3xl font-bold">
             {objeto.titulo}
           </h1>
-          <p className="text-gray-700 text-base sm:text-lg font-semibold baloo tracking-wide leading-tight">
-            {objeto[label]}
+          <p className="flex text-gray-700 text-base sm:text-lg font-semibold baloo tracking-wide leading-tight">
+            <span>{objeto[label]}</span>
+            {label === "ubicacion" && objeto.municipio && (
+              <>
+                <span className="mx-1 primary-color">/</span>
+                <span>{objeto.municipio}</span>
+                <span className="material-symbols-outlined align-middle primary-color ml-1">
+                  location_on
+                </span>
+              </>
+            )}
           </p>
           <figure>
             <img

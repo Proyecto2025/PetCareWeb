@@ -1,4 +1,4 @@
-function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, children }) {
+function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, ubicacion, municipio, children }) {
   {/* He quitado el tabIndex={0} ya que por ahora ya que la card está dentro de un link
         y me hacia tocar dos veces el tabulador para avanzar
       */}
@@ -11,7 +11,17 @@ function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, child
         <h3 className="text-black tracking-wide leading-tight font-bold">
           {nombreUsuario}
         </h3>
-        <p className="contenedor__texto-primary mb-1 font-bold">{tipoAnimal}</p>
+        <section className="md:flex items-center justify-between w-full mb-1">
+          <p className="contenedor__texto-primary font-bold">{tipoAnimal}</p>
+          {ubicacion && (
+            <section className="flex items-center">
+              <p className="contenedor__texto-primary font-bold text-sm lg:text-base">{ubicacion}</p>
+              <p className="mr-1 ml-1 primary-color">/</p>
+              <p className="contenedor__texto-primary font-bold text-sm lg:text-base">{municipio}</p>
+              <span className="material-symbols-outlined primary-color">location_on</span>
+            </section>
+          )}
+        </section>
       </section>
       <figure className="w-full aspect-square rounded-lg bg-gray-100 overflow-hidden max-h-60 sm:max-h-full">
         <img
