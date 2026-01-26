@@ -11,7 +11,7 @@ function Nav() {
     <>
       {/* Botón hamburguesa accesible */}
       <button
-        className="md:hidden font-bold text-3xl text-black rounded px-3 py-1 focus:ring-green-500"
+        className="md:hidden font-bold text-4xl primary-color rounded px-3 py-1 focus:ring-green-500"
         aria-label={open ? "Cerrar menú" : "Abrir menú"}
         aria-expanded={open}
         aria-controls="menu-principal"
@@ -25,8 +25,8 @@ function Nav() {
         id="menu-principal"
         className={
           open
-            ? "md:h-full opacity-100 pointer-events-auto md:max-h-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 bg-white md:top-autoshadow md:shadow-none p-6 md:p-0 z-50"
-            : "opacity-0 md:max-h-none pointer-events-none md:pointer-events-auto md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 md:bg-none md:top-auto shadow md:shadow-none p-6 md:p-0 z-50"
+            ? "md:h-full opacity-100 pointer-events-auto md:max-h-none md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 bg-white shadow-md border-b border-gray-200 md:shadow-none md:border-none p-6 md:p-0 z-50"
+            : "opacity-0 md:max-h-none pointer-events-none md:pointer-events-auto md:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:gap-6 text-lg absolute md:static left-0 right-0 top-20 bg-white shadow-md border-b border-gray-200 md:shadow-none md:border-none p-6 md:p-0 z-50"
         }
         aria-label="Navegación principal"
       >

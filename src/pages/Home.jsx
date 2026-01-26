@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropDownTitle from "../components/DropDownTitle.jsx";
-import Filter from "../components/Filter.jsx";
+import Filter from "../components/animalFilter.jsx";
 import UbicacionFilter from "../components/UbicacionFilter.jsx";
 
 function Home() {
@@ -11,6 +11,9 @@ function Home() {
 
   const { categoria } = useParams();
   const navigate = useNavigate();
+
+  // Estado para controlar la visibilidad del menú de filtros
+  const [openMenu, setOpenMenu] = useState(false);
 
   // Por defecto muestra todas las categorías
   const filtroCategoria = categoria ? categoria.toLowerCase() : "todas";
@@ -82,7 +85,35 @@ function Home() {
           }))}
         />
 
-        <section className="md:flex w-full justify-end items-center md:gap-8">
+        <section className="w-full md:hidden">
+          <button
+            onClick={() => setOpenMenu(!openMenu)}
+            className="mt-6 bg-primary rounded-md justify-center font-bold flex items-center primary-color"
+          >
+            <span className="material-symbols-outlined mr-1 transition-all duration-300 ease-in-out">
+              filter_list
+            </span>
+            Filtros
+          </button>
+
+          <section className={`transition-all duration-300 ease-in-out ${openMenu ? "max-h-[500px] shadow-md opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"} `} >
+            <section className="shadow-md border border-gray-200 rounded-md p-4 bg-white">
+              <UbicacionFilter apiKey={GEOAPI_KEY} onSelect={(value) => setFiltroUbicacion(value)}
+              />
+
+              <section className="mt-4">
+                <Filter title={opcionesAnimal.find(opt => opt.value === filtroAnimal)?.label || "Todos"}
+                  options={opcionesAnimal.map(opt => ({
+                    label: opt.label,
+                    onClick: () => setFiltroAnimal(opt.value),
+                  }))}
+                />
+              </section>
+            </section>
+          </section>
+        </section>
+
+        <section className="hidden md:flex md:gap-8 w-full justify-end items-center">
           <UbicacionFilter
             apiKey={GEOAPI_KEY}
             onSelect={(value) => setFiltroUbicacion(value)}
@@ -98,7 +129,7 @@ function Home() {
         </section>
       </section>
 
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
+      <section className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
         {filtrado.map(animales => (
           <Link
             key={animales.id}

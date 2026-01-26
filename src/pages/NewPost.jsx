@@ -229,7 +229,7 @@ function NewPost() {
   const isBackDisabled = currentStep === 0;
 
   return (
-    <section className="w-full relative">
+    <section className="w-full relative shadow-2xl border border-gray-200 rounded-md p-5">
       {/* Mensaje de éxito */}
       <section className={`success-message z-40 ${showSuccess ? "show" : ""}`}>
         Finalizado <span className="material-symbols-outlined">check_circle</span>

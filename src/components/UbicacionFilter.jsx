@@ -217,7 +217,7 @@ function UbicacionFilter({ apiKey, onSelect }) {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="flex items-center justify-end w-full cursor-pointer text-gray-700 primary-color"
+          className="flex items-center md:justify-end w-full cursor-pointer text-gray-700 primary-color"
         >
           <span className="mr-1 md:text-lg">{selected || "Ubicación"}</span>
           <span className="material-symbols-outlined md:text-xl">location_on</span>
@@ -235,13 +235,13 @@ function UbicacionFilter({ apiKey, onSelect }) {
                 ? "Busca una provincia..."
                 : `Busca el municipio de ${capitalize(selectedProvince.PRO)}...`
             }
-            className="w-full px-2 py-1 text-sm md:text-base border border-gray-300 rounded-md focus-primary-color text-left block"
+            className="w-full h-10 text-sm md:h-auto px-2 py-1 md:text-base border border-gray-300 rounded-md focus-primary-color text-left block"
             autoFocus
           />
           {selectedProvince && (
             <button
               onClick={resetProvince}
-              className="absolute right-3 top-2 text-gray-400 hover:text-red-600 focus:outline-none"
+              className="absolute right-3 top-3 md:top-2 text-gray-400 hover:text-red-600 focus:outline-none"
               aria-label="Cambiar provincia"
             >
               ×

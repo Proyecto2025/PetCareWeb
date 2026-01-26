@@ -5,20 +5,20 @@ function Card({ nombreUsuario, tipoAnimal, titulo, foto, descripcionCorta, ubica
   return (
     <article
       aria-label={titulo}
-      className="flex flex-col justify-between w-full h-full p-6 sm:p-3 rounded-md bg-white shadow-sm sm:shadow-md border border-gray-300 transition-transform duration-200 hover:scale-[1.02]"
+      className="flex shadow-md p-4 md:p-6 flex-col justify-between w-full h-full rounded-md bg-white sm:shadow-md border border-gray-200 transition-transform duration-200 hover:scale-[1.02]"
     >
       <section>
         <h3 className="text-black tracking-wide leading-tight font-bold">
           {nombreUsuario}
         </h3>
-        <section className="md:flex items-center justify-between w-full mb-1">
+        <section className="items-center justify-between w-full mb-1">
           <p className="contenedor__texto-primary font-bold">{tipoAnimal}</p>
           {ubicacion && (
-            <section className="flex items-center">
+            <section className="flex items-center flex-wrap text-sm lg:text-base">
+              <span className="material-symbols-outlined primary-color">location_on</span>
               <p className="contenedor__texto-primary font-bold text-sm lg:text-base">{ubicacion}</p>
               <p className="mr-1 ml-1 primary-color">/</p>
               <p className="contenedor__texto-primary font-bold text-sm lg:text-base">{municipio}</p>
-              <span className="material-symbols-outlined primary-color">location_on</span>
             </section>
           )}
         </section>
