@@ -46,7 +46,7 @@ function Advice() {
         }))}
       />
 
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch mt-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch mt-6">
         {filtrado.map((consejos) => (
           <Link
             key={consejos.id}
