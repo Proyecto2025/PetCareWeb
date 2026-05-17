@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import FormInput from "../components/FormInput";
-import loginHero from "../assets/images/login-hero.png";
+import loginHero from "../assets/images/perroLogin.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
