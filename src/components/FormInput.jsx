@@ -76,6 +76,11 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
     </p>
   );
 
+  // Estado para mostrar/ocultar contraseña
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
+  const inputType = isPassword ? (showPassword ? "text" : "password") : type;
+
   return (
     <section className={`w-full ${className || ""}`}>
       {/* Label normal */}
@@ -85,11 +90,12 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
       {isTagInput && (
         <section className="flex flex-col w-full">
           {nombre && (
-            <p className="block font-medium text-gray-700 mb-1">
+            <label htmlFor={id} className="block font-medium text-gray-700 mb-1">
               {nombre} {required && <span className="text-red-500 ml-1">*</span>}
-            </p>
+            </label>
           )}
           <input
+            id={id}
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -119,23 +125,37 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
               placeholder={placeholder}
               required={required}
               maxLength={maxLength}
-              className={`resize-none mt-1 block w-full p-2 pb-7 border-gray-300 border rounded-md shadow-sm focus-primary-color h-60 ${className || ""}`}
+              className={`resize-none mt-1 block w-full p-2 ${maxLength ? "pb-7" : ""} border-gray-300 border rounded-md shadow-sm focus-primary-color h-60 ${className || ""}`}
               aria-invalid={!!error}
               aria-describedby={errorId}
             />
           ) : (
-            <input
-              id={id}
-              type={type}
-              value={value}
-              onChange={handleChange}
-              placeholder={placeholder}
-              required={required}
-              maxLength={maxLength}
-              className={`mt-1 block w-full p-2 pb-7 border-gray-300 border rounded-md shadow-sm focus-primary-color ${className || ""}`}
-              aria-invalid={!!error}
-              aria-describedby={errorId}
-            />
+            <section className="relative">
+              <input
+                id={id}
+                type={inputType}
+                value={value}
+                onChange={handleChange}
+                placeholder={placeholder}
+                required={required}
+                maxLength={maxLength}
+                className={`mt-1 block w-full p-2 ${maxLength ? "pb-7" : ""} ${isPassword ? "pr-10" : ""} border-gray-300 border rounded-md shadow-sm focus-primary-color ${className || ""}`}
+                aria-invalid={!!error}
+                aria-describedby={errorId}
+              />
+              {isPassword && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer flex items-center"
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  <span className="material-symbols-outlined select-none">
+                    {showPassword ? "visibility" : "visibility_off"}
+                  </span>
+                </button>
+              )}
+            </section>
           )}
           {renderCharCount()}
         </section>

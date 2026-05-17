@@ -1,10 +1,10 @@
-import posts from "../data/post.js";
 import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropDownTitle from "../components/DropDownTitle.jsx";
 import Filter from "../components/animalFilter.jsx";
 import UbicacionFilter from "../components/UbicacionFilter.jsx";
+import { usePosts } from "../hooks/usePosts";
 
 function Home() {
   const GEOAPI_KEY = "ffbe70b5978749886d63284dfbdab1cf22cb3e40a40c6f0c87f74dc49bbdd7f4";
@@ -12,11 +12,13 @@ function Home() {
   const { categoria } = useParams();
   const navigate = useNavigate();
 
+  const { posts: postsList, loading } = usePosts();
+
   // Estado para controlar la visibilidad del menú de filtros
   const [openMenu, setOpenMenu] = useState(false);
 
   // Por defecto muestra todas las categorías
-  const filtroCategoria = categoria ? categoria.toLowerCase() : "todas";
+  const filtroCategoria = categoria ? categoria.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "todas";
 
   const [filtroAnimal, setFiltroAnimal] = useState("todos");
   const TITULO_TODO = "Publicaciones";
@@ -51,7 +53,7 @@ function Home() {
 
   // Filtrado de posts según categoría y animal
   const filtrado = useMemo(() => {
-    return posts.filter(post => {
+    return postsList.filter(post => {
       const coincideCategoria =
         filtroCategoria === "todas" || post.categoria.toLowerCase() === filtroCategoria;
 
@@ -70,7 +72,7 @@ function Home() {
 
       return coincideCategoria && coincideAnimal && coincideUbicacion;
     });
-  }, [filtroCategoria, filtroAnimal, filtroUbicacion]);
+  }, [filtroCategoria, filtroAnimal, filtroUbicacion, postsList]);
 
   return (
     <>
@@ -98,7 +100,7 @@ function Home() {
 
           <section className={`transition-all duration-300 ease-in-out ${openMenu ? "max-h-[500px] shadow-md opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"} `} >
             <section className="shadow-md border border-gray-200 rounded-md p-4 bg-white">
-              <UbicacionFilter apiKey={GEOAPI_KEY} onSelect={(value) => setFiltroUbicacion(value)}
+              <UbicacionFilter apiKey={GEOAPI_KEY} className="text-left" onSelect={(value) => setFiltroUbicacion(value)}
               />
 
               <section className="mt-4">
@@ -130,23 +132,32 @@ function Home() {
       </section>
 
       <section className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
-        {filtrado.map(animales => (
-          <Link
-            key={animales.id}
-            to={`/animal/${animales.id}`}
-            aria-label={`Ver detalles de ${animales.titulo}`}
-          >
-            <Card
-              nombreUsuario={animales.nombreUsuario}
-              tipoAnimal={animales.tipoAnimal}
-              titulo={animales.titulo}
-              foto={animales.imagen}
-              descripcionCorta={animales.descripcionCorta}
-              ubicacion={animales.ubicacion}
-              municipio={animales.municipio}
-            />
-          </Link>
-        ))}
+        {loading ? (
+          <section className="col-span-full flex flex-row items-center justify-center text-gray-500 text-xl mt-10 gap-3">
+            <span className="material-symbols-outlined animate-spin text-2xl">progress_activity</span>
+            <p>Cargando publicaciones...</p>
+          </section>
+        ) : filtrado.length === 0 ? (
+          <p className="col-span-full text-center text-gray-500 text-xl mt-10">No hay publicaciones disponibles.</p>
+        ) : (
+          filtrado.map(animales => (
+            <Link
+              key={animales.id}
+              to={`/animal/${animales.id}`}
+              aria-label={`Ver detalles de ${animales.titulo}`}
+            >
+              <Card
+                nombreUsuario={animales.nombreUsuario}
+                tipoAnimal={animales.tipoAnimal}
+                titulo={animales.titulo}
+                foto={animales.imagen}
+                descripcionCorta={animales.descripcionCorta}
+                ubicacion={animales.ubicacion}
+                municipio={animales.municipio}
+              />
+            </Link>
+          ))
+        )}
       </section>
     </>
   );

@@ -19,11 +19,11 @@ function capitalize(str) {
 let cachedProvinces = null;
 const cachedMunicipios = {}; // key = CPRO
 
-function UbicacionFilter({ apiKey, onSelect }) {
+function UbicacionFilter({ apiKey, onSelect, className = "text-right md:max-w-70", initialValue = "" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(initialValue);
 
   const [provinces, setProvinces] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState(null);
@@ -207,23 +207,37 @@ function UbicacionFilter({ apiKey, onSelect }) {
   };
 
 
+  const isLeft = className.includes("text-left");
+
   return (
     <article
       ref={containerRef}
-      className="relative text-right md:max-w-70 contenedor__textfont w-full"
+      className={`relative contenedor__textfont w-full ${className}`}
     >
-      {/* Texto inicial a la derecha */}
+      {/* Texto inicial */}
       {!isOpen ? (
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="flex items-center md:justify-end w-full cursor-pointer text-gray-700 primary-color"
-        >
-          <span className="mr-1 md:text-lg">{selected || "Ubicación"}</span>
-          <span className="material-symbols-outlined md:text-xl">location_on</span>
-        </button>
+        <section className={`flex items-center gap-2 w-full ${isLeft ? "justify-start" : "justify-end"}`}>
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className={`flex items-center cursor-pointer text-gray-700 primary-color ${isLeft ? "" : "md:justify-end"}`}
+          >
+            <span className="mr-1 md:text-lg">{selected || "Ubicación"}</span>
+            <span className="material-symbols-outlined md:text-xl">location_on</span>
+          </button>
+          {selected && (
+            <button
+              type="button"
+              onClick={resetProvince}
+              className="text-gray-400 hover:text-red-600 focus:outline-none text-2xl leading-none"
+              aria-label="Borrar ubicación"
+            >
+              ×
+            </button>
+          )}
+        </section>
       ) : (
-        <section className="relative w-full text-left">
+        <section className={`relative w-full ${isLeft ? "text-left" : "text-right"}`}>
           <input
             ref={inputRef}
             type="text"
@@ -235,13 +249,13 @@ function UbicacionFilter({ apiKey, onSelect }) {
                 ? "Busca una provincia..."
                 : `Busca el municipio de ${capitalize(selectedProvince.PRO)}...`
             }
-            className="w-full h-10 text-sm md:h-auto px-2 py-1 md:text-base border border-gray-300 rounded-md focus-primary-color text-left block"
+            className={`w-full h-10 text-sm md:h-auto px-2 py-1 md:text-base border border-gray-300 rounded-md focus-primary-color block ${isLeft ? "text-left" : "text-right"}`}
             autoFocus
           />
           {selectedProvince && (
             <button
               onClick={resetProvince}
-              className="absolute right-3 top-3 md:top-2 text-gray-400 hover:text-red-600 focus:outline-none"
+              className={`absolute top-3 md:top-2 text-gray-400 hover:text-red-600 focus:outline-none ${isLeft ? "right-3" : "left-3"}`}
               aria-label="Cambiar provincia"
             >
               ×
@@ -252,15 +266,15 @@ function UbicacionFilter({ apiKey, onSelect }) {
 
       {/* Dropdown animado */}
       <section
-        className={`absolute z-10 right-0 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden transform origin-top transition-all duration-300
+        className={`absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden transform origin-top transition-all duration-300 ${isLeft ? "left-0" : "right-0"}
       ${isOpen ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}
     `}
         role="listbox"
       >
         {loading ? (
-          <p className="px-2 py-1 text-gray-500 text-sm">Cargando...</p>
+          <p className={`px-2 py-1 text-gray-500 text-sm ${isLeft ? "text-left" : "text-right"}`}>Cargando...</p>
         ) : error ? (
-          <p className="px-2 py-1 text-red-500 text-sm">{error}</p>
+          <p className={`px-2 py-1 text-red-500 text-sm ${isLeft ? "text-left" : "text-right"}`}>{error}</p>
         ) : filtered.length > 0 ? (
           <ul>
             {filtered.map((item, idx) => (
@@ -268,7 +282,7 @@ function UbicacionFilter({ apiKey, onSelect }) {
                 key={idx}
                 role="option"
                 aria-selected={highlightedIndex === idx}
-                className={`px-2 py-1 text-sm md:text-base cursor-pointer text-left truncate ${highlightedIndex === idx ? "bg-green-100" : ""
+                className={`px-2 py-1 text-sm md:text-base cursor-pointer truncate ${isLeft ? "text-left" : "text-right"} ${highlightedIndex === idx ? "bg-green-100" : ""
                   } hover:bg-green-100`}
                 onMouseEnter={() => setHighlightedIndex(idx)}
                 onClick={() => handleSelect(item)}
@@ -283,9 +297,9 @@ function UbicacionFilter({ apiKey, onSelect }) {
             ))}
           </ul>
         ) : search ? (
-          <p className="px-2 py-1 text-gray-500 text-sm text-left md:text-base">No se encontraron resultados</p>
+          <p className={`px-2 py-1 text-gray-500 text-sm md:text-base ${isLeft ? "text-left" : "text-right"}`}>No se encontraron resultados</p>
         ) : (
-          <p className="px-2 py-1 text-gray-500 text-sm text-left md:text-base">Escribe para buscar</p>
+          <p className={`px-2 py-1 text-gray-500 text-sm md:text-base ${isLeft ? "text-left" : "text-right"}`}>Escribe para buscar</p>
         )}
       </section>
     </article>

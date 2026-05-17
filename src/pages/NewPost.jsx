@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import DropDownTitle from "../components/DropDownTitle";
 import Form from "../components/Form";
+import { createPost, createAdoptionPost } from "../services/postService";
+import { createAdvice } from "../services/adviceService";
 
 // Datos iniciales para un Post
 const INITIAL_POST = {
@@ -35,6 +37,7 @@ function NewPost() {
   const [preview, setPreview] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Detecta si la vista es móvil
   const [isMobile, setIsMobile] = useState(
@@ -84,7 +87,7 @@ function NewPost() {
           ["imagen"],
         ]
         : [
-          ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "descripcion", "detalleExtra"],
+          ["tipoConsejo", "tituloConsejo", "descripcionCorta", "descripcion", "detalleExtra"],
           ["imagen"],
         ];
     }
@@ -106,7 +109,7 @@ function NewPost() {
     }
 
     return [
-      ["tipoConsejo", "tituloConsejo", "subtituloConsejo"],
+      ["tipoConsejo", "tituloConsejo"],
       ["descripcionCorta", "descripcion"],
       ["detalleExtra"],
       ["imagen"],
@@ -120,7 +123,7 @@ function NewPost() {
     if (modo === "post") {
       return stepFields.filter(
         (field) =>
-          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "imagen","descripcion"].includes(field) ||
+          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "imagen", "descripcion"].includes(field) ||
           (field === "donarPertenencias" &&
             !["Extravio", "Ayuda"].includes(formData.tipoPost))
       );
@@ -128,7 +131,7 @@ function NewPost() {
 
     return stepFields.filter(
       (field) =>
-        ["tipoConsejo", "tituloConsejo", "subtituloConsejo", "descripcionCorta", "imagen", "descripcion"].includes(field)
+        ["tipoConsejo", "tituloConsejo", "descripcionCorta", "imagen", "descripcion"].includes(field)
     );
   };
 
@@ -141,6 +144,9 @@ function NewPost() {
     return requiredFields.some((field) => {
       if (field === "pertenencias" && formData.donarPertenencias === "si") {
         return !formData.pertenencias || formData.pertenencias.length === 0;
+      }
+      if (field === "ubicacion") {
+        return !formData.ubicacion || !formData.ubicacion.includes("/");
       }
       return !formData[field];
     });
@@ -159,6 +165,8 @@ function NewPost() {
         (Array.isArray(formData[field]) && formData[field].length === 0)
       ) {
         validationErrors[field] = "Campo obligatorio";
+      } else if (field === "ubicacion" && !formData.ubicacion.includes("/")) {
+        validationErrors[field] = "Debes seleccionar un municipio";
       }
     });
 
@@ -184,16 +192,76 @@ function NewPost() {
   };
 
   // Envía el formulario
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const allFields = steps.flat();
     const errors = validate(allFields);
     if (Object.keys(errors).length > 0) return;
 
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("Debes iniciar sesión para publicar.");
+      return;
+    }
 
-    setFormData(modo === "post" ? INITIAL_POST : INITIAL_CONSEJO);
-    setCurrentStep(0);
+    setIsSubmitting(true);
+    try {
+      if (modo === "post") {
+        // Mapeamos los campos para la API
+        let categoryPost = formData.tipoPost.toUpperCase();
+        if (categoryPost === "ADOPCIÓN") categoryPost = "ADOPCION";
+        if (categoryPost === "EXTRAVÍO") categoryPost = "EXTRAVIO";
+
+        const typeAnimal = formData.tipoAnimal.toUpperCase();
+
+        // Separamos provincia y municipio de la ubicación (formato: "Provincia/Municipio")
+        const [provincia, municipio] = formData.ubicacion.split("/");
+
+        const postData = {
+          postCategory: categoryPost,
+          typeAnimal,
+          title: formData.tituloPost,
+          subtitle: formData.descripcionCorta,
+          shortDescription: formData.descripcionCorta,
+          longDescription: formData.descripcion,
+          extraDetails: formData.detalleExtra,
+          location: provincia,
+          municipality: municipio,
+          userId: parseInt(userId)
+        };
+
+        if (categoryPost === "ADOPCION") {
+          postData.belongings = formData.pertenencias || [];
+          await createAdoptionPost(postData, formData.imagen);
+        } else {
+          await createPost(postData, formData.imagen);
+        }
+      } else {
+        // Mapeamos los campos para Consejo
+        const category = formData.tipoConsejo.toUpperCase();
+
+        const adviceData = {
+          category,
+          title: formData.tituloConsejo,
+          subtitle: formData.descripcionCorta,
+          shortDescription: formData.descripcionCorta,
+          longDescription: formData.descripcion,
+          extraDetail: formData.detalleExtra,
+          userId: parseInt(userId)
+        };
+
+        await createAdvice(adviceData, formData.imagen);
+      }
+
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+
+      setFormData(modo === "post" ? INITIAL_POST : INITIAL_CONSEJO);
+      setCurrentStep(0);
+    } catch (err) {
+      alert(err.message || "Error al crear la publicación");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Opciones del dropdown de modo
@@ -247,9 +315,13 @@ function NewPost() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="px-6 py-4 rounded text-white text-2xl contenedor__textfont cursor-pointer primary-bg-color primary-color-hover"
+            disabled={isSubmitting}
+            className={`px-6 py-4 rounded text-white text-2xl contenedor__textfont flex items-center justify-center gap-2 primary-bg-color primary-color-hover ${isSubmitting ? "cursor-not-allowed opacity-70" : "cursor-pointer"}`}
           >
-            Publicar
+            {isSubmitting && (
+              <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>
+            )}
+            {isSubmitting ? "Publicando..." : "Publicar"}
           </button>
         )}
       </article>
@@ -275,7 +347,7 @@ function NewPost() {
 
           {/* Barra de progreso */}
           <section className="w-full h-2 bg-gray-300 rounded">
-            <div
+            <section
               className="h-full primary-bg-color transition-all"
               style={{ width: `${progressPercent}%` }}
             />
@@ -308,11 +380,14 @@ function NewPost() {
             <button
               type="button"
               onClick={handleNext}
-              disabled={isStepInvalid}
-              className={`px-5 py-2 rounded text-white cursor-pointer ${isStepInvalid ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover"
+              disabled={isStepInvalid || isSubmitting}
+              className={`px-5 py-2 rounded text-white flex items-center justify-center gap-2 ${isStepInvalid || isSubmitting ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover"
                 }`}
             >
-              {currentStep === steps.length - 1 ? "Publicar" : "Siguiente"}
+              {isSubmitting && (
+                <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>
+              )}
+              {currentStep === steps.length - 1 ? (isSubmitting ? "Publicando..." : "Publicar") : "Siguiente"}
             </button>
           </section>
         </section>

@@ -1,12 +1,14 @@
-import advices from "../data/advice.js";
 import { useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import DropDownTitle from "../components/DropDownTitle.jsx";
+import { useAdvices } from "../hooks/useAdvices";
 
 function Advice() {
   const { categoria } = useParams();
   const navigate = useNavigate();
+
+  const { advices: advicesList, loading } = useAdvices();
 
   // Por defecto muestra todas las categorías
   const filtroCategoria = categoria ? categoria.toLowerCase() : "todos";
@@ -28,27 +30,35 @@ function Advice() {
 
   // Filtrado de consejos según categoría
   const filtrado = useMemo(() => {
-    return advices.filter(
+    return (advicesList || []).filter(
       (advice) =>
         filtroCategoria === "todos" || advice.categoria.toLowerCase() === filtroCategoria
     );
-  }, [filtroCategoria]);
+  }, [advicesList, filtroCategoria]);
 
   return (
     <>
-      <DropDownTitle
-        title={titulo}
-        options={opcionesCategoria.map((opcion) => ({
-          label: opcion.label,
-          onClick: () => {
-            navigate(opcion.to);
-          },
-        }))}
-      />
+      <section className="w-full md:flex justify-between items-center mb-6">
+        <DropDownTitle
+          title={titulo}
+          options={opcionesCategoria.map((opcion) => ({
+            label: opcion.label,
+            onClick: () => {
+              navigate(opcion.to);
+            },
+          }))}
+        />
+      </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch mt-6">
-        {filtrado.map((consejos) => (
-          <Link
+      <section className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
+        {loading ? (
+          <section className="col-span-full flex flex-row items-center justify-center text-gray-500 text-xl mt-10 gap-3">
+            <span className="material-symbols-outlined animate-spin text-2xl">progress_activity</span>
+            <p>Cargando consejos...</p>
+          </section>
+        ) : (
+          filtrado.map((consejos) => (
+            <Link
             key={consejos.id}
             to={`/consejo/${consejos.id}`}
             aria-label={`Ver detalles de ${consejos.titulo}`}
@@ -61,7 +71,7 @@ function Advice() {
               descripcionCorta={consejos.descripcionCorta}
             />
           </Link>
-        ))}
+        )))}
       </section>
     </>
   );

@@ -173,6 +173,12 @@
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .success-message {
+    top: calc(1rem + 80px);
+  }
+}
+
 .success-message.show {
   opacity: 1;
   transform: translateX(-50%) scale(1);
@@ -203,4 +209,13 @@
 
 .profile-post-icon-hover:hover::after {
   width: 100%;
+}
+
+.profile-post-icon-hover.active::after {
+  width: 100%;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
 }

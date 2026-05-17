@@ -4,8 +4,10 @@ import Home from "../pages/Home.jsx";
 import Advice from "../pages/Advice.jsx";
 import Profile from "../pages/Profile.jsx";
 import DetailAnimal from "../components/DetailAnimal.jsx";
-import DetailAdvice from "../components/DetailAdvice.jsx"; 
+import DetailAdvice from "../components/DetailAdvice.jsx";
 import NewPost from "../pages/NewPost.jsx";
+import Login from "../pages/Login.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 function Router() {
   return (
@@ -21,12 +23,14 @@ function Router() {
           <Route path="advice" element={<Advice />} />
           <Route path="advice/:categoria" element={<Advice />} />
 
-          <Route path="newPost" element={<NewPost />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="newPost" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
+          <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="animal/:id" element={<DetailAnimal />} />
           <Route path="consejo/:id" element={<DetailAdvice />} />
           <Route path="*" element={<p>La página que buscas no existe</p>} />
         </Route>
+        
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

@@ -8,4 +8,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      '/petCare': {
+        target: 'https://petcare-api-r9b6.onrender.com',
+        changeOrigin: true,
+      }
+    }
+  }
 })
