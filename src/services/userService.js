@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// Configuramos la URL de Render para que funcione en Vercel
+axios.defaults.baseURL = 'https://petcare-api-r9b6.onrender.com';
+
 // Esta función sirve para iniciar sesión, le mandamos el usuario y la contraseña.
 export const login = async (username, password) => {
   try {

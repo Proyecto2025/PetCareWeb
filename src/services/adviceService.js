@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// Configuramos la URL de Render para que funcione en Vercel
+axios.defaults.baseURL = 'https://petcare-api-r9b6.onrender.com';
+
 // Este archivo tiene las funciones para pedir y mandar consejos a la base de datos.
 
 // Esta función sirve para pedir todos los consejos de golpe.
