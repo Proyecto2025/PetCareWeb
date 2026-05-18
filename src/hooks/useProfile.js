@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getPerfil, getPerfilFiltrado } from "../services/userService";
+import { getAdviceById } from "../services/adviceService";
+import { getPostById } from "../services/postService";
 
 // Este hook sirve para manejar todo lo que pasa en la pantalla de perfil.
 // Pide los datos del usuario y también sus publicaciones filtradas.
@@ -38,27 +40,69 @@ export const useProfile = (id) => {
   const loadFilteredData = async (type) => {
     if (!id) return;
     currentRequestType.current = type;
-    setFilteredData([]); // Vaciamos lo que había antes para que se vea limpio
     setLoadingFiltered(true);
     try {
-      let apiType = type.toUpperCase();
-      if (type === "advices") apiType = "advice"; // Porque en la base de datos se llama 'advice' en singular
-      
-      const data = await getPerfilFiltrado(id, apiType);
-      
       // Si el usuario ha cambiado de pestaña antes de que termine esta petición, pasamos de ella
       if (currentRequestType.current !== type) return;
-      
+
+      let apiType = type.toUpperCase();
+      if (type === "advices") apiType = "advice"; // Porque en la base de datos se llama 'advice' en singular
+
+      const data = await getPerfilFiltrado(id, apiType);
+
+      // Si cambió de pestaña mientras esperábamos la lista, abortamos
+      if (currentRequestType.current !== type) return;
+
       if (apiType === "advice") {
-        setFilteredData(data.advices || []);
+        const list = data.advices || [];
+        const detailed = await Promise.all(
+          list.map(async (item) => {
+            const detail = await getAdviceById(item.id);
+            return {
+              id: detail.id,
+              titulo: detail.titulo,
+              subtitle: detail.subtitle,
+              tipoAnimal: detail.categoria,
+              foto: detail.imagen,
+              descripcionCorta: detail.descripcionCorta
+            };
+          })
+        );
+
+        // Si cambió de pestaña mientras esperábamos los detalles, abortamos
+        if (currentRequestType.current !== type) return;
+
+        setFilteredData(detailed);
       } else {
-        setFilteredData(data.posts || []);
+        const list = data.posts || [];
+        const detailed = await Promise.all(
+          list.map(async (item) => {
+            const detail = await getPostById(item.id);
+            return {
+              id: detail.id,
+              titulo: detail.titulo,
+              subtitle: detail.subtitle,
+              tipoAnimal: detail.tipoAnimal,
+              foto: detail.imagen,
+              descripcionCorta: detail.shortDescription,
+              ubicacion: detail.ubicacion,
+              municipio: detail.municipio
+            };
+          })
+        );
+
+        // Si cambió de pestaña mientras esperábamos los detalles, abortamos
+        if (currentRequestType.current !== type) return;
+
+        setFilteredData(detailed);
       }
     } catch (err) {
-      console.error("Error al cargar datos filtrados:", err);
+      if (currentRequestType.current !== type) return;
       setFilteredData([]);
     } finally {
-      setLoadingFiltered(false);
+      if (currentRequestType.current === type) {
+        setLoadingFiltered(false);
+      }
     }
   };
 

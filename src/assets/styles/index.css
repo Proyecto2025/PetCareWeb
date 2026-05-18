@@ -155,7 +155,7 @@
 
 .success-message {
   position: fixed;
-  top: 1rem;
+  top: 5rem;
   left: 50%;
   transform: translateX(-50%) scale(0.9);
   background-color: rgba(34, 197, 94, 0.2);
@@ -171,12 +171,6 @@
   opacity: 0;
   transition: all 0.5s ease-in-out;
   pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .success-message {
-    top: calc(1rem + 80px);
-  }
 }
 
 .success-message.show {

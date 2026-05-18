@@ -25,6 +25,10 @@ function UbicacionFilter({ apiKey, onSelect, className = "text-right md:max-w-70
   const [filtered, setFiltered] = useState([]);
   const [selected, setSelected] = useState(initialValue);
 
+  useEffect(() => {
+    setSelected(initialValue);
+  }, [initialValue]);
+
   const [provinces, setProvinces] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [municipios, setMunicipios] = useState([]);

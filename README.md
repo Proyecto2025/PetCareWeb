@@ -1,5 +1,8 @@
 # PetCare – Aplicación Web en React
 
+![Tabulacion](src/assets/images/web.png)
+**URL de la web:** https://pet-care-web-pi.vercel.app
+
 PetCare es una aplicación web desarrollada en **React** (empaquetado con **Vite**) y estilizada con **Tailwind CSS**, conectada a una API REST en Spring Boot.
 Permite gestionar publicaciones de adopción, ayuda y extravíos, así como consejos sobre el cuidado de animales.
 
@@ -62,6 +65,7 @@ src/
 - **React Router DOM**.
 - **Axios**.
 - **Material Symbols**.
+- **Vercel**.
 
 ---
 

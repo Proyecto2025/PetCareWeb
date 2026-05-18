@@ -10,11 +10,11 @@ export const getPosts = async () => {
   try {
     const response = await axios.get("/petCare/post/all");
     const data = response.data;
-    
+
     return (data.content || []).map(post => ({
       id: post.id,
       titulo: post.title,
-      subtitulo: post.subtitle,
+      subtitle: post.subtitle,
       nombreUsuario: post.userName,
       ubicacion: post.location,
       municipio: post.municipality,
@@ -34,12 +34,12 @@ export const getPostById = async (id) => {
   try {
     const response = await axios.get(`/petCare/post/detail/${id}`);
     const post = response.data;
-    
+
     return {
       id: post.id,
       userId: post.userId,
       titulo: post.title,
-      subtitulo: post.subtitle,
+      subtitle: post.subtitle,
       nombreUsuario: post.userName || `Usuario ${post.userId}`,
       ubicacion: post.location,
       municipio: post.municipality,

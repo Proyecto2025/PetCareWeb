@@ -11,7 +11,7 @@ function Modal({ isOpen, title, message, confirmText = "Confirmar", cancelText =
           <button
             onClick={onCancel}
             disabled={isLoading}
-            className={`px-5 py-2.5 rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors font-medium ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+            className={`px-5 py-2.5 rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors font-medium ${isLoading ? "opacity-50" : "cursor-pointer"}`}
           >
             {cancelText}
           </button>
@@ -19,7 +19,7 @@ function Modal({ isOpen, title, message, confirmText = "Confirmar", cancelText =
             onClick={onConfirm}
             disabled={isLoading}
             className={`px-5 py-2.5 rounded-md text-white transition-colors font-medium flex items-center justify-center gap-2 ${
-              isLoading ? "cursor-not-allowed opacity-70" : "cursor-pointer"
+              isLoading ? "opacity-70" : "cursor-pointer"
             } ${
               isDestructive 
                 ? "bg-red-600 hover:bg-red-700" 

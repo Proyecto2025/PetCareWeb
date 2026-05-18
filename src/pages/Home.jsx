@@ -154,6 +154,7 @@ function Home() {
                 descripcionCorta={animales.descripcionCorta}
                 ubicacion={animales.ubicacion}
                 municipio={animales.municipio}
+                subtitle={animales.subtitle}
               />
             </Link>
           ))

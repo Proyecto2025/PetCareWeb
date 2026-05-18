@@ -59,19 +59,20 @@ function Advice() {
         ) : (
           filtrado.map((consejos) => (
             <Link
-            key={consejos.id}
-            to={`/consejo/${consejos.id}`}
-            aria-label={`Ver detalles de ${consejos.titulo}`}
-          >
-            <Card
-              nombreUsuario={consejos.nombreUsuario}
-              tipoAnimal={consejos.categoria}
-              titulo={consejos.titulo}
-              foto={consejos.imagen}
-              descripcionCorta={consejos.descripcionCorta}
-            />
-          </Link>
-        )))}
+              key={consejos.id}
+              to={`/consejo/${consejos.id}`}
+              aria-label={`Ver detalles de ${consejos.titulo}`}
+            >
+              <Card
+                nombreUsuario={consejos.nombreUsuario}
+                tipoAnimal={consejos.categoria}
+                titulo={consejos.titulo}
+                foto={consejos.imagen}
+                descripcionCorta={consejos.descripcionCorta}
+                subtitle={consejos.subtitle}
+              />
+            </Link>
+          )))}
       </section>
     </>
   );

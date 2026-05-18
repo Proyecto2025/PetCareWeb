@@ -244,7 +244,7 @@ function Login() {
                     type="button"
                     onClick={() => setCurrentStep(0)}
                     disabled={currentStep === 0}
-                    className={`px-5 py-2 rounded text-white cursor-pointer ${currentStep === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-gray-700 hover:bg-gray-800"}`}
+                    className={`px-5 py-2 rounded text-white cursor-pointer ${currentStep === 0 ? "bg-gray-400" : "bg-gray-700 hover:bg-gray-800"}`}
                   >
                     Atrás
                   </button>
@@ -259,7 +259,7 @@ function Login() {
                       }
                     }}
                     disabled={isMobileButtonDisabled}
-                    className={`px-5 py-2 rounded text-white flex items-center gap-2 ${isMobileButtonDisabled ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover cursor-pointer"}`}
+                    className={`px-5 py-2 rounded text-white flex items-center gap-2 ${isMobileButtonDisabled ? "bg-gray-400" : "primary-bg-color primary-color-hover cursor-pointer"}`}
                   >
                     {loading && currentStep === 1 && (
                       <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>
@@ -353,7 +353,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={isDesktopButtonDisabled}
-                  className={`mt-6 w-full py-4 text-white text-2xl contenedor__textfont rounded-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${isDesktopButtonDisabled ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover cursor-pointer"}`}
+                  className={`mt-6 w-full py-4 text-white text-2xl contenedor__textfont rounded-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${isDesktopButtonDisabled ? "bg-gray-400" : "primary-bg-color primary-color-hover cursor-pointer"}`}
                 >
                   {loading && (
                     <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>

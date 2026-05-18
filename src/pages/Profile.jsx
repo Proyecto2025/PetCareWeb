@@ -54,13 +54,13 @@ function Profile() {
 
   const hasChanges = useMemo(() => {
     if (!profileData) return false;
-    
+
     const isSameName = editData.nombreCompleto === (profileData.fullName || "");
     const isSameUser = editData.nombreUsuario === (profileData.userName || "");
     const isSamePhone = editData.numTelefono === (profileData.phoneNumber || "");
     const isSameEmail = editData.correo === (profileData.email || "");
     const hasPassword = editData.password !== "" || editData.confirmPassword !== "";
-    
+
     return !isSameName || !isSameUser || !isSamePhone || !isSameEmail || hasPassword;
   }, [editData, profileData]);
 
@@ -164,10 +164,9 @@ function Profile() {
         password: editData.password || undefined,
         confirmPassword: editData.confirmPassword || undefined
       });
-      
-      alert("Perfil actualizado correctamente");
+
       setIsEditing(false);
-      window.location.reload();
+      reloadProfile();
     } catch (err) {
       alert(err.message || "Error al actualizar el perfil");
     } finally {
@@ -180,15 +179,15 @@ function Profile() {
     setIsDeletingAccount(true);
     try {
       await deleteUser(userId);
-      
+
       // Limpiar toda la sesión
       localStorage.removeItem("userId");
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("userName");
-      
+
       // Notificar a los componentes (como Nav) que el estado de auth ha cambiado
       window.dispatchEvent(new Event("authChange"));
-      
+
       navigate("/");
     } catch (err) {
       alert(err.message || "Error al eliminar la cuenta");
@@ -228,7 +227,7 @@ function Profile() {
       }
       loadFilteredData(itemToDelete.type);
       reloadProfile();
-      
+
       // Mostrar mensaje de éxito
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
@@ -282,7 +281,7 @@ function Profile() {
               </section>
             </section>
 
-            <section 
+            <section
               onClick={() => setIsEditing(true)}
               className="flex w-full md:w-[30%] text-2xl mt-5 w-[40%] lg:w-[20%] justify-center md:mt-0 items-center gap-4 md:gap-2 text-white primary-bg-color primary-color-hover transition-all ease-in-out shadow-lg p-2 rounded-md cursor-pointer"
             >
@@ -334,7 +333,7 @@ function Profile() {
                 placeholder="Nuevo correo..."
                 required
               />
-              
+
               <FormInput
                 nombre="Nueva contraseña"
                 id="password"
@@ -355,7 +354,7 @@ function Profile() {
                 error={errors.confirmPassword}
                 placeholder="Repite la nueva contraseña"
               />
-              
+
               <section className="md:col-span-2 flex gap-4 mt-4">
                 <button
                   type="button"
@@ -368,11 +367,10 @@ function Profile() {
                   type="button"
                   onClick={() => setIsSaveModalOpen(true)}
                   disabled={isSaving || !hasChanges || hasInvalidData}
-                  className={`flex-1 py-4 text-white text-xl contenedor__textfont rounded-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isSaving || !hasChanges || hasInvalidData
-                      ? "bg-gray-400 cursor-not-allowed" 
-                      : "primary-bg-color primary-color-hover cursor-pointer"
-                  }`}
+                  className={`flex-1 py-4 text-white text-xl contenedor__textfont rounded-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${isSaving || !hasChanges || hasInvalidData
+                    ? "bg-gray-400"
+                    : "primary-bg-color primary-color-hover cursor-pointer"
+                    }`}
                 >
                   {isSaving && (
                     <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>
@@ -381,7 +379,7 @@ function Profile() {
                 </button>
               </section>
             </form>
-            
+
             {/* Zona de peligro separada (Eliminar cuenta) */}
             <section className="mt-8 pt-4 border-t border-gray-100 flex justify-center">
               <button
@@ -439,7 +437,7 @@ function Profile() {
               </p>
             ) : (
               filteredData.map((item) => (
-                <section key={item.id} className="relative group">
+                <section key={item.id} className="relative">
                   <Link
                     to={content === "advices" ? `/consejo/${item.id}` : `/animal/${item.id}`}
                     aria-label={`Ver detalles de ${item.title || item.titulo}`}
@@ -447,25 +445,16 @@ function Profile() {
                   >
                     <Card
                       nombreUsuario={profileData?.userName}
-                      tipoAnimal={item.typeAnimal || item.category || content}
-                      titulo={item.title || item.titulo}
-                      foto={item.image || item.imagen}
-                      descripcionCorta={item.shortDescription || item.descripcionCorta}
-                      ubicacion={item.location}
-                      municipio={item.municipality}
+                      tipoAnimal={item.tipoAnimal}
+                      titulo={item.titulo}
+                      foto={item.foto}
+                      descripcionCorta={item.descripcionCorta}
+                      ubicacion={item.ubicacion}
+                      municipio={item.municipio}
+                      subtitle={item.subtitle}
+                      onDelete={() => handleDeleteClick(item.id, content)}
                     />
                   </Link>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleDeleteClick(item.id, content);
-                    }}
-                    className="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-red-700 z-10 flex items-center justify-center"
-                    title="Eliminar publicación"
-                  >
-                    <span className="material-symbols-outlined text-base">delete</span>
-                  </button>
                 </section>
               ))
             )}

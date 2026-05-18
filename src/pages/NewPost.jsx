@@ -14,6 +14,7 @@ const INITIAL_POST = {
   descripcion: "",
   detalleExtra: "",
   imagen: null,
+  altTexto: "",
   donarPertenencias: "",
   pertenencias: [],
 };
@@ -27,6 +28,7 @@ const INITIAL_CONSEJO = {
   descripcion: "",
   detalleExtra: "",
   imagen: null,
+  altTexto: "",
 };
 
 // Componente principal para crear un nuevo Post o Consejo
@@ -75,12 +77,21 @@ function NewPost() {
       [id]: type === "file" ? files[0] : value,
     }));
     setError((prev) => ({ ...prev, [id]: "" }));
+
+    // Validación en tiempo real para longitud mínima
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias", "altTexto"];
+    if (textFields.includes(id) && value && typeof value === "string") {
+      const trimmed = value.trim();
+      if (trimmed.length > 0 && trimmed.length < 5) {
+        setError((prev) => ({ ...prev, [id]: "Mínimo 5 caracteres" }));
+      }
+    }
   };
 
   const handleBlur = (e) => {
     const { id, value } = e.target;
-    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
-    
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias", "altTexto"];
+
     if (textFields.includes(id) && value) {
       if (typeof value === "string" && value.trim().length < 5) {
         setError((prev) => ({ ...prev, [id]: "Mínimo 5 caracteres" }));
@@ -95,11 +106,11 @@ function NewPost() {
       return modo === "post"
         ? [
           ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "descripcion", "detalleExtra", "donarPertenencias", "pertenencias"],
-          ["imagen"],
+          ["imagen", "altTexto"],
         ]
         : [
           ["tipoConsejo", "tituloConsejo", "descripcionCorta", "descripcion", "detalleExtra"],
-          ["imagen"],
+          ["imagen", "altTexto"],
         ];
     }
 
@@ -115,7 +126,7 @@ function NewPost() {
         mobileSteps.push(["donarPertenencias", "pertenencias"]);
       }
 
-      mobileSteps.push(["imagen"]);
+      mobileSteps.push(["imagen", "altTexto"]);
       return mobileSteps;
     }
 
@@ -123,7 +134,7 @@ function NewPost() {
       ["tipoConsejo", "tituloConsejo"],
       ["descripcionCorta", "descripcion"],
       ["detalleExtra"],
-      ["imagen"],
+      ["imagen", "altTexto"],
     ];
   }, [modo, isMobile, formData.tipoPost]);
 
@@ -134,15 +145,15 @@ function NewPost() {
     if (modo === "post") {
       return stepFields.filter(
         (field) =>
-          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "imagen", "descripcion"].includes(field) ||
-          (field === "donarPertenencias" &&
-            !["Extravio", "Ayuda"].includes(formData.tipoPost))
+          ["tipoPost", "tipoAnimal", "tituloPost", "ubicacion", "descripcionCorta", "imagen", "descripcion", "altTexto"].includes(field) ||
+          (field === "donarPertenencias" && !["Extravio", "Ayuda"].includes(formData.tipoPost)) ||
+          (field === "pertenencias" && formData.donarPertenencias === "si")
       );
     }
 
     return stepFields.filter(
       (field) =>
-        ["tipoConsejo", "tituloConsejo", "descripcionCorta", "imagen", "descripcion"].includes(field)
+        ["tipoConsejo", "tituloConsejo", "descripcionCorta", "imagen", "descripcion", "altTexto"].includes(field)
     );
   };
 
@@ -151,7 +162,7 @@ function NewPost() {
     if (!Array.isArray(fieldsToCheck)) return false;
 
     const requiredFields = getRequiredFields(fieldsToCheck);
-    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias", "altTexto"];
 
     const missingRequired = requiredFields.some((field) => {
       if (field === "pertenencias" && formData.donarPertenencias === "si") {
@@ -182,15 +193,10 @@ function NewPost() {
 
     const validationErrors = {};
     const requiredFields = getRequiredFields(fields);
-    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias", "altTexto"];
 
     requiredFields.forEach((field) => {
-      if (
-        !formData[field] ||
-        (Array.isArray(formData[field]) && formData[field].length === 0)
-      ) {
-        validationErrors[field] = "Campo obligatorio";
-      } else if (field === "ubicacion" && !formData.ubicacion.includes("/")) {
+      if (field === "ubicacion" && formData.ubicacion && !formData.ubicacion.includes("/")) {
         validationErrors[field] = "Debes seleccionar un municipio";
       }
     });
@@ -254,7 +260,7 @@ function NewPost() {
           postCategory: categoryPost,
           typeAnimal,
           title: formData.tituloPost,
-          subtitle: formData.descripcionCorta,
+          subtitle: formData.altTexto,
           shortDescription: formData.descripcionCorta,
           longDescription: formData.descripcion,
           extraDetails: formData.detalleExtra,
@@ -276,7 +282,7 @@ function NewPost() {
         const adviceData = {
           category,
           title: formData.tituloConsejo,
-          subtitle: formData.descripcionCorta,
+          subtitle: formData.altTexto,
           shortDescription: formData.descripcionCorta,
           longDescription: formData.descripcion,
           extraDetail: formData.detalleExtra,
@@ -349,8 +355,8 @@ function NewPost() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={isSubmitting}
-            className={`px-6 py-4 rounded text-white text-2xl contenedor__textfont flex items-center justify-center gap-2 primary-bg-color primary-color-hover ${isSubmitting ? "cursor-not-allowed opacity-70" : "cursor-pointer"}`}
+            disabled={isSubmitting || isStepInvalid}
+            className={`px-6 py-4 rounded text-white text-2xl contenedor__textfont flex items-center justify-center gap-2 ${isSubmitting || isStepInvalid ? "bg-gray-400" : "primary-bg-color primary-color-hover cursor-pointer"}`}
           >
             {isSubmitting && (
               <span className="material-symbols-outlined animate-spin text-base">progress_activity</span>
@@ -370,6 +376,7 @@ function NewPost() {
           handleChange={handleChange}
           onBlur={handleBlur}
           isMobile={false}
+          disabled={isSubmitting}
         />
       )}
 
@@ -399,6 +406,7 @@ function NewPost() {
             currentStep={currentStep}
             visibleFields={steps[currentStep]}
             isMobile
+            disabled={isSubmitting}
           />
 
           {/* Botones de navegación */}
@@ -407,7 +415,7 @@ function NewPost() {
               type="button"
               onClick={handleBack}
               disabled={isBackDisabled}
-              className={`px-5 py-2 rounded text-white cursor-pointer ${isBackDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-gray-700 hover:bg-gray-800"
+              className={`px-5 py-2 rounded text-white ${isBackDisabled ? "bg-gray-400" : "bg-gray-700 hover:bg-gray-800 cursor-pointer"
                 }`}
             >
               Atrás
@@ -417,7 +425,7 @@ function NewPost() {
               type="button"
               onClick={handleNext}
               disabled={isStepInvalid || isSubmitting}
-              className={`px-5 py-2 rounded text-white flex items-center justify-center gap-2 ${isStepInvalid || isSubmitting ? "bg-gray-400 cursor-not-allowed" : "primary-bg-color primary-color-hover"
+              className={`px-5 py-2 rounded text-white flex items-center justify-center gap-2 ${isStepInvalid || isSubmitting ? "bg-gray-400" : "primary-bg-color primary-color-hover cursor-pointer"
                 }`}
             >
               {isSubmitting && (

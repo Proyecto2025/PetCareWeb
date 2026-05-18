@@ -122,7 +122,7 @@ function Nav() {
           )}
         </section>
       </nav>
-      
+
       <Modal
         isOpen={isLogoutModalOpen}
         title="¿Cerrar sesión?"

@@ -16,7 +16,8 @@ const camposPorModo = {
     { id: "detalleExtra", nombre: "Detalles Extra", type: "textarea", maxLength: 500 },
     { id: "donarPertenencias", nombre: "¿Deseas Donar Pertenencias?", type: "radio", options: [{ label: "Sí", value: "si" }, { label: "No", value: "no" }] },
     { id: "pertenencias", nombre: "¿Qué pertenencias deseas donar?" },
-    { id: "imagen", nombre: "Imagen", required: true }
+    { id: "imagen", nombre: "Imagen", required: true },
+    { id: "altTexto", nombre: "Descripcion Imagen", maxLength: 100, required: true }
   ],
   consejo: [
     { id: "tipoConsejo", nombre: "Tipo de Consejo", type: "select", options: [{ label: "Comida", value: "Comida" }, { label: "Higiene", value: "Higiene" }, { label: "Accesorios", value: "Accesorios" }], required: true },
@@ -24,11 +25,12 @@ const camposPorModo = {
     { id: "descripcionCorta", nombre: "Descripción Corta del Consejo", maxLength: 60, required: true },
     { id: "descripcion", nombre: "Descripción del Consejo", type: "textarea", maxLength: 1500, required: true },
     { id: "detalleExtra", nombre: "Detalles Extra", type: "textarea", maxLength: 500 },
-    { id: "imagen", nombre: "Imagen", required: true }
+    { id: "imagen", nombre: "Imagen", required: true },
+    { id: "altTexto", nombre: "Descripcion Imagen", maxLength: 100, required: true }
   ]
 };
 
-function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFields }) {
+function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFields, disabled = false }) {
 
   const isFieldVisible = (id) => (!visibleFields ? true : visibleFields.includes(id));
 
@@ -41,8 +43,8 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
   });
 
   const rightFields = camposFiltrados.filter(c => {
-    if (modo === "post") return ["detalleExtra", "donarPertenencias", "pertenencias", "imagen"].includes(c.id);
-    if (modo === "consejo") return ["detalleExtra", "imagen"].includes(c.id);
+    if (modo === "post") return ["donarPertenencias", "pertenencias", "imagen", "altTexto"].includes(c.id);
+    if (modo === "consejo") return ["detalleExtra", "imagen", "altTexto"].includes(c.id);
     return false;
   });
 
@@ -132,6 +134,7 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
                   maxLength={c.maxLength}
                   className={`w-full`}
                   options={c.options}
+                  disabled={disabled}
                 />
               );
             })}
@@ -139,7 +142,7 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
         )}
 
         {/* Columna derecha */}
-        {rightFields.length > 0 && (
+        {(rightFields.length > 0 || isFieldVisible("detalleExtra")) && (
           <section className="flex-1 flex flex-col gap-4 w-full h-auto">
 
             <p className="text-gray-600 text-sm md:hidden">
@@ -160,8 +163,23 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
                       <p className="text-gray-400 text-sm text-center">No se ha seleccionado imagen</p>
                     )}
                   </section>
-                  <ImageUploader id="imagen" onChange={handleChange} />
+                  <ImageUploader id="imagen" onChange={handleChange} value={formData.imagen} />
                   {error?.imagen && <p className="text-red-600 text-sm mt-1 w-full">{error.imagen}</p>}
+                  
+                  {isFieldVisible("altTexto") && (
+                    <FormInput
+                      nombre="Descripcion Imagen"
+                      id="altTexto"
+                      placeholder="describe brevemente la imagen"
+                      value={formData.altTexto}
+                      onChange={handleChange}
+                      onBlur={onBlur}
+                      required
+                      error={error?.altTexto}
+                      maxLength={60}
+                      className="w-full mt-2"
+                    />
+                  )}
                 </section>
               </section>
             )}
@@ -169,58 +187,60 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
             {/* POST: Adopción - Detalle Extra y Donar Pertenencias debajo */}
             {modo === "post" && formData.tipoPost === "Adopción" && (
               <section className="flex flex-col gap-4 w-full">
-                {/* Detalle Extra */}
-                {isFieldVisible("detalleExtra") && (
-                  <FormInput
-                    nombre="Detalles Extra"
-                    id="detalleExtra"
-                    type="textarea"
-                    placeholder="Agrega información adicional..."
-                    value={formData?.detalleExtra}
-                    onChange={handleChange}
-                    onBlur={onBlur}
-                    className="w-full min-h-[100px]"
-                    maxLength={500}
-                  />
-                )}
-
-                {/* Donar Pertenencias debajo de Detalle Extra */}
-                {isFieldVisible("donarPertenencias") && (
-                  <section className="flex flex-col gap-2">
+                <section className="flex flex-col md:flex-row gap-4 w-full">
+                  {isFieldVisible("detalleExtra") && (
                     <FormInput
-                      nombre="¿Deseas Donar Pertenencias?"
-                      id="donarPertenencias"
-                      type="radio"
-                      value={formData.donarPertenencias}
+                      nombre="Detalles Extra"
+                      id="detalleExtra"
+                      type="textarea"
+                      placeholder="Agrega información adicional..."
+                      value={formData?.detalleExtra}
                       onChange={handleChange}
-                      required
-                      error={error.donarPertenencias}
-                      options={[
-                        { label: "Sí", value: "si" },
-                        { label: "No", value: "no" },
-                      ]}
-                      className="w-full"
+                      onBlur={onBlur}
+                      error={error?.detalleExtra}
+                      className="flex-1"
+                      disabled={disabled}
                     />
-
-                    {formData.donarPertenencias === "si" && isFieldVisible("pertenencias") && (
+                  )}
+                  {isFieldVisible("donarPertenencias") && (
+                    <section className="flex-1 flex flex-col gap-4">
                       <FormInput
-                        nombre="¿Qué pertenencias deseas donar?"
-                        id="pertenencias"
-                        placeholder="Separa con coma..."
-                        value={formData.pertenencias}
+                        nombre="¿Deseas Donar Pertenencias?"
+                        id="donarPertenencias"
+                        type="radio"
+                        value={formData.donarPertenencias}
                         onChange={handleChange}
-                        onBlur={onBlur}
                         required
-                        error={error.pertenencias}
-                        className="w-full min-h-[50px]"
+                        error={error.donarPertenencias}
+                        options={[
+                          { label: "Sí", value: "si" },
+                          { label: "No", value: "no" },
+                        ]}
+                        className="w-full"
+                        disabled={disabled}
                       />
-                    )}
-                  </section>
-                )}
+
+                      {formData.donarPertenencias === "si" && isFieldVisible("pertenencias") && (
+                        <FormInput
+                          nombre="¿Qué pertenencias deseas donar?"
+                          id="pertenencias"
+                          placeholder="Separa con coma..."
+                          value={formData.pertenencias}
+                          onChange={handleChange}
+                          onBlur={onBlur}
+                          required
+                          error={error.pertenencias}
+                          className="w-full min-h-[50px]"
+                          disabled={disabled}
+                        />
+                      )}
+                    </section>
+                  )}
+                </section>
               </section>
             )}
 
-            {/* POST: No Adopción */}
+            {/* POST: No Adopción - Detalle Extra solo */}
             {modo === "post" && formData.tipoPost !== "Adopción" && isFieldVisible("detalleExtra") && (
               <FormInput
                 nombre="Detalles Extra"
@@ -230,8 +250,9 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
                 value={formData?.detalleExtra}
                 onChange={handleChange}
                 onBlur={onBlur}
-                className="w-full min-h-[100px]"
-                maxLength={500}
+                error={error?.detalleExtra}
+                className="w-full"
+                disabled={disabled}
               />
             )}
 
@@ -245,8 +266,10 @@ function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFie
                 value={formData?.detalleExtra}
                 onChange={handleChange}
                 onBlur={onBlur}
+                error={error?.detalleExtra}
                 className="w-full min-h-[100px]"
                 maxLength={500}
+                disabled={disabled}
               />
             )}
           </section>

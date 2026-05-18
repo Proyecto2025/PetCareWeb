@@ -6,6 +6,7 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
   }
 
   const [copiado, setCopiado] = useState(false);
+  const currentUserId = localStorage.getItem("userId");
 
   // Copia el enlace de la publicación al portapapeles para compartir el post
   const handleShare = () => {
@@ -53,12 +54,12 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
           <figure>
             <img
               src={objeto.imagen}
-              alt={`Imagen de ${objeto.titulo}`}
+              alt={objeto.subtitle}
               className="w-full max-w-xs sm:max-w-sm lg:max-w-md h-auto rounded-lg shadow-sm mx-auto"
             />
             <figcaption className="sr-only">{objeto.titulo}</figcaption>
           </figure>
-          {objeto.email && (
+          {objeto.email && String(objeto.userId) !== String(currentUserId) && (
             <a
               href={`mailto:${objeto.email}`}
               className="mt-4 w-full px-6 py-2 md:py-3 text-sm md:text-base primary-bg-color text-white font-bold rounded-lg shadow primary-color-hover transition flex items-center justify-center gap-2"
@@ -67,7 +68,7 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
               Contactar por correo
             </a>
           )}
-          
+
           <button
             onClick={handleShare}
             className="mt-2 w-full px-6 py-2 md:py-3 text-sm md:text-base bg-gray-100 border border-gray-300 text-gray-700 font-bold rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-center gap-2 cursor-pointer"

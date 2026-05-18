@@ -10,11 +10,11 @@ export const getAdvices = async () => {
   try {
     const response = await axios.get("/petCare/advice/all");
     const data = response.data;
-    
+
     return (data.content || []).map(advice => ({
       id: advice.id,
       titulo: advice.title,
-      subtitulo: advice.subtitle,
+      subtitle: advice.subtitle,
       nombreUsuario: advice.userName,
       categoria: advice.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
       imagen: advice.image,
@@ -31,17 +31,17 @@ export const getAdviceById = async (id) => {
   try {
     const response = await axios.get(`/petCare/advice/detail/${id}`);
     const advice = response.data;
-    
+
     return {
       id: advice.id,
       userId: advice.userId,
       titulo: advice.title,
-      subtitulo: advice.subtitle,
+      subtitle: advice.subtitle,
       nombreUsuario: advice.userName || `Usuario ${advice.userId}`,
-      categoria: advice.category ? advice.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "",
+      categoria: advice.adviceCategory ? advice.adviceCategory.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "",
       imagen: advice.image,
       descripcionCorta: advice.shortDescription,
-      descripcionLarga: advice.longDescription || advice.shortDescription,
+      descripcionLarga: advice.longDescription,
       datosExtra: advice.extraDetails || "No especificado por ahora...",
       pertenencias: advice.belongings || []
     };

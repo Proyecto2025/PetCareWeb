@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, required = false, placeholder, options, className, maxLength }) {
+function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, required = false, placeholder, options, className, maxLength, disabled = false }) {
 
   // Tipos de input
   const isTextArea = type === "textarea";
@@ -109,12 +109,13 @@ function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, 
             onKeyDown={handleTagKeyDown}
             placeholder={placeholder}
             className="w-full p-2 border border-gray-300 rounded focus-primary-color"
+            disabled={disabled}
           />
           <section className="flex flex-wrap gap-2 mt-2">
             {tags.map((tag) => (
               <span key={tag} className="flex items-center gap-1 bg-emerald-700 text-white px-2 py-1 rounded-full text-sm">
                 {tag}
-                <button type="button" onClick={() => removeTag(tag)} className="text-white font-bold cursor-pointer">×</button>
+                <button type="button" onClick={() => removeTag(tag)} className={`text-white font-bold ${disabled ? "" : "cursor-pointer"}`} disabled={disabled}>×</button>
               </span>
             ))}
           </section>
@@ -136,6 +137,7 @@ function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, 
               className={`resize-none mt-1 block w-full p-2 ${maxLength ? "pb-7" : ""} border-gray-300 border rounded-md shadow-sm focus-primary-color h-60 ${className || ""}`}
               aria-invalid={!!error}
               aria-describedby={errorId}
+              disabled={disabled}
             />
           ) : (
             <section className="relative">
@@ -151,6 +153,7 @@ function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, 
                 className={`mt-1 block w-full p-2 ${maxLength ? "pb-7" : ""} ${isPassword ? "pr-10" : ""} border-gray-300 border rounded-md shadow-sm focus-primary-color ${className || ""}`}
                 aria-invalid={!!error}
                 aria-describedby={errorId}
+                disabled={disabled}
               />
               {isPassword && (
                 <button
@@ -181,8 +184,8 @@ function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, 
 
           {/* Input simulado */}
           <section
-            className="p-2 border border-gray-300 rounded-md shadow-sm flex justify-between items-center cursor-pointer"
-            onClick={() => setOpen(!open)}
+            className={`p-2 border border-gray-300 rounded-md shadow-sm flex justify-between items-center ${disabled ? "bg-gray-50" : "cursor-pointer"}`}
+            onClick={() => !disabled && setOpen(!open)}
             aria-labelledby={`${id}-label`}
           >
             {value || "Selecciona una opción"}
@@ -227,6 +230,7 @@ function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, 
                 onChange={() => onChange({ target: { id, value: opt.value } })}
                 required={required}
                 className="w-4 h-4 border-gray-300"
+                disabled={disabled}
               />
               <span className="text-gray-700">{opt.label}</span>
             </label>
