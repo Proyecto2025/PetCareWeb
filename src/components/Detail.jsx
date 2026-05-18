@@ -60,13 +60,11 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
           </figure>
           {objeto.email && (
             <a
-              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${objeto.email}`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${objeto.email}`}
               className="mt-4 w-full px-6 py-2 md:py-3 text-sm md:text-base primary-bg-color text-white font-bold rounded-lg shadow primary-color-hover transition flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined">mail</span>
-              Contactar vía Gmail
+              Contactar por correo
             </a>
           )}
           
