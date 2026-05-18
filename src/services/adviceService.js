@@ -34,6 +34,7 @@ export const getAdviceById = async (id) => {
     
     return {
       id: advice.id,
+      userId: advice.userId,
       titulo: advice.title,
       subtitulo: advice.subtitle,
       nombreUsuario: advice.userName || `Usuario ${advice.userId}`,

@@ -1,7 +1,18 @@
+import { useState } from "react";
+
 function Detail({ objeto, onBack, label = "ubicacion" }) {
   {
     /*Por defecto siempre muestra la ubicación (a no ser que se le pase uno llamado categoria) */
   }
+
+  const [copiado, setCopiado] = useState(false);
+
+  // Copia el enlace de la publicación al portapapeles para compartir el post
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopiado(true);
+    setTimeout(() => setCopiado(false), 2000);
+  };
 
   if (!objeto) {
     return <p>No existe la página</p>;
@@ -47,6 +58,25 @@ function Detail({ objeto, onBack, label = "ubicacion" }) {
             />
             <figcaption className="sr-only">{objeto.titulo}</figcaption>
           </figure>
+          {objeto.email && (
+            <a
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${objeto.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 w-full px-6 py-2 md:py-3 text-sm md:text-base primary-bg-color text-white font-bold rounded-lg shadow primary-color-hover transition flex items-center justify-center gap-2"
+            >
+              <span className="material-symbols-outlined">mail</span>
+              Contactar vía Gmail
+            </a>
+          )}
+          
+          <button
+            onClick={handleShare}
+            className="mt-2 w-full px-6 py-2 md:py-3 text-sm md:text-base bg-gray-100 border border-gray-300 text-gray-700 font-bold rounded-lg shadow hover:bg-gray-200 transition flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span className="material-symbols-outlined">share</span>
+            {copiado ? "¡Enlace copiado!" : "Compartir publicación"}
+          </button>
         </header>
 
         {/* Descripción + datos extra + pertenencias */}

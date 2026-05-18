@@ -31,6 +31,7 @@ function Profile() {
     password: "",
     confirmPassword: ""
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (profileData) {
@@ -63,18 +64,86 @@ function Profile() {
     return !isSameName || !isSameUser || !isSamePhone || !isSameEmail || hasPassword;
   }, [editData, profileData]);
 
+  const hasInvalidData = useMemo(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{9,10}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+
+    const isNameInvalid = !editData.nombreCompleto?.trim() || editData.nombreCompleto.trim().length < 5;
+    const isEmailInvalid = !editData.correo?.trim() || !emailRegex.test(editData.correo);
+    const isPhoneInvalid = !editData.numTelefono?.trim() || !phoneRegex.test(editData.numTelefono);
+    const isPasswordInvalid = editData.password && !passwordRegex.test(editData.password);
+    const isConfirmInvalid = editData.password !== editData.confirmPassword;
+
+    return isNameInvalid || isEmailInvalid || isPhoneInvalid || isPasswordInvalid || isConfirmInvalid;
+  }, [editData]);
+
   const postsCount = profileData?.numberOfPosts || 0;
   const advicesCount = profileData?.numberOfAdvices || 0;
 
   const handleEditChange = (e) => {
     const { id, value } = e.target;
     setEditData(prev => ({ ...prev, [id]: value }));
+    setErrors(prev => ({ ...prev, [id]: "" }));
+  };
+
+  const handleBlur = (e) => {
+    const { id, value } = e.target;
+    let errorMsg = "";
+
+    if (id === "nombreCompleto") {
+      if (value.trim().length < 5) {
+        errorMsg = "El nombre debe tener al menos 5 caracteres";
+      }
+    } else if (id === "correo") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value && !emailRegex.test(value)) {
+        errorMsg = "Introduce un correo válido";
+      }
+    } else if (id === "numTelefono") {
+      const phoneRegex = /^\d{9,10}$/;
+      if (value && !phoneRegex.test(value)) {
+        errorMsg = "Introduce un teléfono válido (9 o 10 dígitos)";
+      }
+    } else if (id === "password") {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+      if (value && !passwordRegex.test(value)) {
+        errorMsg = "Mínimo 6 caracteres, una mayúscula, una minúscula y un carácter especial";
+      }
+    } else if (id === "confirmPassword") {
+      if (value !== editData.password) {
+        errorMsg = "Las contraseñas no coinciden";
+      }
+    }
+
+    setErrors((prev) => ({ ...prev, [id]: errorMsg }));
   };
 
   const handleConfirmSave = async () => {
     // Validar campos obligatorios
     if (!editData.nombreCompleto || !editData.nombreUsuario || !editData.numTelefono || !editData.correo) {
       alert("Por favor, rellena todos los campos obligatorios.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{9,10}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+
+    if (editData.nombreCompleto.trim().length < 5) {
+      alert("El nombre debe tener al menos 5 caracteres");
+      return;
+    }
+    if (!emailRegex.test(editData.correo)) {
+      alert("Introduce un correo válido");
+      return;
+    }
+    if (!phoneRegex.test(editData.numTelefono)) {
+      alert("Introduce un teléfono válido (9 o 10 dígitos)");
+      return;
+    }
+    if (editData.password && !passwordRegex.test(editData.password)) {
+      alert("La contraseña no cumple con los requisitos de seguridad");
       return;
     }
 
@@ -230,6 +299,8 @@ function Profile() {
                 id="nombreCompleto"
                 value={editData.nombreCompleto}
                 onChange={handleEditChange}
+                onBlur={handleBlur}
+                error={errors.nombreCompleto}
                 placeholder="Nuevo nombre completo..."
                 required
               />
@@ -247,6 +318,8 @@ function Profile() {
                 type="tel"
                 value={editData.numTelefono}
                 onChange={handleEditChange}
+                onBlur={handleBlur}
+                error={errors.numTelefono}
                 placeholder="Nuevo teléfono..."
                 required
               />
@@ -256,6 +329,8 @@ function Profile() {
                 type="email"
                 value={editData.correo}
                 onChange={handleEditChange}
+                onBlur={handleBlur}
+                error={errors.correo}
                 placeholder="Nuevo correo..."
                 required
               />
@@ -266,6 +341,8 @@ function Profile() {
                 type="password"
                 value={editData.password}
                 onChange={handleEditChange}
+                onBlur={handleBlur}
+                error={errors.password}
                 placeholder="Dejar en blanco para no cambiar"
               />
               <FormInput
@@ -274,6 +351,8 @@ function Profile() {
                 type="password"
                 value={editData.confirmPassword}
                 onChange={handleEditChange}
+                onBlur={handleBlur}
+                error={errors.confirmPassword}
                 placeholder="Repite la nueva contraseña"
               />
               
@@ -288,9 +367,9 @@ function Profile() {
                 <button
                   type="button"
                   onClick={() => setIsSaveModalOpen(true)}
-                  disabled={isSaving || !hasChanges}
+                  disabled={isSaving || !hasChanges || hasInvalidData}
                   className={`flex-1 py-4 text-white text-xl contenedor__textfont rounded-md shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isSaving || !hasChanges 
+                    isSaving || !hasChanges || hasInvalidData
                       ? "bg-gray-400 cursor-not-allowed" 
                       : "primary-bg-color primary-color-hover cursor-pointer"
                   }`}

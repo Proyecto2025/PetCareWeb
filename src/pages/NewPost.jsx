@@ -77,6 +77,17 @@ function NewPost() {
     setError((prev) => ({ ...prev, [id]: "" }));
   };
 
+  const handleBlur = (e) => {
+    const { id, value } = e.target;
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
+    
+    if (textFields.includes(id) && value) {
+      if (typeof value === "string" && value.trim().length < 5) {
+        setError((prev) => ({ ...prev, [id]: "Mínimo 5 caracteres" }));
+      }
+    }
+  };
+
   // Define los pasos del formulario según modo y tamaño de pantalla
   const steps = useMemo(() => {
     if (!isMobile) {
@@ -140,8 +151,9 @@ function NewPost() {
     if (!Array.isArray(fieldsToCheck)) return false;
 
     const requiredFields = getRequiredFields(fieldsToCheck);
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
 
-    return requiredFields.some((field) => {
+    const missingRequired = requiredFields.some((field) => {
       if (field === "pertenencias" && formData.donarPertenencias === "si") {
         return !formData.pertenencias || formData.pertenencias.length === 0;
       }
@@ -150,6 +162,18 @@ function NewPost() {
       }
       return !formData[field];
     });
+
+    if (missingRequired) return true;
+
+    const invalidLength = fieldsToCheck.some((field) => {
+      if (textFields.includes(field)) {
+        const value = formData[field];
+        return value && typeof value === "string" && value.trim().length < 5;
+      }
+      return false;
+    });
+
+    return invalidLength;
   };
 
   // Valida los campos del formulario
@@ -158,6 +182,7 @@ function NewPost() {
 
     const validationErrors = {};
     const requiredFields = getRequiredFields(fields);
+    const textFields = ["tituloPost", "descripcionCorta", "descripcion", "detalleExtra", "tituloConsejo", "pertenencias"];
 
     requiredFields.forEach((field) => {
       if (
@@ -167,6 +192,15 @@ function NewPost() {
         validationErrors[field] = "Campo obligatorio";
       } else if (field === "ubicacion" && !formData.ubicacion.includes("/")) {
         validationErrors[field] = "Debes seleccionar un municipio";
+      }
+    });
+
+    fields.forEach((field) => {
+      if (textFields.includes(field)) {
+        const value = formData[field];
+        if (value && typeof value === "string" && value.trim().length < 5) {
+          validationErrors[field] = "Mínimo 5 caracteres";
+        }
       }
     });
 
@@ -334,6 +368,7 @@ function NewPost() {
           error={error}
           preview={preview}
           handleChange={handleChange}
+          onBlur={handleBlur}
           isMobile={false}
         />
       )}
@@ -360,6 +395,7 @@ function NewPost() {
             error={error}
             preview={preview}
             handleChange={handleChange}
+            onBlur={handleBlur}
             currentStep={currentStep}
             visibleFields={steps[currentStep]}
             isMobile

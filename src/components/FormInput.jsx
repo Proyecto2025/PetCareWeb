@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function FormInput({ nombre, id, type = "text", value, onChange, error, required = false, placeholder, options, className, maxLength }) {
+function FormInput({ nombre, id, type = "text", value, onChange, onBlur, error, required = false, placeholder, options, className, maxLength }) {
 
   // Tipos de input
   const isTextArea = type === "textarea";
@@ -33,6 +33,13 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
     let val = e.target.value;
     if ((type === "text" || type === "textarea") && maxLength) val = val.slice(0, maxLength);
     onChange({ target: { id, value: val, type } });
+  };
+
+  // Manejo de desenfoque (blur)
+  const handleBlur = (e) => {
+    if (onBlur) {
+      onBlur({ target: { id, value: e.target.value, type } });
+    }
   };
 
   // Función para agregar tag
@@ -122,6 +129,7 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
               id={id}
               value={value}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder={placeholder}
               required={required}
               maxLength={maxLength}
@@ -136,6 +144,7 @@ function FormInput({ nombre, id, type = "text", value, onChange, error, required
                 type={inputType}
                 value={value}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder={placeholder}
                 required={required}
                 maxLength={maxLength}

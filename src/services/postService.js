@@ -37,6 +37,7 @@ export const getPostById = async (id) => {
     
     return {
       id: post.id,
+      userId: post.userId,
       titulo: post.title,
       subtitulo: post.subtitle,
       nombreUsuario: post.userName || `Usuario ${post.userId}`,

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { getPostById } from "../services/postService";
+import { getPerfil } from "../services/userService";
 
 export const usePost = (id) => {
   const fetched = useRef(false);
@@ -15,7 +16,16 @@ export const usePost = (id) => {
       setLoading(true);
       try {
         const res = await getPostById(id);
-        setData(res);
+        let email = "";
+        if (res.userId) {
+          try {
+            const perfil = await getPerfil(res.userId);
+            email = perfil.email;
+          } catch (profileErr) {
+            console.error("Error al cargar el perfil:", profileErr);
+          }
+        }
+        setData({ ...res, email });
       } catch (err) {
         setError(err.message || "Error al cargar el post");
       } finally {

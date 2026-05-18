@@ -28,7 +28,7 @@ const camposPorModo = {
   ]
 };
 
-function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
+function Form({ modo, formData, error, preview, handleChange, onBlur, visibleFields }) {
 
   const isFieldVisible = (id) => (!visibleFields ? true : visibleFields.includes(id));
 
@@ -126,6 +126,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                   placeholder={`Escribe ${c.nombre.toLowerCase()}...`}
                   value={formData[c.id]}
                   onChange={handleChange}
+                  onBlur={onBlur}
                   required={c.required}
                   error={error?.[c.id]}
                   maxLength={c.maxLength}
@@ -177,6 +178,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                     placeholder="Agrega información adicional..."
                     value={formData?.detalleExtra}
                     onChange={handleChange}
+                    onBlur={onBlur}
                     className="w-full min-h-[100px]"
                     maxLength={500}
                   />
@@ -207,6 +209,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                         placeholder="Separa con coma..."
                         value={formData.pertenencias}
                         onChange={handleChange}
+                        onBlur={onBlur}
                         required
                         error={error.pertenencias}
                         className="w-full min-h-[50px]"
@@ -226,6 +229,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                 placeholder="Agrega información adicional..."
                 value={formData?.detalleExtra}
                 onChange={handleChange}
+                onBlur={onBlur}
                 className="w-full min-h-[100px]"
                 maxLength={500}
               />
@@ -240,6 +244,7 @@ function Form({ modo, formData, error, preview, handleChange, visibleFields }) {
                 placeholder="Agrega información adicional..."
                 value={formData?.detalleExtra}
                 onChange={handleChange}
+                onBlur={onBlur}
                 className="w-full min-h-[100px]"
                 maxLength={500}
               />

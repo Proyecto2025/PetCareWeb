@@ -14,6 +14,7 @@ function Login() {
     password: "",
     confirmPassword: ""
   });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { loginUser, registerUser, loading, error: authError, clearError } = useAuth();
 
@@ -37,7 +38,40 @@ function Login() {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
+    setErrors((prev) => ({ ...prev, [id]: "" }));
     clearError();
+  };
+
+  const handleBlur = (e) => {
+    const { id, value } = e.target;
+    let errorMsg = "";
+
+    if (id === "nombreCompleto" && !isLogin) {
+      if (value.trim().length < 5) {
+        errorMsg = "El nombre debe tener al menos 5 caracteres";
+      }
+    } else if (id === "email" && !isLogin) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value && !emailRegex.test(value)) {
+        errorMsg = "Introduce un correo válido";
+      }
+    } else if (id === "telefono" && !isLogin) {
+      const phoneRegex = /^\d{9,10}$/;
+      if (value && !phoneRegex.test(value)) {
+        errorMsg = "Introduce un teléfono válido (9 o 10 dígitos)";
+      }
+    } else if (id === "password" && !isLogin) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+      if (value && !passwordRegex.test(value)) {
+        errorMsg = "Mínimo 6 caracteres, una mayúscula, una minúscula y un carácter especial";
+      }
+    } else if (id === "confirmPassword" && !isLogin) {
+      if (value !== formData.password) {
+        errorMsg = "Las contraseñas no coinciden";
+      }
+    }
+
+    setErrors((prev) => ({ ...prev, [id]: errorMsg }));
   };
 
 
@@ -66,11 +100,26 @@ function Login() {
     }
   };
 
-  const isStep0Invalid = !isLogin && (!formData.nombreCompleto?.trim() || !formData.username?.trim() || !formData.telefono?.trim() || !formData.email?.trim());
-  const isStep1Invalid = !isLogin && (!formData.password || !formData.confirmPassword || formData.password !== formData.confirmPassword);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{9,10}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+
+  const isStep0Invalid = !isLogin && (
+    !formData.nombreCompleto?.trim() || formData.nombreCompleto.trim().length < 5 ||
+    !formData.username?.trim() ||
+    !formData.telefono?.trim() || !phoneRegex.test(formData.telefono) ||
+    !formData.email?.trim() || !emailRegex.test(formData.email)
+  );
+  const isStep1Invalid = !isLogin && (!formData.password || !passwordRegex.test(formData.password) || !formData.confirmPassword || formData.password !== formData.confirmPassword);
   const isMobileButtonDisabled = loading || (currentStep === 0 ? isStep0Invalid : isStep1Invalid);
 
-  const isDesktopRegisterInvalid = !isLogin && (!formData.nombreCompleto?.trim() || !formData.username?.trim() || !formData.telefono?.trim() || !formData.email?.trim() || !formData.password || !formData.confirmPassword || formData.password !== formData.confirmPassword);
+  const isDesktopRegisterInvalid = !isLogin && (
+    !formData.nombreCompleto?.trim() || formData.nombreCompleto.trim().length < 5 ||
+    !formData.username?.trim() ||
+    !formData.telefono?.trim() || !phoneRegex.test(formData.telefono) ||
+    !formData.email?.trim() || !emailRegex.test(formData.email) ||
+    !formData.password || !passwordRegex.test(formData.password) || !formData.confirmPassword || formData.password !== formData.confirmPassword
+  );
   const isDesktopLoginInvalid = isLogin && (!formData.username?.trim() || !formData.password);
   const isDesktopButtonDisabled = loading || (isLogin ? isDesktopLoginInvalid : isDesktopRegisterInvalid);
 
@@ -121,6 +170,8 @@ function Login() {
                       placeholder="Introduce tu nombre completo"
                       value={formData.nombreCompleto}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.nombreCompleto}
                       required
                     />
                     <FormInput
@@ -138,6 +189,8 @@ function Login() {
                       placeholder="Introduce tu teléfono"
                       value={formData.telefono}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.telefono}
                       required
                     />
                     <FormInput
@@ -147,6 +200,8 @@ function Login() {
                       placeholder="Introduce tu correo"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.email}
                       required
                     />
                   </>
@@ -161,6 +216,8 @@ function Login() {
                       placeholder="Introduce tu contraseña"
                       value={formData.password}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.password}
                       required
                     />
                     <FormInput
@@ -170,6 +227,8 @@ function Login() {
                       placeholder="Confirma tu contraseña"
                       value={formData.confirmPassword}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.confirmPassword}
                       required
                     />
                   </>
@@ -219,6 +278,8 @@ function Login() {
                     placeholder="Introduce tu nombre completo"
                     value={formData.nombreCompleto}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.nombreCompleto}
                     required
                   />
                 )}
@@ -241,6 +302,8 @@ function Login() {
                       placeholder="Introduce tu teléfono"
                       value={formData.telefono}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.telefono}
                       required
                     />
                     <FormInput
@@ -250,6 +313,8 @@ function Login() {
                       placeholder="Introduce tu correo"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.email}
                       required
                     />
                   </>
@@ -262,6 +327,8 @@ function Login() {
                   placeholder="Introduce tu contraseña"
                   value={formData.password}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.password}
                   required
                 />
 
@@ -273,6 +340,8 @@ function Login() {
                     placeholder="Confirma tu contraseña"
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={errors.confirmPassword}
                     required
                   />
                 )}
